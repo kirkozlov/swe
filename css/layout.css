@@ -1,0 +1,195 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+}
+
+body {
+    background: #eee;
+    color: #444;
+    -webkit-font-smoothing: antialiased;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
+    font-weight: 400;
+    height: auto !important;
+    height: 100%;
+    min-height: 100%;
+    text-rendering: optimizeLegibility;
+}
+
+header {
+    background-color: rgb(140, 193, 193);
+    border-bottom: 1px solid rgba(0,0,0,.15);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+header > nav {
+    background-color: white;
+    display: none;
+    flex: 1;
+    transform: 300ms all ease;
+}
+    
+    header nav > ul {
+       list-style-type: none;    
+    }
+        
+        header nav > ul > li {
+            border-bottom: 1px dotted rgba(0,0,0,.1);
+            position: relative;
+        }
+            
+            header nav > ul > li > a {
+                display: block;
+                color: rgba(0,0,0,.65);
+                font-weight: 700;
+                padding: 1.5rem 0;
+                text-decoration: none;
+                transition: 250ms all ease;
+            }
+            
+            header nav > ul > li:last-of-type {
+    border-bottom: none;    
+}
+
+header nav > ul > li > a span.toggle {
+    background-color: rgba(0,0,0,.05);
+    border-radius: 3rem;
+    color: rgba(0,0,0,.25);
+    font-size: 0.75em;
+    font-weight: 500;
+    padding: 2px 8px;
+    text-transform: lowercase;    
+}
+
+header nav > ul > li > a span.caret {
+    display: none;
+}
+
+header > nav > ul > li:hover > a {
+    color: rgb(140, 193, 193);  
+}
+
+header > nav > ul > li > nav {
+    background-color: rgb(51,51,51);
+    border-radius: 1.5em;
+    box-shadow: 0 2px 8px rgba(0,0,0,.6);
+    display: none;
+    overflow: hidden;
+    position: absolute;
+    right: 5%;
+    width: 90%;
+    z-index: 100;
+}
+
+header > nav > ul > li > nav > ul > li > a {
+    color: rgba(255,255,255,.85);
+    transition: 300ms all ease;
+}
+    
+    header > nav > ul > li > nav > ul > li:hover > a {
+        background-color: rgba(0,0,0,.6);
+        color: rgba(255,255,255,1);
+    }
+
+header > div#logo {
+    line-height: 70px;
+    position: relative;
+}
+
+header > div#logo > h1 {
+    color: white;
+    font-weight: 300;
+    text-transform: lowercase;
+}
+
+header > div#logo > div#navToggle {
+    background-color: rgba(0,0,0,.15);
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: 300ms all ease;
+}
+    
+    header > div#logo > div#navToggle:hover {
+        background-color: rgba(0,0,0,.1);
+    }
+    
+    header > div#logo > div#navToggle > a {
+        color: rgba(255,255,255,.85);
+        display: block;
+        font-size: 0.85em;
+        font-weight: 600;
+        padding: 0 2.5rem;
+        text-decoration: none;
+        transition: 300ms all ease;
+    }
+    
+        header > div#logo > div#navToggle:hover > a {
+            color: rgba(255,255,255,1);
+        }
+        
+        /* Medium screens */
+@media all and (min-width: 600px) {
+/*Code goes here*/
+}
+
+header > div#logo > div#navToggle {
+   display: none;    
+}
+
+header nav > ul > li > a span.toggle {
+    display: none;    
+}
+
+header nav > ul > li > a span.caret {
+    border-bottom: 4px solid transparent;
+    border-top: 4px solid rgba(0,0,0,.65);
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    border-radius: 1px;
+    content: "";
+    display: inline-block;
+    height: 0;
+    margin: 0 0 0 .25rem;
+    transition: 250ms all ease;
+    width: 0;
+    vertical-align: middle;
+}
+
+    header nav > ul > li:hover > a span.caret {
+        border-top-color: rgb(140, 193, 193);
+        transform: rotate(270deg); 
+    }
+    
+    header > nav {
+    background-color: transparent;
+    display: block;
+}
+
+    header > nav > ul {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-end;    
+    }
+    
+        header nav > ul > li {
+            border-bottom: none;
+        }
+
+            header nav > ul > li > a {
+                padding: 0 1.25rem;
+            }
+            
+            header > nav > ul > li:hover > nav {
+    background-color: rgb(51,51,51);
+    border-radius: .25em;
+    box-shadow: 0 2px 8px rgba(0,0,0,.6);
+    display: block;
+    line-height: 3em;
+    right: -50%;
+    width: 196px;
+}

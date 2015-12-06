@@ -1,0 +1,55 @@
+/*------------------------------------*\
+    RESET
+\*------------------------------------*/
+
+*,
+*:after,
+*:before {
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-font-smoothing:antialiased;
+	font-smoothing:antialiased;
+	text-rendering:optimizeLegibility;
+}
+body {
+	font:400 13px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	background:#333;
+}
+
+/*------------------------------------*\
+    STRUCTURE
+\*------------------------------------*/
+
+.menu {
+	max-width:1280px;
+	margin:0 auto;
+}
+
+.content {
+	max-width:1280px;
+	width:95%;
+	margin:0 auto;
+	position:relative;
+	background-color: #D8D8D8;
+    border-radius:0 0 5px 5px;
+		-webkit-border-radius:0 0 5px 5px;
+		-moz-border-radius:0 0 5px 5px;
+}
+
+.content table{
+    margin:0 auto;
+	position:relative;
+    max-width: 1280px;
+    width: 95%;
+}
+.content table td{
+    text-align: center;
+}
+
+.content img{
+    max-width: 1280px;
+    width: 100%;
+}
