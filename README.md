@@ -1,2 +1,2 @@
 # swe
-it just a student project
+it's just a student project
