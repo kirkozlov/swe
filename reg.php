@@ -78,7 +78,7 @@
 				var p2=document.getElementById("p2").value;
 				var e=document.getElementById("em").value;
 				if(p1=="" || p2=="" ||e==""){
-					document.getElementById("ppt").innerHTML="Bitte fÃ¼lle alle Pflichtfelder";
+					document.getElementById("ppt").innerHTML="Bitte fülle alle Pflichtfelder";
 					PopUpShow();
 					return false;
 				}
