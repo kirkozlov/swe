@@ -3,23 +3,7 @@
 		header('Location: login.php');
 	$uid=$_SESSION['idu'];
 	include("includes/ConectionOpen.php");
-    $str1 = "SELECT id FROM offers WHERE userid='".$uid."'";
-    $res = $conn->query($str1);
-	while($row=$res->fetch_row()){
-		$interid[$row[0]]=$row[0];
-	}
-	if (isset($interid)) {
-		foreach ($interid as $key => $value) {
-			$str1 = "SELECT maintext, price, amount, mainimage FROM offers WHERE id='".$value."'";
-			$res = $conn->query($str1);
-			if($row=$res->fetch_row()) {	
-				$interText[$key]=$row[0];	
-				$interPrice[$key] = $row[1];	
-				$interAmount[$key] = $row[2];	
-			}
-		}
-	}
-	if(isset($_POST['delete'])){
+		if(isset($_POST['delete'])){
 		$id = "";
 		$id = $id.$_POST["delete"];
 		$query = "";
@@ -40,6 +24,23 @@
 		echo $query;
 		$res = $conn->query($query);
 	}
+    $str1 = "SELECT id FROM offers WHERE userid='".$uid."'";
+    $res = $conn->query($str1);
+	while($row=$res->fetch_row()){
+		$interid[$row[0]]=$row[0];
+	}
+	if (isset($interid)) {
+		foreach ($interid as $key => $value) {
+			$str1 = "SELECT maintext, price, amount, mainimage FROM offers WHERE id='".$value."'";
+			$res = $conn->query($str1);
+			if($row=$res->fetch_row()) {	
+				$interText[$key]=$row[0];	
+				$interPrice[$key] = $row[1];	
+				$interAmount[$key] = $row[2];	
+			}
+		}
+	}
+
 	
     $conn->close();?>
 <html>
