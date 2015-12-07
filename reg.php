@@ -1,5 +1,6 @@
 <?php 
 	session_start();
+
 	if(isset($_SESSION['login'])&&$_SESSION['login']==true)
 		header('Location: index.php');
 	$e="";
@@ -11,7 +12,7 @@
 		$e=$_POST['email'];
 		$p=$_POST['password'];
 		$pw=$_POST['passwordw'];
-		if(filter_var($e, FILTER_VALIDATE_EMAIL)||true)//true weg machen für reliase
+		if(filter_var($e, FILTER_VALIDATE_EMAIL)||true)//true weg machen fÃ¼r reliase
 		{
 			$str1="SELECT * from users WHERE email='".$e."'";
 			include ('includes/ConectionOpen.php');
@@ -77,7 +78,7 @@
 				var p2=document.getElementById("p2").value;
 				var e=document.getElementById("em").value;
 				if(p1=="" || p2=="" ||e==""){
-					document.getElementById("ppt").innerHTML="Bitte fülle alle Pflichtfelder";
+					document.getElementById("ppt").innerHTML="Bitte fÃ¼lle alle Pflichtfelder";
 					PopUpShow();
 					return false;
 				}

@@ -9,7 +9,8 @@
 	$pw="";
 	$stree="";
 	$strep="";
-	$error=0;
+	$error=0; 
+	$streo = "";
 	include ('includes/ConectionOpen.php');
 	if(isset($_POST['activ'])){
 		$o=$_POST['oldpass'];
