@@ -58,10 +58,10 @@
         ?>
         <div class="main">
             <div class="content">
+				<form action="additem.php"> <input type="submit" value="Anzeige hinzufügen"></form>
                 <?php
                 	if (isset($interText) && isset($interPrice) && isset($interAmount)) {
                 		echo '<table>';
-                		echo '<tr><td colspan="3"><form action="additem.php"> <input type="submit" value="Anzeige hinzufügen"></form></td></tr>';
                 		echo '<tr><td>Bild</td><td>Beschreibung</td><td></td>';
                 		foreach ($interText as $key => $value) {
                 			echo '<tr>';
