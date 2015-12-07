@@ -1,4 +1,7 @@
-<?php session_start(); if(!$_SESSION['login']==true) header("Location: index.php");
+<?php session_start(); 
+	if(!$_SESSION['login']==true) {
+		header("Location: index.php");
+	}
 
     if(isset($_POST['save'])){
         $counter = $_GET['c'];

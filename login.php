@@ -51,7 +51,7 @@
 			<tr><td>E-Mail:</td><td><input type="text" name="email" value=<?php echo "'".$e."'" ?>/></td></tr>
 			<tr><td>Passwort:</td><td><input type="password" name="password"value=<?php echo "'".$p."'" ?>/></td></tr>
 			<tr><td colspan="2"><?php echo $stre ?> </td><tr>
-			<tr><td colspan="2"><input type="submit" name="activ"value="Einloggen"/></td></tr>
+			<tr><td colspan="2"><input type="submit" name="activ" value="Einloggen"/></td></tr>
 			<tr><td colspan="2"><a href="reg.php">Registrieren</a></td></tr>
 		</table>
 		</form>
