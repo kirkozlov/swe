@@ -14,8 +14,8 @@
 			$res = $conn->query($str1);
 			if($row=$res->fetch_row()) {	
 				$interText[$key]=$row[0];	
-				//$interPrice[$key] = $row[1];	
-				//$interAmount[$key] = $row[2];	
+				$interPrice[$key] = $row[1];	
+				$interAmount[$key] = $row[2];	
 			}
 		}
 	}
@@ -29,7 +29,14 @@
 				  INNER JOIN  detailedtexts as t2 on t1.id = t2.offersid
 				  INNER JOIN  images as t3 on t1.id=t3.offersid
 				  WHERE  t1.id = ".$id.";"; */
-		$query = $query."DELETE FROM offers WHERE id =".$id.";DELETE FROM detailedtexts WHERE offersid=".$id.";DELETE FROM images WHERE offersid=".$id.";";
+				  
+		$query = "DELETE FROM detailedtexts WHERE offersid='".$id."'";
+		echo $query;
+		$res = $conn->query($query);
+		$query = "DELETE FROM images WHERE offersid='".$id."';";
+		echo $query;
+		$res = $conn->query($query);
+		$query = "DELETE FROM offers WHERE id ='".$id."'";
 		echo $query;
 		$res = $conn->query($query);
 	}
