@@ -58,26 +58,31 @@
         ?>
         <div class="main">
             <div class="content">
-				<form action="additem.php"> <input type="submit" value="Anzeige hinzufügen"></form>
-                <?php
-                	if (isset($interText) && isset($interPrice) && isset($interAmount)) {
-                		echo '<table>';
-                		echo '<tr><td>Bild</td><td>Beschreibung</td><td></td>';
-                		foreach ($interText as $key => $value) {
-                			echo '<tr>';
-                			echo '<td>PLATZHALTER</td>';
-                			echo '<td>'.$value.'</td>';
-                			echo '<td>
-                					<form id="delete" action="" method="post" enctype="multipart/form-data" >
-		            					<button value="'.$interid[$key].'" name="delete"/>Löschen</button>
-		            				</form>
-		            			</td>';
-                			echo '</tr>';
-                		}
-						echo '</table>';
-						echo '</form>';
-                	}             
-                 ?>
+				<table>
+					<tr>
+						<td colspan="3">
+							<form action="additem.php"> 
+								<input type="submit" value="Anzeige hinzufügen">
+							</form>
+						</td>
+					</tr>
+					<?php
+						if (isset($interText) && isset($interPrice) && isset($interAmount)) {
+							echo '<tr><td>Bild</td><td>Beschreibung</td></tr>';
+							foreach ($interText as $key => $value) {
+								echo '<tr>';
+								echo '<td>PLATZHALTER</td>';
+								echo '<td>'.$value.'</td>';
+								echo '<td>
+										<form id="delete" action="" method="post" enctype="multipart/form-data" >
+											<button value="'.$interid[$key].'" name="delete"/>Löschen</button>
+										</form>
+									</td>';
+								echo '</tr>';
+							}
+						}             
+					 ?>
+				</table>
             </div>
         </div>
     </body>
