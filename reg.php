@@ -1,7 +1,7 @@
 <?php 
 	session_start();
 
-	if(isset($_SESSION['login'])&&$_SESSION['login']==true)
+	if(isset($_SESSION['login'])&& $_SESSION['login']==true)
 		header('Location: index.php');
 	$e="";
 	$p="";
@@ -12,7 +12,7 @@
 		$e=$_POST['email'];
 		$p=$_POST['password'];
 		$pw=$_POST['passwordw'];
-		if(filter_var($e, FILTER_VALIDATE_EMAIL)||true)//true weg machen fÃ¼r reliase
+		if(filter_var($e, FILTER_VALIDATE_EMAIL)||true)//true weg machen für release
 		{
 			$str1="SELECT * from users WHERE email='".$e."'";
 			include ('includes/ConectionOpen.php');
@@ -20,7 +20,7 @@
 			if($res->fetch_row())
 			{
 				$error=1;
-				$erroremail="Emeil Vorhanden";
+				$erroremail="E-Mail-Adresse wird bereits verwendet";
 			}
 			else
 			{
@@ -36,7 +36,7 @@
 		else
 		{
 			$error=1;
-			$erroremail="Das Format des Email ist fehlgeschaft";
+			$erroremail="ungültige E-Mail-Adresse";
 		}
 	}
 		
@@ -78,12 +78,12 @@
 				var p2=document.getElementById("p2").value;
 				var e=document.getElementById("em").value;
 				if(p1=="" || p2=="" ||e==""){
-					document.getElementById("ppt").innerHTML="Bitte fÃ¼lle alle Pflichtfelder";
+					document.getElementById("ppt").innerHTML="Bitte alle Pflichtfelder ausfüllen";
 					PopUpShow();
 					return false;
 				}
 				if(p1!=p2){
-					document.getElementById("ppt").innerHTML="Die beiden Passwort-Felder stimmen nicht zu";
+					document.getElementById("ppt").innerHTML="Passwörter sind nicht identisch";
 					PopUpShow();
 					return false;
 				}

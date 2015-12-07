@@ -3,10 +3,10 @@
 		header('Location: login.php');
 	$uid=$_SESSION['idu'];
 	include("includes/ConectionOpen.php");
-    $str1 = "SELECT id,offersid FROM interests WHERE userid='".$uid."'";
+    $str1 = "SELECT id FROM offers WHERE userid='".$uid."'";
     $res = $conn->query($str1);
 	while($row=$res->fetch_row()){
-		$interid[$row[0]]=$row[1];
+		$interid[$row[0]]=$row[0];
 	}
 	if (isset($interid)) {
 		foreach ($interid as $key => $value) {
@@ -16,7 +16,7 @@
 				$interText[$key]=$row[0];	
 				$interPrice[$key] = $row[1];	
 				$interAmount[$key] = $row[2];	
-				//$interImage[$key] = $row[3];		//so nicht!					
+				//$interImage[$key] = $row[3];		//so nicht!	
 			}
 		}
 	}
@@ -48,7 +48,7 @@
                 			echo '</tr>';
                 		}
 						echo '</table>';
-                	}              
+                	}             
                  ?>
             </div>
         </div>

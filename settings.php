@@ -99,9 +99,10 @@
             include("includes/menu.php");
         ?>  
 	<div	class="main">		
-	<div class="content">	
-		<input id="elem" type="range" min="0" max="100" step="5" value=<?php echo $km ?> onSlide="vach()" onChange="vach()" />
-        <div id="te" ><?php echo $km ?> </div>
+	<div class="content">
+		<table>
+			<tr><td>Umkreis:</td><td><input id="elem" type="range" min="0" max="100" step="5" value=<?php echo $km ?> onSlide="vach()" onChange="vach()" /><div id="te" ><?php echo $km ?></div></td></tr>
+        
 	</div>
 	</div>
 	<br/>
@@ -114,7 +115,7 @@
 			<tr><td>Neues Passwort:</td><td><input type="password" name="password"value=<?php echo "'".$p."'" ?>/></td></tr>
 			<tr><td>Wiederholung:</td><td><input type="password" name="passwordw"value=<?php echo "'".$pw."'" ?>/></td></tr>
 			<tr><td colspan="2"><?php echo $strep ?> </td><tr>
-			<tr><td colspan="2"><input type="submit" name="activ"value="Go"/></td></tr>
+			<tr><td colspan="2"><input type="submit" name="activ"value="Speichern"/></td></tr>
 		</table>
 		</form>
     </div>
@@ -123,12 +124,11 @@
 	<div	class="main">		
 	<div class="content">
 		
-		<button id="openlist"onclick="filadd()">Add new</button>
+		<button id="openlist"onclick="filadd()">Kategorie hinzufügen</button>
 		<?php
 		if(isset($_SESSION['filter'])){
 			foreach ($_SESSION['filter'] as $key => $value)
-			{
-			 
+			{		 
 				{
 					echo '<form action ="settings.php" method="post">
 						<input type="text" hidden="true" visibility="collapse " name="kf" value="'.$key.'">
