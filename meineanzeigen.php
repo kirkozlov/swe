@@ -14,12 +14,26 @@
 			$res = $conn->query($str1);
 			if($row=$res->fetch_row()) {	
 				$interText[$key]=$row[0];	
-				$interPrice[$key] = $row[1];	
-				$interAmount[$key] = $row[2];	
-				//$interImage[$key] = $row[3];		//so nicht!	
+				//$interPrice[$key] = $row[1];	
+				//$interAmount[$key] = $row[2];	
 			}
 		}
 	}
+	if(isset($_POST['delete'])){
+		$id = "";
+		$id = $id.$_POST["delete"];
+		$query = "";
+		//$query = $query."DELETE FROM offers WHERE id=".$id."";
+		/*$query = "DELETE t1, t2, t3 FROM 
+				  offers as t1 
+				  INNER JOIN  detailedtexts as t2 on t1.id = t2.offersid
+				  INNER JOIN  images as t3 on t1.id=t3.offersid
+				  WHERE  t1.id = ".$id.";"; */
+		$query = $query."DELETE FROM offers WHERE id =".$id.";DELETE FROM detailedtexts WHERE offersid=".$id.";DELETE FROM images WHERE offersid=".$id.";";
+		echo $query;
+		$res = $conn->query($query);
+	}
+	
     $conn->close();?>
 <html>
     <head>
@@ -27,6 +41,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
+
     </head>
     <body>
         <?php 
@@ -38,16 +53,21 @@
                 <?php
                 	if (isset($interText) && isset($interPrice) && isset($interAmount)) {
                 		echo '<table>';
-                		echo '<tr><td>Beschreibung</td><td>Bild</td><td>Preis</td><td>Anzahl</td></tr>';
+                		echo '<tr><td>ID</td><td>Bild</td><td>Beschreibung</td><td></td>';
                 		foreach ($interText as $key => $value) {
                 			echo '<tr>';
-                			echo '<td>'.$value.'</td>';
+                			echo '<td>'.$interid[$key].'</td>';
                 			echo '<td>PLATZHALTER</td>';
-                			echo '<td>'.$interPrice[$key].'€</td>';
-                			echo '<td>'.$interAmount[$key].'</td>';
+                			echo '<td>'.$value.'</td>';
+                			echo '<td>
+                					<form id="delete" action="" method="post" enctype="multipart/form-data" >
+		            					<button value="'.$interid[$key].'" name="delete"/>Löschen</button>
+		            				</form>
+		            			</td>';
                 			echo '</tr>';
                 		}
 						echo '</table>';
+						echo '</form>';
                 	}             
                  ?>
             </div>
