@@ -15,13 +15,13 @@
 				  WHERE  t1.id = ".$id.";"; */
 				  
 		$query = "DELETE FROM detailedtexts WHERE offersid='".$id."'";
-		echo $query;
+		//echo $query;
 		$res = $conn->query($query);
 		$query = "DELETE FROM images WHERE offersid='".$id."';";
-		echo $query;
+		//echo $query;
 		$res = $conn->query($query);
 		$query = "DELETE FROM offers WHERE id ='".$id."'";
-		echo $query;
+		//echo $query;
 		$res = $conn->query($query);
 	}
     $str1 = "SELECT id FROM offers WHERE userid='".$uid."'";
@@ -61,10 +61,10 @@
                 <?php
                 	if (isset($interText) && isset($interPrice) && isset($interAmount)) {
                 		echo '<table>';
-                		echo '<tr><td>ID</td><td>Bild</td><td>Beschreibung</td><td></td>';
+                		echo '<tr><td colspan="3"><form action="additem.php"> <input type="submit" value="Anzeige hinzufügen"></form></td></tr>';
+                		echo '<tr><td>Bild</td><td>Beschreibung</td><td></td>';
                 		foreach ($interText as $key => $value) {
                 			echo '<tr>';
-                			echo '<td>'.$interid[$key].'</td>';
                 			echo '<td>PLATZHALTER</td>';
                 			echo '<td>'.$value.'</td>';
                 			echo '<td>

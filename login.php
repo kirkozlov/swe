@@ -23,7 +23,7 @@
 		}
 		else
 		{
-			$stre="email oder pass falsh";
+			$stre="E-Mail-Adresse oder Passwort falsch";
 		}
 		
 		
@@ -58,7 +58,6 @@
 		</div>
     </div>
 		
-
     </body>
 </html>
 

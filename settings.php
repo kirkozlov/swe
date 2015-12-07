@@ -143,7 +143,8 @@
 	</div>
 	<div id="newfiladd" class="listforfilteradd" <?php echo 'style="display: '.$liststyle.';"' ?> >
 		<?php
-		foreach ($filtr as $key => $value)
+		if (isset($filtr)) {
+			foreach ($filtr as $key => $value)
 			{
 				if(!isset($_SESSION['filter'][$key]))
 				{
@@ -154,6 +155,7 @@
 					</form>';
 				}
 			}
+		}
 		?>
 	</div>
     </body>

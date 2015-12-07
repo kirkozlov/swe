@@ -120,7 +120,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `adminflag`, `goldflag`) VALUES
-(1, 'p', 'p', 0, 0),
+(1, 'p', 'p', 1, 0),
 (2, 'wwww', 'w', 0, 0);
 
 --
