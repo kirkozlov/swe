@@ -53,3 +53,8 @@ body {
     max-width: 1280px;
     width: 100%;
 }
+
+.thumb {
+	max-width: 300px;
+	max-height: 300px;
+}

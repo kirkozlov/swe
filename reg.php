@@ -100,13 +100,16 @@
 		<div	class="main">		
 			<div class="content">
 				<form action ="reg.php" method="post">
-				<table>
-					<tr><td>E-Mail:</td><td><input id="em" type="text" name="email" value=<?php echo "'".$e."'" ?>/></td></tr>
-					
-					<tr><td>Passwort:</td><td><input id="p1"type="password" name="password"value=<?php echo "'".$p."'" ?>/></td></tr>
-					
-					<tr><td>Wiederholung:</td><td><input id="p2"type="password" name="passwordw"value=<?php echo "'".$pw."'" ?>/></td></tr>
-					
+				<table style=" margin:0 auto;
+									position:relative;
+									max-width: 280px;
+									width: 95%;">
+					<tr><td >E-Mail:</td></tr>
+					<tr><td><input id="em" type="text" name="email" value=<?php echo "'".$e."'" ?>/></td></td>
+					<tr><td>Passwort:</td></tr>
+					<tr><td><input id="p1"type="password" name="password"value=<?php echo "'".$p."'" ?>/></td></td>
+					<tr><td>Wiederholung:</td></tr>
+					<tr><td><input id="p2"type="password" name="passwordw"value=<?php echo "'".$pw."'" ?>/></td>
 					<tr><td colspan="2"><input type="submit" name="activ"value="Registrieren" onclick="return clickbutton(this)"/></td></tr>
 				</table>
 				</form>

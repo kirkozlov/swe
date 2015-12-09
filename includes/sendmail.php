@@ -1,10 +1,10 @@
 <?php
-require_once "Mail.php";
 
+require_once "Mail.php";
+function sendmail($to,$mess){
 $from = '<fhswege3@gmail.com>';
-$to = '<kirill.kozlov.fhaachen@gmail.com>';
 $subject = 'Hi!';
-$body = "Hi,\n\nHow are you?";
+$body = $mess;
 
 $headers = array(
     'From' => $from,
@@ -25,6 +25,7 @@ $mail = $smtp->send($to, $headers, $body);
 if (PEAR::isError($mail)) {
     echo('<p>' . $mail->getMessage() . '</p>');
 } else {
-    echo('<p>Message successfully sent!</p>');
+ //   echo('<p>Message successfully sent!</p>');
+}
 }
 ?>

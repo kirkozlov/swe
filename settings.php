@@ -1,9 +1,10 @@
 <?php session_start();
 	if($_SESSION['login']!=true)
 		header('Location: login.php');
-	$km="";
+	if(!isset($_COOKIE['km'])){
+		$_COOKIE['km']=50;
+	}
 	$km=$_COOKIE['km'];
-	if($km=="") $km=50;
 	$o="";
 	$p="";
 	$pw="";
@@ -91,7 +92,9 @@
                 }
 				
 			}
-			
+			function delete_cookie(name) {
+			document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+			};
 		</script>
     </head>
     <body>
@@ -100,20 +103,28 @@
         ?>  
 	<div	class="main">		
 	<div class="content">
-		<table>
+		<table style=" margin:0 auto;
+									position:relative;
+									max-width: 280px;
+									width: 95%;">
 			<tr><td>Umkreis:</td><td><input id="elem" type="range" min="0" max="100" step="5" value=<?php echo $km ?> onSlide="vach()" onChange="vach()" /><div id="te" ><?php echo $km ?></div></td></tr>
-        
+        </table>
 	</div>
 	</div>
 	<br/>
 	<div	class="main">		
 	<div class="content">
 		<form action ="settings.php" method="post">
-		<table>
-			<tr><td>Altes Passwort:</td><td><input type="password" name="oldpass" value=<?php echo "'".$o."'" ?>/></td></tr>
-			<tr><td colspan="2"><?php echo $streo ?> </td><tr>
-			<tr><td>Neues Passwort:</td><td><input type="password" name="password"value=<?php echo "'".$p."'" ?>/></td></tr>
-			<tr><td>Wiederholung:</td><td><input type="password" name="passwordw"value=<?php echo "'".$pw."'" ?>/></td></tr>
+		<table style=" margin:0 auto;
+									position:relative;
+									max-width: 280px;
+									width: 95%;">
+			<tr><td>Altes Passwort:</td></tr>
+			<tr><td><input type="password" name="oldpass" value=<?php echo "'".$o."'" ?>/></td></tr>
+			<tr><td>Neues Passwort:</td></tr>
+			<tr><td><input type="password" name="password"value=<?php echo "'".$p."'" ?>/></td></tr>
+			<tr><td>Wiederholung:</td></tr>
+			<tr><td><input type="password" name="passwordw"value=<?php echo "'".$pw."'" ?>/></td></tr>
 			<tr><td colspan="2"><?php echo $strep ?> </td><tr>
 			<tr><td colspan="2"><input type="submit" name="activ"value="Speichern"/></td></tr>
 		</table>
