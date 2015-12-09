@@ -1,9 +1,10 @@
 <?php session_start();
 	if($_SESSION['login']!=true)
 		header('Location: login.php');
-	$km="";
+	if(!isset($_COOKIE['km'])){
+		$_COOKIE['km']=50;
+	}
 	$km=$_COOKIE['km'];
-	if($km=="") $km=50;
 	$o="";
 	$p="";
 	$pw="";
