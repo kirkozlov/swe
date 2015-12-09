@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 4.5.1
 -- http://www.phpmyadmin.net
 --
@@ -119,9 +119,7 @@ CREATE TABLE `users` (
 -- Daten für Tabelle `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `adminflag`, `goldflag`) VALUES
-(1, 'p', 'p', 1, 0),
-(2, 'wwww', 'w', 0, 0);
+
 
 --
 -- Indizes der exportierten Tabellen
