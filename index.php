@@ -43,13 +43,15 @@ include("includes/ConectionOpen.php");
                     
                     echo '<table >
                             <tr>
+                                <td colspan=2><img style="max-width: 600px; max-height: 600px;" src="data:image/jpeg;base64,'.base64_encode( $result['mainimage'] ).'"/></td>
+                            </tr>
+                            <tr>
                                 <td colspan=2>'.$result['maintext'].'</td>
                             </tr>
                             <tr>
-                                <td colspan=2><img style="max-width: 600px; max-height: 600px;" src="data:image/jpeg;base64,'.base64_encode( $result['mainimage'] ).'"/></td>
-                            </tr>
                             	<td><button value="" name="yes"/>♥</button></td>
-                            	<td><button value="" name="no"/>X</button></td>
+                            	<td><button value="" name="no"/>✗</button></td>
+                            </tr>
                           </table>'; 
                  ?>
             </div>
