@@ -55,6 +55,41 @@
         <link rel="stylesheet" href="css/additem.css" type="text/css" />
         <script language="javascript" type="text/javascript">
             var counter = 0;
+			var imgTmp = "";
+			
+			function handleMainSelect(evt){
+					var files = evt.target.files; // FileList object
+
+                // Loop through the FileList and render image files as thumbnails.
+                for (var i = 0, f; f = files[i]; i++) {
+
+                  // Only process image files.
+                  if (!f.type.match('image.*')) {
+                    continue;
+                  }
+
+                  var reader = new FileReader();
+
+                  // Closure to capture the file information.
+                  reader.onload = (function(theFile) {
+                    return function(e) {
+                      // Render thumbnail.
+                      //var span = document.createElement('span');
+                      imgTmp.innerHTML = ['<img name="img" class="thumb" src="', e.target.result,
+                                        '" title="', escape(theFile.name), '" style="max-width: 300px; max-height:300px;" />'].join('');
+                      document.getElementById('mainOutput').insertBefore(span, null);
+                    };
+                  })(f);
+
+                  // Read in the image file as a data URL.
+                  reader.readAsDataURL(f);
+                }
+            }
+			
+			function getElement(elem){
+				elem.addEventListener('change', handleMainSelect, false);
+				imgTmp = document.getElementById('spanMain');
+			}
             
             function openFileDialog(elemId) {
                var elem = document.getElementById(elemId);
@@ -82,10 +117,6 @@
                 cell.setAttribute("colspan", 2);
                 return cell;
             }
-            function insertList(){
-                var cell = insertRow();
-
-            }
             function insertText(){
                 var cell = insertRow();
                 cell.innerHTML = "<textarea name=txt" + counter + "></textarea>";
@@ -111,7 +142,7 @@
                       // Render thumbnail.
                       var span = document.createElement('span');
                       span.innerHTML = ['<img name="img' + counter++ + '" class="thumb" src="', e.target.result,
-                                        '" title="', escape(theFile.name), '"/>'].join('');
+                                        '" title="', escape(theFile.name), '" style="max-width: 300px; max-height:300px;" />'].join('');
                       document.getElementById('imgOutput' + (counter - 1)).insertBefore(span, null);
                     };
                   })(f);
@@ -126,7 +157,7 @@
                 var id = "file" + counter;
 				cell.innerHTML = '';
 				cell.innerHTML = cell.innerHTML + '<output id="imgOutput' + counter + '" ></output>';
-                cell.innerHTML = cell.innerHTML + '<input  onchange="" type="file" id="'+ id +'" name="file' + counter + '" />';
+                cell.innerHTML = cell.innerHTML + '<input hidden="hidden" onchange="" type="file" id="'+ id +'" name="file' + counter + '" />';
                 document.getElementById(id).addEventListener('change', handleFileSelect, false);
                 openFileDialog(id);
                 
@@ -151,7 +182,8 @@
                             <tr><td>Beschreibung:</td><td><input type="text" name="mainTitle"/></td></tr>
                             <tr><td>Preis (in €):</td><td><input type="text" name="price" /></td></tr>
                             <tr><td>Anzahl:</td><td><input type="text" name="amount" /></td></tr>
-                            <tr><td>Titelbild:</td><td><input type="file" name="mainImage" /></td></tr>
+                            <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" name="mainImage" /></td></tr>
+							<tr><td colspan="2"><output id="mainOutput"><span id="spanMain"></span></output></td></tr>
                         </table>
                     </form>
                     <ul class="elementList" id="elementList" style="display: none;">
