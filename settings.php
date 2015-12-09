@@ -52,18 +52,7 @@
 	while($row=$res->fetch_row()){
 		$filtr[$row[0]]=$row[1];
 	}
-	$liststyle="none";
-	if(isset($_POST['add'])){
-		$liststyle="block";
-		$kf=$_POST['kf'];
-		$vf=$_POST['vf'];
-		$_SESSION['filter'][$kf]=$vf;
-	}
-	if(isset($_POST['del'])){
-		$kf=$_POST['kf'];
-		$vf=$_POST['vf'];
-		unset($_SESSION['filter'][$kf]);
-	}
+	
 	$conn->close();
 		
 ?>
@@ -73,15 +62,20 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
+		<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
 		<script type="text/javascript">
-			
+			$(document).ready(function(){
+			    updateinout();
+			});
 			function vach(){
 				var v=document.getElementById("elem").value;
 				document.getElementById("te").innerHTML = v;
 				document.cookie="km=" + v;
 			}
-			function filadd(){
+			function filadd(){//button
 				var list = document.getElementById("newfiladd");
+				var but=document.getElementById("openlist");
+				
                 if(list.style.display == "none"){
                     list.style.display = "block";
 					
@@ -90,11 +84,89 @@
                     list.style.display = "none";
 					
                 }
-				
+				setCookie("filter", "", {expires: -1});///////////////////////////////////////////////////////////////////////////
 			}
-			function delete_cookie(name) {
-			document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-			};
+			function updateinout(){
+				var fil=getCookie("filter");
+				if (fil == undefined){
+						fil=0;
+					}
+					for(i=1;i<=31;i++){
+						var liin = document.getElementById("liin"+i);
+						var liout = document.getElementById("liout"+i);
+						if(liin==undefined)break;
+						var com=fil&Math.pow(2,i-1);
+						if(com){
+							$("#liin"+i).hide();
+							$("#liout"+i).show();
+						}
+						else{
+							$("#liin"+i).show();
+							$("#liout"+i).hide();
+						}
+					}
+			}
+			function addfilter(key){
+				var fil=getCookie("filter");
+				if (fil == undefined){
+					fil=0;
+				}
+				fil=fil|Math.pow(2,key-1);
+				var options={};
+				options.expires=24;
+				setCookie("filter", fil,options);
+				
+				updateinout();
+			}
+			function deletefilter(key){
+				var fil=getCookie("filter");
+				if (fil == undefined){
+					fil=0;
+				}
+				fil=fil&(Math.pow(2,32)-1-Math.pow(2,key-1));
+				var options={};
+				options.expires=24;
+				setCookie("filter", fil,options);
+				
+				updateinout();
+			}
+			function deleteCookie(name) {
+				setCookie(name, "", {expires: -1});
+			}
+			function getCookie(name) {
+				var matches = document.cookie.match(new RegExp(
+					"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+					));
+				return matches ? decodeURIComponent(matches[1]) : undefined;
+			}
+			function setCookie(name, value, options) {
+			  options = options || {};
+
+			  var expires = options.expires;
+
+			  if (typeof expires == "number" && expires) {
+				var d = new Date();
+				d.setTime(d.getTime() + expires * 3600000);
+				expires = options.expires = d;
+			  }
+			  if (expires && expires.toUTCString) {
+				options.expires = expires.toUTCString();
+			  }
+
+			  value = encodeURIComponent(value);
+
+			  var updatedCookie = name + "=" + value;
+
+			  for (var propName in options) {
+				updatedCookie += "; " + propName;
+				var propValue = options[propName];
+				if (propValue !== true) {
+				  updatedCookie += "=" + propValue;
+				}
+			  }
+
+			  document.cookie = updatedCookie;
+}
 		</script>
     </head>
     <body>
@@ -136,38 +208,29 @@
 	<div class="content">
 		
 		<button id="openlist"onclick="filadd()">Kategorie hinzufügen</button>
-		<?php
-		if(isset($_SESSION['filter'])){
-			foreach ($_SESSION['filter'] as $key => $value)
-			{		 
-				{
-					echo '<form action ="settings.php" method="post">
-						<input type="text" hidden="true" visibility="collapse " name="kf" value="'.$key.'">
-						<input type="text" hidden="true" visibility="collapse " name="vf" value="'.$value.'">
-						<input type="submit" name="del"value="'.$value.' -"/>
-					</form>';
-				}
-			}
-		}
-		?>
-    </div>
-	</div>
-	<div id="newfiladd" class="listforfilteradd" <?php echo 'style="display: '.$liststyle.';"' ?> >
+		<ul>
 		<?php
 		if (isset($filtr)) {
 			foreach ($filtr as $key => $value)
 			{
-				if(!isset($_SESSION['filter'][$key]))
-				{
-				echo '<form action ="settings.php" method="post">
-						<input type="text" hidden="true" visibility="collapse" name="kf" value="'.$key.'">
-						<input type="text" hidden="true" visibility="collapse" name="vf" value="'.$value.'">
-						<input type="submit" name="add"value="'.$value.' +"/>
-					</form>';
-				}
+				echo '<li id="liout'.$key.'" style="display: none;"> <a href="javascript:deletefilter('.$key.')">'.$value.' </a> </li>';
 			}
 		}
 		?>
+		</ul>
+    </div>
+	</div>
+	<div id="newfiladd" class="listforfilteradd" style='display: none;' >
+		<ul>
+		<?php
+		if (isset($filtr)) {
+			foreach ($filtr as $key => $value)
+			{
+				echo '<li id="liin'.$key.'" style="display: none;"> <a href="javascript:addfilter('.$key.')">'.$value.' </a> </li>';
+			}
+		}
+		?>
+		</ul>
 	</div>
     </body>
 </html>
