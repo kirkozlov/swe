@@ -22,7 +22,7 @@
         include("includes/ConectionOpen.php");
         $res = $conn->query($query);
         $offerID = $conn->insert_id;
-        $query = ""; var_dump($_FILES);
+        $query = "";// var_dump($_FILES);
         for($i = 1; $i <= $counter; $i++){
             if(isset($_FILES['files' . $i])){
                 $file = addslashes(file_get_contents($_FILES['file' . $i]['tmp_name']));
