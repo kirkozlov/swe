@@ -29,7 +29,8 @@
 			if($row=$res->fetch_row()) {	
 				$interText[$key]=$row[0];	
 				$interPrice[$key] = $row[1];	
-				$interAmount[$key] = $row[2];	
+				$interAmount[$key] = $row[2];
+				$interImage[$key] = $row[3];	
 			}
 		}
 	}
@@ -64,8 +65,13 @@
 							echo '<tr><td>Bild</td><td>Beschreibung</td></tr>';
 							foreach ($interText as $key => $value) {
 								echo '<tr>';
-								echo '<td>PLATZHALTER</td>';
+								echo '<td><img style="max-width: 300px; max-height: 300px;" src="data:image/jpeg;base64,'.base64_encode( $interImage[$key] ).'"/></td>';
 								echo '<td>'.$value.'</td>';
+								echo '<td>
+										<form id="edit" action="" method="post" enctype="multipart/form-data" >
+											<button value="'.$interid[$key].'" name="edit"/>Editieren</button>
+										</form>
+									</td>';
 								echo '<td>
 										<form id="delete" action="" method="post" enctype="multipart/form-data" >
 											<button value="'.$interid[$key].'" name="delete"/>Löschen</button>

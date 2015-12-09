@@ -1,11 +1,13 @@
 <?php session_start(); 
 include("includes/ConectionOpen.php");
-                    
-                    $sql = "SELECT maintext, mainimage FROM offers";
-                    $sth = $conn->query($sql);
-                    $result=mysqli_fetch_array($sth);
-                    
-                    $conn->close();?>
+                   
+    $sql = "SELECT id, maintext, mainimage FROM offers";
+    $sth = $conn->query($sql);
+    $result=mysqli_fetch_array($sth);
+    
+    $conn->close();
+    
+?>
 <html>
     <head>
         <meta charset="utf-8"/>
@@ -41,11 +43,13 @@ include("includes/ConectionOpen.php");
                     
                     echo '<table >
                             <tr>
-                                <td>'.$result['maintext'].'</td>
+                                <td colspan=2>'.$result['maintext'].'</td>
                             </tr>
                             <tr>
-                                <td><img src="data:image/jpeg;base64,'.base64_encode( $result['mainimage'] ).'"/></td>
+                                <td colspan=2><img style="max-width: 600px; max-height: 600px;" src="data:image/jpeg;base64,'.base64_encode( $result['mainimage'] ).'"/></td>
                             </tr>
+                            	<td><button value="" name="yes"/>♥</button></td>
+                            	<td><button value="" name="no"/>X</button></td>
                           </table>'; 
                  ?>
             </div>
