@@ -142,7 +142,7 @@
                 <div class="additem">
                     <form id="saveForm" action="" method="post" enctype="multipart/form-data" >
                         <table class="anzeige" id="anzeige">
-                            <tr><td colspan="2"><input type="submit" value="Speichern" name="save" onclick="sendCounter()" /></td></tr>
+                            <tr><td colspan="3"><input type="submit" value="Speichern" name="save" onclick="sendCounter()" /></td></tr>
                             <tr><td>Beschreibung:</td><td><input type="text" name="mainTitle"/></td></tr>
                             <tr><td>Preis (in €):</td><td><input type="text" name="price" /></td></tr>
                             <tr><td>Anzahl:</td><td><input type="text" name="amount" /></td></tr>
