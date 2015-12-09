@@ -1,8 +1,17 @@
 <?php
 	function passgeneric(){
-		return 2536;
+		$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		$count = mb_strlen($chars);
+		$length=8;
+		for ($i = 0, $result = ''; $i < $length; $i++) {
+			$index = rand(0, $count - 1);
+			$result .= mb_substr($chars, $index, 1);
+		}
+
+		return $result;
 	}
 	$errortextt="";
+	$sucsess=false;
 	if(isset($_GET['e'])){
 		$newpass=passgeneric();
 		$to=$_GET['e'];
@@ -10,7 +19,7 @@
 		include ('includes/ConectionOpen.php');
 		$res=$conn->query($str1);
 		if($res != FALSE && $row=$res->fetch_row()){
-			
+			$sucsess=true;
 			$errortext="Ihhre neuue pass ist gesendet";
 			include("includes/sendmail.php");
 			$str1="UPDATE `users`SET `password`='".$newpass."' WHERE id='".$row[0]."'";
@@ -42,9 +51,27 @@
                 <?php
                     
 					echo $errortext;
-                    
-                   
+                    if($sucsess){
+						echo '<form action ="login.php" method="post">
+								<table style=" margin:0 auto;
+									position:relative;
+									max-width: 280px;
+									width: 95%;">
+			
+									<tr><td colspan="2"><input id="email"style="max-width: 280px; width: 95%;" type="text" name="email" value="'.$to.'" hidden="true" visibility="collapse "/></td></tr>
+									<tr><td>Passwort:</td></tr>
+									<tr><td colspan="2"><input style="max-width: 280px; width: 95%;" type="password" name="password"/></td><tr>
+									<tr><td><input type="submit" name="activ" value="Einloggen"/></td></tr>
+								</table>
+							</form>';
+					
+					
+					}
+				
                  ?>
+				 <br/>
+				 <a href="index.php">Haupseite</a>
+                <a href="reg.php">Registrieren</a>
             </div>
         </div>
     </body>
