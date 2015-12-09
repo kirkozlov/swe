@@ -6,17 +6,17 @@
 		$id = "";
 		$id = $id.$_POST["delete"];
 		$query = "";				  
-		$query = "DELETE FROM users WHERE id='".$id."'";
-		echo $query;
+		$query = "DELETE FROM offers WHERE id='".$id."'";
+		//echo $query;
 		$res = $conn->query($query);
 	}
-    $str1 = "SELECT id,email FROM users" ;
+    $str1 = "SELECT id,maintext FROM offers" ;
     $res = $conn->query($str1);
 	while($row=$res->fetch_row()){
-		$user[$row[0]] = $row[1];
-	}	
-    $conn->close();
- ?>
+		$offers[$row[0]] = $row[1];
+	}
+	
+    $conn->close();?>
 <html>
     <head>
         <meta charset="utf-8"/>
@@ -34,9 +34,9 @@
             <div class="content">
 				<table>
 					<?php
-						if (isset($user)) {
-							echo '<tr><td>Benutzer</td><td></td></tr>';
-							foreach ($user as $key => $value) {
+						if (isset($offers)) {
+							echo '<tr><td>Anzeige</td><td></td></tr>';
+							foreach ($offers as $key => $value) {
 								echo '<tr>';
 								echo '<td>'.$value.'</td>';
 								echo '<td>

@@ -10,7 +10,8 @@
 					<?php
 						if(isset($_SESSION['admin']) && $_SESSION['admin'] == "1")
 						{
-							echo '<li class="nav-item"><a href="useradmin.php">Adminbereich</a></li>';
+							echo '<li class="nav-item"><a href="useradmin.php">Benutzerverwaltung</a></li>';
+							echo '<li class="nav-item"><a href="anzeigenverwaltungadmin.php">Anzeigenverwaltung</a></li>';
 						}
 						if(isset($_SESSION['login']) && $_SESSION['login'] == true)
 						{

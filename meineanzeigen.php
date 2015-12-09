@@ -3,17 +3,10 @@
 		header('Location: login.php');
 	$uid=$_SESSION['idu'];
 	include("includes/ConectionOpen.php");
-		if(isset($_POST['delete'])){
+	if(isset($_POST['delete'])) {
 		$id = "";
 		$id = $id.$_POST["delete"];
-		$query = "";
-		//$query = $query."DELETE FROM offers WHERE id=".$id."";
-		/*$query = "DELETE t1, t2, t3 FROM 
-				  offers as t1 
-				  INNER JOIN  detailedtexts as t2 on t1.id = t2.offersid
-				  INNER JOIN  images as t3 on t1.id=t3.offersid
-				  WHERE  t1.id = ".$id.";"; */
-				  
+		$query = "";	  
 		$query = "DELETE FROM detailedtexts WHERE offersid='".$id."'";
 		//echo $query;
 		$res = $conn->query($query);
