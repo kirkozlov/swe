@@ -56,7 +56,7 @@
 					<tr>
 						<td colspan="3">
 							<form action="additem.php"> 
-								<input type="submit" value="Anzeige hinzufügen">
+								<input type="submit" value="Anzeige erstellen">
 							</form>
 						</td>
 					</tr>
