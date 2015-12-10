@@ -76,8 +76,8 @@
                       // Render thumbnail.
                       //var span = document.createElement('span');
                       imgTmp.innerHTML = ['<img name="img" class="thumb" src="', e.target.result,
-                                        '" title="', escape(theFile.name), '" style="max-width: 300px; max-height:300px;" />'].join('');
-                      document.getElementById('mainOutput').insertBefore(span, null);
+                                        '" title="', escape(theFile.name), '" style="max-width: 600px; max-height: 600px; width: auto; height: auto;" />'].join('');
+                      document.getElementById('mainOutput').insertBefore(imgTmp, null);
                     };
                   })(f);
 
@@ -109,9 +109,62 @@
                     list.style.display = "none";
                 }
             }
+			
+			function deleteElement(elem){
+				var row = elem.parentNode.parentNode;
+//				alert(row);
+				row.parentNode.removeChild(row);
+				return false;
+			}
+			
+			function elementUp(elem){
+				var row = elem.parentNode.parentNode;
+				var table = row.parentNode.parentNode;//document.getElementById("anzeige");
+				//alert(table);
+				var currentRow = 6;
+				var tmp = 0;
+				for(i = 7; r = table.rows[i]; i++ ){
+					//alert(r);
+					if(r == row){ tmp = i; break;}
+					currentRow = i;
+				}
+				//alert(table.rows[currentRow]);
+				if((currentRow + 1) > 6 && tmp > 0){
+					//alert(table.rows[currentRow].innerHTML);
+					var tmp = table.rows[currentRow].innerHTML;
+					table.rows[currentRow].innerHTML = row.innerHTML;
+					table.rows[currentRow + 1].innerHTML = tmp;
+				}
+				
+				return false;
+			}
+			
+			function elementDown(elem){
+				var row = elem.parentNode.parentNode;
+				var table = row.parentNode.parentNode;//document.getElementById("anzeige");
+				//alert(table);
+				var currentRow = table.rows.length;
+				var tmp = 0;
+				for(i = table.rows.length - 1; r = table.rows[i]; i-- ){
+					//alert(r);
+					if(r == row){ tmp = i; break;}
+					currentRow = i;
+				}
+				//alert(table.rows[currentRow]);
+				if((currentRow) > 6 && tmp < table.rows.length - 1){
+					//alert(table.rows[currentRow].innerHTML);
+					var tmp = table.rows[currentRow].innerHTML;
+					table.rows[currentRow].innerHTML = row.innerHTML;
+					table.rows[currentRow - 1].innerHTML = tmp;
+				}
+				
+				return false;
+			}
+			
             function insertRow(){
                 var table = document.getElementById("anzeige");
                 var row = table.insertRow(-1);
+				row.setAttribute("id", counter)
                 var cell = row.insertCell(-1);
                 cell.setAttribute("id", counter++);
                 cell.setAttribute("colspan", 2);
@@ -119,8 +172,11 @@
             }
             function insertText(){
                 var cell = insertRow();
-                cell.innerHTML = "<textarea name=txt" + counter + "></textarea>";
-
+				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return deleteElement(this)" value="del" />';
+                cell.innerHTML = cell.innerHTML + "<textarea name='txt" + counter + "'></textarea>";
+				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementUp(this)" value="up" />';
+				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementDown(this)" value="down" />';
+				return false;
             }
             
             function handleFileSelect(evt) {
@@ -142,7 +198,7 @@
                       // Render thumbnail.
                       var span = document.createElement('span');
                       span.innerHTML = ['<img name="img' + counter++ + '" class="thumb" src="', e.target.result,
-                                        '" title="', escape(theFile.name), '" style="max-width: 300px; max-height:300px;" />'].join('');
+                                        '" title="', escape(theFile.name), '" style="max-width: 300px; max-height: 300px; width: auto; height: auto;" />'].join('');
                       document.getElementById('imgOutput' + (counter - 1)).insertBefore(span, null);
                     };
                   })(f);
@@ -156,10 +212,14 @@
                 var cell = insertRow();
                 var id = "file" + counter;
 				cell.innerHTML = '';
+				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return deleteElement(this)" value="del" />';
 				cell.innerHTML = cell.innerHTML + '<output id="imgOutput' + counter + '" ></output>';
                 cell.innerHTML = cell.innerHTML + '<input hidden="hidden" onchange="" type="file" id="'+ id +'" name="file' + counter + '" />';
+				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementUp(this)" value="up" />';
+				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementDown(this)" value="down" />';
                 document.getElementById(id).addEventListener('change', handleFileSelect, false);
                 openFileDialog(id);
+				
                 
                 //cell.innerHTML = cell.innerHTML + '<img src="' + document.getElementById(id). + '" />';
             }
