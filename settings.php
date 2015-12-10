@@ -197,7 +197,6 @@
 			<tr><td><input type="password" name="password"value=<?php echo "'".$p."'" ?>/></td></tr>
 			<tr><td>Wiederholung:</td></tr>
 			<tr><td><input type="password" name="passwordw"value=<?php echo "'".$pw."'" ?>/></td></tr>
-			<tr><td colspan="2"><?php echo $strep ?> </td><tr>
 			<tr><td colspan="2"><input type="submit" name="activ"value="Speichern"/></td></tr>
 		</table>
 		</form>
