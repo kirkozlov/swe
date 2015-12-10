@@ -1,9 +1,24 @@
 <?php session_start(); 
-include("includes/ConectionOpen.php");
-                   
-    $sql = "SELECT id, maintext, mainimage FROM offers";
+	include("includes/ConectionOpen.php");
+    $counter = 0;         
+          
+	if(isset($_POST['next'])) {
+		$query = "SELECT COUNT(*) AS NumberOfOffers FROM offers;";
+		$res = $conn->query($query);
+		$numberofoffers = mysqli_fetch_array($res);
+		$counter = ($_POST["next"] + 1) % $numberofoffers[0];
+	}
+    $sql = "SELECT id, maintext, price, mainimage FROM offers";
     $sth = $conn->query($sql);
-    $result=mysqli_fetch_array($sth);
+    $tmp = 0;
+	while($row=$sth->fetch_row()){
+		$id[$tmp] = $row[0];
+		$interMaintext[$row[0]] = $row[1];	
+		$interPrice[$row[0]] = $row[2];	
+		$interImage[$row[0]] = $row[3];	
+		$tmp++;
+	}
+    //$result=mysqli_fetch_array($sth);
     
     $conn->close();
     
@@ -43,14 +58,18 @@ include("includes/ConectionOpen.php");
                     
                     echo '<table >
                             <tr>
-                                <td colspan=2><img style="max-width: 600px; max-height: 600px;" src="data:image/jpeg;base64,'.base64_encode( $result['mainimage'] ).'"/></td>
+                                <td colspan=2><img style="max-width: 600px; max-height: 600px;" src="data:image/jpeg;base64,'.base64_encode( $interImage[$id[$counter]] ).'"/></td>
                             </tr>
                             <tr>
-                                <td colspan=2>'.$result['maintext'].'</td>
+                                <td colspan=2>'.$interMaintext[$id[$counter]].'</td>
                             </tr>
                             <tr>
                             	<td><button value="" name="yes"/>♥</button></td>
-                            	<td><button value="" name="no"/>✗</button></td>
+                            	<td>
+									<form id="next" action="" method="post" enctype="multipart/form-data" >
+										<button value="'.$counter.'" name="next"/>✗</button>
+									</form>
+								</td>
                             </tr>
                           </table>'; 
                  ?>
