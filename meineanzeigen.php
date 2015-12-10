@@ -14,7 +14,7 @@
 		//echo $query;
 		$res = $conn->query($query);
 		$query = "DELETE FROM offers WHERE id ='".$id."'";
-		//echo $query;
+		echo $query;
 		$res = $conn->query($query);
 	}
     $str1 = "SELECT id FROM offers WHERE userid='".$uid."'";

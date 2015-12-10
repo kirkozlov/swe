@@ -172,10 +172,10 @@
             }
             function insertText(){
                 var cell = insertRow();
-				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return deleteElement(this)" value="del" />';
+				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return deleteElement(this)" value="Löschen" />';
                 cell.innerHTML = cell.innerHTML + "<textarea name='txt" + counter + "'></textarea>";
-				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementUp(this)" value="up" />';
-				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementDown(this)" value="down" />';
+				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementUp(this)" value="Hoch" />';
+				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementDown(this)" value="Runter" />';
 				return false;
             }
             
@@ -212,11 +212,11 @@
                 var cell = insertRow();
                 var id = "file" + counter;
 				cell.innerHTML = '';
-				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return deleteElement(this)" value="del" />';
+				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return deleteElement(this)" value="Löschen" />';
 				cell.innerHTML = cell.innerHTML + '<output id="imgOutput' + counter + '" ></output>';
                 cell.innerHTML = cell.innerHTML + '<input hidden="hidden" onchange="" type="file" id="'+ id +'" name="file' + counter + '" />';
-				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementUp(this)" value="up" />';
-				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementDown(this)" value="down" />';
+				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementUp(this)" value="Hoch" />';
+				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementDown(this)" value="Runter" />';
                 document.getElementById(id).addEventListener('change', handleFileSelect, false);
                 openFileDialog(id);
 				

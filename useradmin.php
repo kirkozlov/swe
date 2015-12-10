@@ -7,13 +7,22 @@
 		$id = $id.$_POST["delete"];
 		$query = "";				  
 		$query = "DELETE FROM users WHERE id='".$id."'";
-		echo $query;
+		//echo $query;
 		$res = $conn->query($query);
 	}
-    $str1 = "SELECT id,email FROM users" ;
+	if(isset($_POST['changeFlag'])) {
+		$id = "";
+		$id = $id.$_POST["changeFlag"];
+		$query = "";				  
+		$query = "UPDATE users SET goldflag = 1 - goldflag WHERE id='".$id."'";
+		//echo $query;
+		$res = $conn->query($query);
+	}
+    $str1 = "SELECT id,email,goldflag FROM users" ;
     $res = $conn->query($str1);
 	while($row=$res->fetch_row()){
 		$user[$row[0]] = $row[1];
+		$flag[$row[0]] = $row[2];
 	}	
     $conn->close();
  ?>
@@ -35,13 +44,24 @@
 				<table>
 					<?php
 						if (isset($user)) {
-							echo '<tr><td>Benutzer</td><td></td></tr>';
+							echo '<tr><td>Benutzer</td><td>Status</td></tr>';
 							foreach ($user as $key => $value) {
 								echo '<tr>';
 								echo '<td>'.$value.'</td>';
+								if ($flag[$key] == 1) {
+									echo '<td>premium</td>';
+								} else {
+									echo "<td>normal</td>";
+								}
+								
 								echo '<td>
 										<form id="delete" action="" method="post" enctype="multipart/form-data" >
 											<button value="'.$key.'" name="delete"/>Löschen</button>
+										</form>
+									</td>';
+								echo '<td>
+										<form id="changeFlag" action="" method="post" enctype="multipart/form-data" >
+											<button value="'.$key.'" name="changeFlag"/>Status ändern</button>
 										</form>
 									</td>';
 								echo '</tr>';
