@@ -10,7 +10,7 @@ Ich fange an.
 
 übberal: style,css.
 
-settings: popups für PassChange machen. Liste mit Kategorien im richtige platz setzen.
+settings: popups für PassChange machen. 
 forgotpassword: text in emails andern.
 forgotpassword: es gibt Problemen mit Sendung-- google hat schon einmal dieses account blockiert. jetzt funktioniert das.
 forgotpassword,settings,reg: pass cheschieren.
