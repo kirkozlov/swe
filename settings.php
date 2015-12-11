@@ -67,6 +67,22 @@
 			$(document).ready(function(){
 			    updateinout();
 			});
+			$( window ).resize(function() {
+				var d = document.getElementById('newfiladd');
+				d.style.position = "absolute";
+				d.style.top=$("#openlist").offset().top;
+				d.style.left=$("#openlist").offset().left+$("#openlist").width()+10; 
+			});
+			var flag=0;
+			$(document).click(function(){
+				if (flag==0){
+			    var list = document.getElementById("newfiladd");
+				list.style.display = "none";
+				}
+				else{
+					flag=0;
+				}
+			});
 			function vach(){
 				var v=document.getElementById("elem").value;
 				document.getElementById("te").innerHTML = v;
@@ -84,7 +100,12 @@
                     list.style.display = "none";
 					
                 }
-				setCookie("filter", "", {expires: -1});///////////////////////////////////////////////////////////////////////////
+				var d = document.getElementById('newfiladd');
+				d.style.position = "absolute";
+				d.style.top=$("#openlist").offset().top;
+				d.style.left=$("#openlist").offset().left+$("#openlist").width()+10; 
+				flag=1;
+				
 			}
 			function updateinout(){
 				var fil=getCookie("filter");
@@ -179,13 +200,14 @@
 									position:relative;
 									max-width: 280px;
 									width: 95%;">
-			<tr><td>Umkreis:</td><td><input id="elem" type="range" min="0" max="100" step="5" value=<?php echo $km ?> onSlide="vach()" onChange="vach()" /><div id="te" ><?php echo $km ?></div></td></tr>
-        </table>
+			<tr><td colspan="2"><input id="elem" type="range" min="0" max="100" step="5" value=<?php echo $km ?> onSlide="vach()" onChange="vach()" /></td></tr>
+			<tr><td >Umkreis:</td><td><div id="te" style="width:30"><?php echo $km ?></div></td></tr>
+		</table>
 	</div>
 	</div>
 	<br/>
 	<div	class="main">		
-	<div class="content">
+	<div class="content" >
 		<form action ="settings.php" method="post">
 		<table style=" margin:0 auto;
 									position:relative;
@@ -203,29 +225,29 @@
     </div>
 	</div>
 	<br/>
-	<div	class="main">		
-	<div class="content">
+	<div	class="main" style="text-align:left;">		<!--gut fuer handy, schlecht for PC -->
+	<div class="content" >
 		
 		<button id="openlist"onclick="filadd()">Kategorie hinzufügen</button>
-		<ul>
+		<ul >
 		<?php
 		if (isset($filtr)) {
 			foreach ($filtr as $key => $value)
 			{
-				echo '<li id="liout'.$key.'" style="display: none;"> <a href="javascript:deletefilter('.$key.')">'.$value.' </a> </li>';
+				echo '<li id="liout'.$key.'" style="display: none;"> <a href="javascript:deletefilter('.$key.')">'.$value.'hhfghfhfh </a> </li>';
 			}
 		}
 		?>
 		</ul>
     </div>
 	</div>
-	<div id="newfiladd" class="listforfilteradd" style='display: none;' >
+	<div id="newfiladd"  style='display: none; background:#FF0000; padding: 0 5 0 5; ' >
 		<ul>
 		<?php
 		if (isset($filtr)) {
 			foreach ($filtr as $key => $value)
 			{
-				echo '<li id="liin'.$key.'" style="display: none;"> <a href="javascript:addfilter('.$key.')">'.$value.' </a> </li>';
+				echo '<li id="liin'.$key.'" style="display: none; background:#FFFF00; margin: 1 1 1 1;"> <a href="javascript:addfilter('.$key.')">'.$value.' </a> </li>';
 			}
 		}
 		?>
