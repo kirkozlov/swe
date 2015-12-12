@@ -18,9 +18,9 @@
 		//echo $query;
 		$res = $conn->query($query);
 	}
-    $str1 = "SELECT id,email,goldflag FROM users" ;
+    $str1 = "SELECT id,email,goldflag FROM users";
     $res = $conn->query($str1);
-	while($row=$res->fetch_row()){
+	while($row=$res->fetch_row()) {
 		$user[$row[0]] = $row[1];
 		$flag[$row[0]] = $row[2];
 	}	

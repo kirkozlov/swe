@@ -20,14 +20,14 @@
 		$res=$conn->query($str1);
 		if($res != FALSE && $row=$res->fetch_row()){
 			$sucsess=true;
-			$errortext="Ihhre neuue pass ist gesendet";
+			$errortext="Ihnen wurde ein neues Passwort zugesendet";
 			include("includes/sendmail.php");
 			$str1="UPDATE `users`SET `password`='".$newpass."' WHERE id='".$row[0]."'";
 			$res=$conn->query($str1);
 			sendmail($to,$newpass);
 		}
 		else{
-			$errortext="email nichht vorhanden";
+			$errortext="Die E-Mail-Adresse ist nicht vorhanden";
 		}
 	}
 

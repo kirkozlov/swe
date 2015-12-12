@@ -27,7 +27,7 @@
 			$str1 = "SELECT maintext, price, amount, mainimage FROM offers WHERE id='".$value."'";
 			$res = $conn->query($str1);
 			if($row=$res->fetch_row()) {	
-				$interText[$key]=$row[0];	
+				$interText[$key] = $row[0];	
 				$interPrice[$key] = $row[1];	
 				$interAmount[$key] = $row[2];
 				$interImage[$key] = $row[3];	
