@@ -2,44 +2,42 @@ Algemeine info:
 Machen wir zuerst ganze Funktionalitet, und nur dann das gute css(style).
 
 
-Hier schreiben wir, was wir noch ändern mussen, um Das nicht zu fergessen.
-Oder einfach was ihr gefält nicht.
+Hier schreiben wir, was wir noch Ã¤ndern mussen, um Das nicht zu fergessen.
+Oder einfach was ihr gefÃ¤lt nicht.
 Ich fange an.
 
 
 
-überall: style, css, popups
+Ã¼bberal: style,css.
 
-Ortung (über IP)
-settings: popups für PassChange machen. 
+settings: popups fÃ¼r PassChange machen. 
 forgotpassword: text in emails andern.
 forgotpassword: es gibt Problemen mit Sendung-- google hat schon einmal dieses account blockiert. jetzt funktioniert das.
 forgotpassword,settings,reg: pass cheschieren.
 index: lesen aus datenbank andern(um nicht alles zu lesen).
 index: mit filtern vergleichen.
-index: counter besser mit _Get übergeben.
+index: counter besser mit _Get Ã¼bergeben.
 additem  Problemen mit Speicherung von nicht haupt Bilder ---Warning: file_get_contents(): Filename cannot be empty in C:\xampp\htdocs\swe\additem.php on line 29;  
 additem: latitude, createdata machen.
-additem: indexen und counter nach verschiebung, löschung verbessern.
-details.php
+additem: indexen und counter nach verschiebung, lÃ¶schung verbessern.
 
-//übersicht über alle Seiten von Thomas:
-Startseite(heißt index)
+//Ã¼bersicht Ã¼ber alle Seiten von Thomas:
+Startseite(heiÃŸt index)
 Detailansicht
 Login
 Reg
 Benutzerverwaltung(admin) - fast fertig
-Interessen Verwalten
+Interessen Verwalten - fast fertig
 Settings
 meine anzeigen
   add item
 Anzeigenverwaltung(admin)
-Menü
-  Menü(admin)
+MenÃ¼
+  MenÃ¼(admin)
 
 Popups:
 //Texte bei allen verschieden aber es gibt nur zwei vom design her:
-Bestätigungspopup (man kann nur auf ok klicken)
+BestÃ¤tigungspopup (man kann nur auf ok klicken)
 Entscheidungspopup (man kann Ja oder Nein klicken)
 brauchen wahrscheinlich javascript
 
@@ -49,8 +47,8 @@ Wer macht was:
 
 Kirill reg,login,logout,forgotpassword,settings
 Viktor: additem,changeitem
-Johanna: index, meineanzeigen, benutzerverwaltung, anzeigenverwaltung, details
-Thomas:
+Johanna: index, meineanzeigen, Anzeigenverwaltung(admin), Userverwaltung(admin), Details
+Thomas: css:interessen Verwalten, Index
 Martin:
 Reiner:
 Tobias:
