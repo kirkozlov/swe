@@ -24,7 +24,7 @@
         $offerID = $conn->insert_id;
         $query = "";// var_dump($_FILES);
         for($i = 1; $i <= $counter; $i++){
-            if(isset($_FILES['file' . $i])){
+            if(isset($_FILES['file' . $i]) && !empty($_FILES['file' . $i]['tmp_name'])){
 				//echo $_FILES['file' . $i]['tmp_name']. " " . $i . "<br />";
                 $file = addslashes(file_get_contents($_FILES['file' . $i]['tmp_name']));
                 $query = " INSERT INTO images(offersid, image, insideid) 
@@ -113,6 +113,13 @@
 			function deleteElement(elem){
 				var row = elem.parentNode.parentNode;
 //				alert(row);
+				if(input = row.getElementsByTagName('img')[0]){
+					var id = input.getAttribute("name");
+					id = id.substring(3,id.length);
+					var img = document.getElementById("file"+id);
+					var images = document.getElementById("images");
+					images.removeChild(img);
+				}
 				row.parentNode.removeChild(row);
 				return false;
 			}
@@ -131,9 +138,72 @@
 				//alert(table.rows[currentRow]);
 				if((currentRow + 1) > 6 && tmp > 0){
 					//alert(table.rows[currentRow].innerHTML);
-					var tmp = table.rows[currentRow].innerHTML;
-					table.rows[currentRow].innerHTML = row.innerHTML;
-					table.rows[currentRow + 1].innerHTML = tmp;
+					var textOben;
+					var textUnten;
+					var imgOben;
+					var imgUnten;
+					
+					if(ta = table.rows[currentRow].getElementsByTagName('textarea')[0]) {
+						textOben = [ta, ta.value, ta.getAttribute("name")];
+						textOben[2] = textOben[2].substring(3,textOben[2].length);
+					}
+					if(ta = table.rows[currentRow + 1].getElementsByTagName('textarea')[0]) {
+						textUnten = [ta, ta.value, ta.getAttribute("name")];
+						textUnten[2] = textUnten[2].substring(3,textUnten[2].length);
+					}
+					if(input = table.rows[currentRow].getElementsByTagName('img')[0]) {
+						imgOben = [input, input.getAttribute("name")];
+						imgOben[1] = imgOben[1].substring(3,imgOben[1].length);
+					}
+					if(input = table.rows[currentRow + 1].getElementsByTagName('img')[0]) {
+						imgUnten = [input, input.getAttribute("name")];
+						imgUnten[1] = imgUnten[1].substring(3,imgUnten[1].length);
+					}
+					if(textOben && textUnten){
+						table.rows[currentRow + 1].getElementsByTagName('textarea')[0].value = textOben[1];
+						table.rows[currentRow].getElementsByTagName('textarea')[0].value = textUnten[1];
+					}
+					if(textOben && imgUnten){
+						var tmp = table.rows[currentRow].innerHTML;
+						table.rows[currentRow].innerHTML = table.rows[currentRow + 1].innerHTML;
+						table.rows[currentRow + 1].innerHTML = tmp;
+						imgUnten[0] = table.rows[currentRow].getElementsByTagName('img')[0];
+						var file = document.getElementById("file" + imgUnten[1]);
+						file.setAttribute("name", "file" + textOben[2]);
+						file.setAttribute("id", "file" + textOben[2]);
+						imgUnten[0].setAttribute("name", "img" + textOben[2]);
+						textOben[0] = table.rows[currentRow + 1].getElementsByTagName('textarea')[0];
+						textOben[0].value = textOben[1];
+						textOben[0].setAttribute("name","txt"+imgUnten[1]);
+					}
+					if(imgOben && textUnten){
+						var tmp = table.rows[currentRow].innerHTML;
+						table.rows[currentRow].innerHTML = table.rows[currentRow + 1].innerHTML;
+						table.rows[currentRow + 1].innerHTML = tmp;
+						imgOben[0] = table.rows[currentRow + 1].getElementsByTagName('img')[0];
+						var file = document.getElementById("file" + imgOben[1]);
+						file.setAttribute("name", "file" + textUnten[2]);
+						file.setAttribute("id", "file" + textUnten[2]);
+						imgOben[0].setAttribute("name", "img" + textUnten[2]);
+						textUnten[0] = table.rows[currentRow].getElementsByTagName('textarea')[0];
+						textUnten[0].value = textUnten[1];
+						textUnten[0].setAttribute("name","txt"+imgOben[1]);
+					}
+					if(imgOben && imgUnten){
+						var tmp = table.rows[currentRow].innerHTML;
+						table.rows[currentRow].innerHTML = table.rows[currentRow + 1].innerHTML;
+						table.rows[currentRow + 1].innerHTML = tmp;
+						imgOben[0] = table.rows[currentRow + 1].getElementsByTagName('img')[0];
+						imgUnten[0] = table.rows[currentRow].getElementsByTagName('img')[0];
+						imgOben[0].setAttribute("name", "img" + imgUnten[1]);
+						imgUnten[0].setAttribute("name", "img" + imgOben[1]);
+						var fileOben = document.getElementById("file" + imgOben[1]);
+						var fileUnten = document.getElementById("file" + imgUnten[1]);
+						fileOben.setAttribute("name", "file" + imgUnten[1]);
+						fileOben.setAttribute("id", "file" + imgUnten[1]);
+						fileUnten.setAttribute("name", "file" + imgOben[1]);
+						fileUnten.setAttribute("id", "file" + imgOben[1]);
+					}
 				}
 				
 				return false;
@@ -153,9 +223,72 @@
 				//alert(table.rows[currentRow]);
 				if((currentRow) > 6 && tmp < table.rows.length - 1){
 					//alert(table.rows[currentRow].innerHTML);
-					var tmp = table.rows[currentRow].innerHTML;
-					table.rows[currentRow].innerHTML = row.innerHTML;
-					table.rows[currentRow - 1].innerHTML = tmp;
+					var textOben;
+					var textUnten;
+					var imgOben;
+					var imgUnten;
+					
+					if(ta = table.rows[currentRow - 1].getElementsByTagName('textarea')[0]) {
+						textOben = [ta, ta.value, ta.getAttribute("name")];
+						textOben[2] = textOben[2].substring(3,textOben[2].length);
+					}
+					if(ta = table.rows[currentRow].getElementsByTagName('textarea')[0]) {
+						textUnten = [ta, ta.value, ta.getAttribute("name")];
+						textUnten[2] = textUnten[2].substring(3,textUnten[2].length);
+					}
+					if(input = table.rows[currentRow - 1].getElementsByTagName('img')[0]) {
+						imgOben = [input, input.getAttribute("name")];
+						imgOben[1] = imgOben[1].substring(3,imgOben[1].length);
+					}
+					if(input = table.rows[currentRow].getElementsByTagName('img')[0]) {
+						imgUnten = [input, input.getAttribute("name")];
+						imgUnten[1] = imgUnten[1].substring(3,imgUnten[1].length);
+					}
+					if(textOben && textUnten){
+						table.rows[currentRow].getElementsByTagName('textarea')[0].value = textOben[1];
+						table.rows[currentRow - 1].getElementsByTagName('textarea')[0].value = textUnten[1];
+					}
+					if(textOben && imgUnten){
+						var tmp = table.rows[currentRow - 1].innerHTML;
+						table.rows[currentRow - 1].innerHTML = table.rows[currentRow].innerHTML;
+						table.rows[currentRow].innerHTML = tmp;
+						imgUnten[0] = table.rows[currentRow - 1].getElementsByTagName('img')[0];
+						var file = document.getElementById("file" + imgUnten[1]);
+						file.setAttribute("name", "file" + textOben[2]);
+						file.setAttribute("id", "file" + textOben[2]);
+						imgUnten[0].setAttribute("name", "img" + textOben[2]);
+						textOben[0] = table.rows[currentRow].getElementsByTagName('textarea')[0];
+						textOben[0].value = textOben[1];
+						textOben[0].setAttribute("name","txt"+imgUnten[1]);
+					}
+					if(imgOben && textUnten){
+						var tmp = table.rows[currentRow - 1].innerHTML;
+						table.rows[currentRow - 1].innerHTML = table.rows[currentRow].innerHTML;
+						table.rows[currentRow].innerHTML = tmp;
+						imgOben[0] = table.rows[currentRow].getElementsByTagName('img')[0];
+						var file = document.getElementById("file" + imgOben[1]);
+						file.setAttribute("name", "file" + textUnten[2]);
+						file.setAttribute("id", "file" + textUnten[2]);
+						imgOben[0].setAttribute("name", "img" + textUnten[2]);
+						textUnten[0] = table.rows[currentRow - 1].getElementsByTagName('textarea')[0];
+						textUnten[0].value = textUnten[1];
+						textUnten[0].setAttribute("name","txt"+imgOben[1]);
+					}
+					if(imgOben && imgUnten){
+						var tmp = table.rows[currentRow - 1].innerHTML;
+						table.rows[currentRow - 1].innerHTML = table.rows[currentRow].innerHTML;
+						table.rows[currentRow].innerHTML = tmp;
+						imgOben[0] = table.rows[currentRow].getElementsByTagName('img')[0];
+						imgUnten[0] = table.rows[currentRow - 1].getElementsByTagName('img')[0];
+						imgOben[0].setAttribute("name", "img" + imgUnten[1]);
+						imgUnten[0].setAttribute("name", "img" + imgOben[1]);
+						var fileOben = document.getElementById("file" + imgOben[1]);
+						var fileUnten = document.getElementById("file" + imgUnten[1]);
+						fileOben.setAttribute("name", "file" + imgUnten[1]);
+						fileOben.setAttribute("id", "file" + imgUnten[1]);
+						fileUnten.setAttribute("name", "file" + imgOben[1]);
+						fileUnten.setAttribute("id", "file" + imgOben[1]);
+					}
 				}
 				
 				return false;
@@ -211,10 +344,17 @@
             function insertImg(){
                 var cell = insertRow();
                 var id = "file" + counter;
-				cell.innerHTML = '';
+				var images = document.getElementById("images");
+				cell.innerHTML = '';// hidden="hidden"
 				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return deleteElement(this)" value="Löschen" />';
 				cell.innerHTML = cell.innerHTML + '<output id="imgOutput' + counter + '" ></output>';
-                cell.innerHTML = cell.innerHTML + '<input hidden="hidden" onchange="" type="file" id="'+ id +'" name="file' + counter + '" />';
+				var img = document.createElement("input");
+				img.setAttribute("onchange","");
+				img.setAttribute("type","file");
+				img.setAttribute("id",id);
+				img.setAttribute("name","file"+counter);
+				images.insertBefore(img,null);
+                //cell.innerHTML = cell.innerHTML + '<input onchange="" type="file" id="'+ id +'" name="file' + counter + '" />';
 				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementUp(this)" value="Hoch" />';
 				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementDown(this)" value="Runter" />';
                 document.getElementById(id).addEventListener('change', handleFileSelect, false);
@@ -245,6 +385,7 @@
                             <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" name="mainImage" /></td></tr>
 							<tr><td colspan="2"><output id="mainOutput"><span id="spanMain"></span></output></td></tr>
                         </table>
+						<span id ="images" hidden="hidden"></span>
                     </form>
                     <ul class="elementList" id="elementList" style="display: none;">
                         <!--li><button onclick="insertList()">Liste</button></li-->
