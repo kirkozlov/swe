@@ -27,7 +27,7 @@ Detailansicht
 Login
 Reg
 Benutzerverwaltung(admin) - fast fertig
-Interessen Verwalten
+Interessen Verwalten - fast fertig
 Settings
 meine anzeigen
   add item
@@ -48,7 +48,7 @@ Wer macht was:
 Kirill reg,login,logout,forgotpassword,settings
 Viktor: additem,changeitem
 Johanna: index,meineanzeigen
-Thomas:
+Thomas: css:interessen Verwalten, Anzeigenverwaltung(admin), index
 Martin:
 Reiner:
 Tobias:
