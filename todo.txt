@@ -18,14 +18,30 @@ forgotpassword,settings,reg: pass cheschieren.
 index: lesen aus datenbank andern(um nicht alles zu lesen).
 index: mit filtern vergleichen.
 index: counter besser mit _Get übergeben.
-index: Preis anzeigen
 additem  Problemen mit Speicherung von nicht haupt Bilder ---Warning: file_get_contents(): Filename cannot be empty in C:\xampp\htdocs\swe\additem.php on line 29;  
 additem: latitude, createdata machen.
 additem: indexen und counter nach verschiebung, löschung verbessern.
 details.php
 
+//übersicht über alle Seiten von Thomas:
+Startseite(heißt index)
+Detailansicht
+Login
+Reg
+Benutzerverwaltung(admin) - fast fertig
+Interessen Verwalten
+Settings
+meine anzeigen
+  add item
+Anzeigenverwaltung(admin)
+Menü
+  Menü(admin)
 
-
+Popups:
+//Texte bei allen verschieden aber es gibt nur zwei vom design her:
+Bestätigungspopup (man kann nur auf ok klicken)
+Entscheidungspopup (man kann Ja oder Nein klicken)
+brauchen wahrscheinlich javascript
 
 
 Wer macht was:
