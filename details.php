@@ -42,7 +42,7 @@
         <div class="main">
             <div class="content">
                 <?php                   
-                    echo '<table border="0">
+                    echo '<table>
                             <tr>
                                 <td colspan=2><img style="max-width: 600px; max-height: 600px;" src="data:image/jpeg;base64,'.base64_encode( $interImage ).'"/></td>
                             </tr>

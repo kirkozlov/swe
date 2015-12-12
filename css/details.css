@@ -1,3 +1,2 @@
-.details button { width: 100px; }
-.details table { table-layout: fixed; }
-.details td { width: 50%; }
+.content table { table-layout: fixed; }
+.content table td { width: 50%; }
