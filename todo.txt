@@ -31,6 +31,7 @@ Interessen Verwalten - fast fertig
 Settings
 meine anzeigen
   add item
+    design detail
 Anzeigenverwaltung(admin)
 Menü
   Menü(admin)
@@ -41,6 +42,11 @@ Bestätigungspopup (man kann nur auf ok klicken)
 Entscheidungspopup (man kann Ja oder Nein klicken)
 brauchen wahrscheinlich javascript
 
+Packet1:Startseite(heißt index),meine anzeigen,Anzeigenverwaltung(admin),Interessen Verwalten
+Packet2:Detailansicht,Benutzerverwaltung(admin), Menü, Menü(admin)
+Packet3:Login,Reg,Settings
+Packet4:add item, design detail, changeitem, evtl u85
+(Pop-ups fehlen noch)
 
 Wer macht was:
 
@@ -56,5 +62,11 @@ Cornelius:
 
 bitte verteilen sie sich selbst
 
+Logik(PHP, Javascript, mysql):
+Kirill, Victor, Tobias, Johanna
+
+
+Designgruppe(css, Javascript):
+Thomas, Reiner, Martin, Cornelius
 
 
