@@ -16,7 +16,7 @@
 				$interText[$key]=$row[0];	
 				$interPrice[$key] = $row[1];	
 				$interAmount[$key] = $row[2];	
-				//$interImage[$key] = $row[3];		//so nicht!					
+				$interImage[$key] = $row[3];		//so nicht!					
 			}
 		}
 	}
@@ -38,11 +38,11 @@
                 <?php
                 	if (isset($interText) && isset($interPrice) && isset($interAmount)) {
                 		echo '<table>';
-                		echo '<tr><td>Beschreibung</td><td>Bild</td><td>Preis</td><td>Anzahl</td></tr>';
+                		echo '<tr><td>Bild</td><td>Beschreibung</td><td>Preis</td><td>Anzahl</td></tr>';
                 		foreach ($interText as $key => $value) {
                 			echo '<tr>';
-                			echo '<td>'.$value.'</td>';
-                			echo '<td>PLATZHALTER</td>';
+                			echo '<td><img style="max-width: 100px; max-height: 100px;" src="data:image/jpeg;base64,'.base64_encode( $interImage[$key] ).'"/></td>';
+							echo '<td>'.$value.'</td>';
                 			echo '<td>'.$interPrice[$key].'€</td>';
                 			echo '<td>'.$interAmount[$key].'</td>';
                 			echo '</tr>';
