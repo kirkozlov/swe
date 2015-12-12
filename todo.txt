@@ -8,8 +8,9 @@ Ich fange an.
 
 
 
-übberal: style,css.
+überall: style, css, popups
 
+Ortung (über IP)
 settings: popups für PassChange machen. 
 forgotpassword: text in emails andern.
 forgotpassword: es gibt Problemen mit Sendung-- google hat schon einmal dieses account blockiert. jetzt funktioniert das.
@@ -17,10 +18,11 @@ forgotpassword,settings,reg: pass cheschieren.
 index: lesen aus datenbank andern(um nicht alles zu lesen).
 index: mit filtern vergleichen.
 index: counter besser mit _Get übergeben.
+index: Preis anzeigen
 additem  Problemen mit Speicherung von nicht haupt Bilder ---Warning: file_get_contents(): Filename cannot be empty in C:\xampp\htdocs\swe\additem.php on line 29;  
 additem: latitude, createdata machen.
 additem: indexen und counter nach verschiebung, löschung verbessern.
-
+details.php
 
 
 
@@ -31,7 +33,7 @@ Wer macht was:
 
 Kirill reg,login,logout,forgotpassword,settings
 Viktor: additem,changeitem
-Johanna: index,meineanzeigen
+Johanna: index, meineanzeigen, benutzerverwaltung, anzeigenverwaltung, details
 Thomas:
 Martin:
 Reiner:

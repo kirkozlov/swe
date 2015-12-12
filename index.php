@@ -64,7 +64,11 @@
                                 <td colspan=2>'.$interMaintext[$id[$counter]].'</td>
                             </tr>
                             <tr>
-                            	<td><button value="" name="yes"/>♥</button></td>
+                            	<td>
+                            		<form id="like" action="details.php" method="get" enctype="multipart/form-data" >
+                            			<button value="'.$id[$counter].'" name="id"/>♥</button>  
+                        			</form>                         	
+                            	</td>
                             	<td>
 									<form id="next" action="" method="post" enctype="multipart/form-data" >
 										<button value="'.$counter.'" name="next"/>✗</button>

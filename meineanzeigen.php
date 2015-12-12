@@ -10,7 +10,7 @@
 		$query = "DELETE FROM detailedtexts WHERE offersid='".$id."'";
 		//echo $query;
 		$res = $conn->query($query);
-		$query = "DELETE FROM images WHERE offersid='".$id."';";
+		$query = "DELETE FROM images WHERE offersid='".$id."'";
 		//echo $query;
 		$res = $conn->query($query);
 		$query = "DELETE FROM offers WHERE id ='".$id."'";
