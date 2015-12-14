@@ -10,10 +10,11 @@
 		//echo $query;
 		$res = $conn->query($query);
 	}
-    $str1 = "SELECT id,maintext FROM offers" ;
+    $str1 = "SELECT id, maintext, mainimage FROM offers" ;
     $res = $conn->query($str1);
 	while($row=$res->fetch_row()){
 		$offers[$row[0]] = $row[1];
+		$images[$row[0]] = $row[2];
 	}
 	
     $conn->close();?>
@@ -33,11 +34,11 @@
         <div class="main">
             <div class="content">
 				<table>
-					<?php
-						if (isset($offers)) {
-							echo '<tr><td>Anzeige</td><td></td></tr>';
+ 					<?php
+						if (isset($offers) && isset($images)) {
 							foreach ($offers as $key => $value) {
 								echo '<tr>';
+								echo '<td><img style="max-width: 300px; max-height: 300px;" src="data:image/jpeg;base64,'.base64_encode( $images[$key] ).'"/></td>';
 								echo '<td>'.$value.'</td>';
 								echo '<td>
 										<form id="delete" action="" method="post" enctype="multipart/form-data" >

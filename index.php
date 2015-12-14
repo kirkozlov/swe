@@ -3,18 +3,15 @@
     if (!isset($_SESSION['anzeigencounter'])) {        
     	$_SESSION['anzeigencounter'] = 0;
     }
-	$counter = 0; 
 	if(isset($_GET['next'])) {
 		$query = "SELECT COUNT(*) AS NumberOfOffers FROM offers;";
 		$res = $conn->query($query);
 		$numberofoffers = mysqli_fetch_array($res);
-		$counter = ($_SESSION['anzeigencounter'] + 1) % $numberofoffers[0];
-		//$counter = ($_POST["next"] + 1) % $numberofoffers[0];
-		$_SESSION['anzeigencounter'] = $counter;
+		$tmp = ($_SESSION['anzeigencounter'] + 1) % $numberofoffers[0];
+		$_SESSION['anzeigencounter'] = $tmp;
 	}
-    $sql = "SELECT id, maintext, price, mainimage FROM offers ORDER BY id LIMIT ".$counter.", 1";
+    $sql = "SELECT id, maintext, price, mainimage FROM offers ORDER BY id LIMIT ".$_SESSION['anzeigencounter'].", 1";
     $sth = $conn->query($sql);
-    $tmp = 0;
     if ($row = $sth->fetch_row()) {
 		$id = $row[0];
 		$interMaintext = $row[1];	

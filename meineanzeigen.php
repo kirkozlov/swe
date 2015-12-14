@@ -54,7 +54,7 @@
             <div class="content">
 				<table>
 					<tr>
-						<td colspan="3">
+						<td colspan="4">
 							<form action="additem.php"> 
 								<input type="submit" value="Anzeige erstellen">
 							</form>
@@ -62,10 +62,9 @@
 					</tr>
 					<?php
 						if (isset($interText) && isset($interPrice) && isset($interAmount)) {
-							echo '<tr><td>Bild</td><td>Beschreibung</td></tr>';
 							foreach ($interText as $key => $value) {
 								echo '<tr>';
-								echo '<td><img style="max-width: 300px; max-height: 300px;" src="data:image/jpeg;base64,'.base64_encode( $interImage[$key] ).'"/></td>';
+								echo '<td><img style="max-width: 100px; max-height: 100px;" src="data:image/jpeg;base64,'.base64_encode( $interImage[$key] ).'"/></td>';
 								echo '<td>'.$value.'</td>';
 								echo '<td>
 										<form id="edit" action="" method="post" enctype="multipart/form-data" >
