@@ -10,16 +10,26 @@
 	}
 	if (isset($interid)) {
 		foreach ($interid as $key => $value) {
-			$str1 = "SELECT maintext, price, amount, mainimage FROM offers WHERE id='".$value."'";
+			$str1 = "SELECT maintext, price, amount, mainimage, userid FROM offers WHERE id='".$value."'";
 			$res = $conn->query($str1);
 			if($row=$res->fetch_row()) {	
 				$interText[$key]=$row[0];	
 				$interPrice[$key] = $row[1];	
 				$interAmount[$key] = $row[2];	
-				$interImage[$key] = $row[3];		//so nicht!					
+				$interImage[$key] = $row[3];	
+				$userid[$key] = $row[4];			
 			}
 		}
 	}
+	if (isset($_GET['contact'])) {
+		$id = $_GET['contact'];
+		$sql = "SELECT email FROM users WHERE id='".$id."'";
+		$res = $conn->query($sql);
+		$email = mysqli_fetch_array($res);
+		//echo $email[0];
+		//TODO: POPUP mit $email
+	}
+	
     $conn->close();?>
 <html>
     <head>
@@ -45,6 +55,11 @@
 							echo '<td>'.$value.'</td>';
                 			echo '<td>'.$interPrice[$key].'€</td>';
                 			echo '<td>'.$interAmount[$key].'</td>';
+							echo '<td>
+									<form id="contact" action="" method="get" enctype="multipart/form-data" >
+										<button value="'.$userid[$key].'" name="contact"/>Kontakt</button>
+									</form>
+								</td>';
                 			echo '</tr>';
                 		}
 						echo '</table>';

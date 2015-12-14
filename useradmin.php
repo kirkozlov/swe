@@ -44,9 +44,10 @@
 				<table>
 					<?php
 						if (isset($user)) {
-							echo '<tr><td>Benutzer</td><td>Status</td></tr>';
+							echo '<tr><td>ID</td><td>Benutzer</td><td>Status</td></tr>';
 							foreach ($user as $key => $value) {
 								echo '<tr>';
+								echo '<td>'.$key.'</td>';
 								echo '<td>'.$value.'</td>';
 								if ($flag[$key] == 1) {
 									echo '<td>premium</td>';
