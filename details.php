@@ -1,8 +1,23 @@
 <?php session_start(); 
 	include("includes/ConectionOpen.php");
 	$id = "";
-	$id = $_GET['id'];
+	if (isset($_GET['id'])) {
+		$id = $_GET['id'];
+	}
 
+	if (isset($_GET['like'])) {
+		$id = $_GET['like'];
+		// TODO popup
+		if (!isset($_SESSION['idu'])) {
+			header("Location: login.php");
+		} else {
+				$userid = $_SESSION['idu'];
+			$sql = "INSERT INTO interests (offersid, userid) VALUES ('$id', '$userid')";
+			echo $sql;
+			$res = $conn->query($sql);
+		}
+	}
+	
     $sql = "SELECT maintext, price, mainimage FROM offers WHERE id='".$id."'";
 	$res = $conn->query($sql);
 	if($row=$res->fetch_row()) {
@@ -22,6 +37,7 @@
 	while($row=$res->fetch_row()){	
 		$interImages[$row[0]] = $row[1];
 	}
+
     
     $conn->close();
     
@@ -62,7 +78,7 @@
                  	echo '<tr>
                             	<td align="left">
                             		<form id="like" action="" method="get" enctype="multipart/form-data" >
-                            			<button value="" name="like"/>♥</button>  
+                            			<button value="'.$id.'" name="like"/>♥</button>  
                         			</form>                         	
                             	</td>
                             	<td align="right">

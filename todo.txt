@@ -35,6 +35,8 @@ meine anzeigen
 Anzeigenverwaltung(admin)
 Menü
   Menü(admin)
+  
+(Like auf Detailansicht -> einloggen ->) TODO: nach einloggen wieder zu detailansicht oder direkt als gekauft markieren
 
 Popups:
 //Texte bei allen verschieden aber es gibt nur zwei vom design her:
