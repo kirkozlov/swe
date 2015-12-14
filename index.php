@@ -1,27 +1,28 @@
 <?php session_start(); 
 	include("includes/ConectionOpen.php");
-    $counter = 0;         
-          
-	if(isset($_POST['next'])) {
+    if (!isset($_SESSION['anzeigencounter'])) {        
+    	$_SESSION['anzeigencounter'] = 0;
+    }
+	$counter = 0; 
+	if(isset($_GET['next'])) {
 		$query = "SELECT COUNT(*) AS NumberOfOffers FROM offers;";
 		$res = $conn->query($query);
 		$numberofoffers = mysqli_fetch_array($res);
-		$counter = ($_POST["next"] + 1) % $numberofoffers[0];
+		$counter = ($_SESSION['anzeigencounter'] + 1) % $numberofoffers[0];
+		//$counter = ($_POST["next"] + 1) % $numberofoffers[0];
+		$_SESSION['anzeigencounter'] = $counter;
 	}
-    $sql = "SELECT id, maintext, price, mainimage FROM offers";
+    $sql = "SELECT id, maintext, price, mainimage FROM offers ORDER BY id LIMIT ".$counter.", 1";
     $sth = $conn->query($sql);
     $tmp = 0;
-	while($row=$sth->fetch_row()){
-		$id[$tmp] = $row[0];
-		$interMaintext[$row[0]] = $row[1];	
-		$interPrice[$row[0]] = $row[2];	
-		$interImage[$row[0]] = $row[3];	
-		$tmp++;
-	}
-    //$result=mysqli_fetch_array($sth);
-    
-    $conn->close();
-    
+    if ($row = $sth->fetch_row()) {
+		$id = $row[0];
+		$interMaintext = $row[1];	
+		$interPrice = $row[2];	
+		$interImage = $row[3];	
+    }
+   	
+    $conn->close();  
 ?>
 <html>
     <head>
@@ -58,20 +59,20 @@
                     
                     echo '<table >
                             <tr>
-                                <td colspan=2><img style="max-width: 600px; max-height: 600px;" src="data:image/jpeg;base64,'.base64_encode( $interImage[$id[$counter]] ).'"/></td>
+                                <td colspan=2><img style="max-width: 600px; max-height: 600px;" src="data:image/jpeg;base64,'.base64_encode( $interImage ).'"/></td>
                             </tr>
                             <tr>
-                                <td colspan=2>'.$interMaintext[$id[$counter]].'</td>
+                                <td colspan=2>'.$interMaintext.'</td>
                             </tr>
                             <tr>
                             	<td>
                             		<form id="like" action="details.php" method="get" enctype="multipart/form-data" >
-                            			<button value="'.$id[$counter].'" name="id"/>♥</button>  
+                            			<button value="'.$id.'" name="id"/>♥</button>  
                         			</form>                         	
                             	</td>
                             	<td>
-									<form id="next" action="" method="post" enctype="multipart/form-data" >
-										<button value="'.$counter.'" name="next"/>✗</button>
+									<form id="next" action="" method="get" enctype="multipart/form-data" >
+										<button value="" name="next"/>✗</button>
 									</form>
 								</td>
                             </tr>
