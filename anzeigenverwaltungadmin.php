@@ -6,7 +6,17 @@
 		$id = "";
 		$id = $id.$_POST["delete"];
 		$query = "";				  
-		$query = "DELETE FROM offers WHERE id='".$id."'";
+		$query = "";	  
+		$query = "DELETE FROM detailedtexts WHERE offersid='".$id."'";
+		//echo $query;
+		$res = $conn->query($query);
+		$query = "DELETE FROM images WHERE offersid='".$id."'";
+		//echo $query;
+		$res = $conn->query($query);
+		$query = "DELETE FROM interests WHERE offersid ='".$id."'";
+		//echo $query;
+		$res = $conn->query($query);
+		$query = "DELETE FROM offers WHERE id ='".$id."'";
 		//echo $query;
 		$res = $conn->query($query);
 	}
