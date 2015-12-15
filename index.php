@@ -17,8 +17,7 @@
 		$interMaintext = $row[1];	
 		$interPrice = $row[2];	
 		$interImage = $row[3];	
-    }
-   	
+    }  	
     $conn->close();  
 ?>
 <html>
