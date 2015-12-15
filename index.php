@@ -17,7 +17,12 @@
 		$interMaintext = $row[1];	
 		$interPrice = $row[2];	
 		$interImage = $row[3];	
-    }  	
+    }
+   	/*
+	um mit filter zu vergleichen:
+	
+	SELECT * from offers_tags WHERE (2^tagsid & $_COOKIES['filter']) == 2^tagsid
+	*/
     $conn->close();  
 ?>
 <html>
