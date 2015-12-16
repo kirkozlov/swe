@@ -48,6 +48,7 @@ Temporary Items
 
 *.swp
 .vscode
+.idea
 
 # Jetbrains IDE user settings
 workspace.xml
