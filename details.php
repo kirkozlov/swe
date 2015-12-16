@@ -1,6 +1,8 @@
 <?php session_start(); 
 	include("includes/ConectionOpen.php");
 	$id = "";
+	$gekauft = false;
+	$contact = "";
 	if (isset($_GET['id'])) {
 		$id = $_GET['id'];
 	}
@@ -13,9 +15,12 @@
 			$userid = $_SESSION['idu'];
 			$sql = "INSERT INTO interests (offersid, userid) VALUES ('$id', '$userid')";
 			$res = $conn->query($sql);
-			//TODO POPUP
-			$message = "Gekauft!";
-			header("Location: index.php?next=");
+			
+			$sql = "SELECT email FROM users INNER JOIN offers ON offers.userid = users.id WHERE offers.id='".$id."'";
+			$res = $conn->query($sql);
+			$email = mysqli_fetch_array($res);
+			$contact = $email[0];
+			$gekauft = true;
 		}
 	}
 	
@@ -53,8 +58,24 @@
 		<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
 		
 		<script>
+			$(document).ready(function(){
+			    PopUpHide();
+			<?php
+				if($gekauft == 0) {
+					
+				}
+				else {
+					echo "document.getElementById('ppt').innerHTML='Herzlichen Glückwunsch! Sie haben den Artikel erworben. Die Kontaktdaten des Verkäufers: ".$contact."';
+					PopUpShow();";
+				}	
+				?>			
+			});
+			
 			function PopUpShow(){
 				$("#popup").show();
+			}
+			function PopUpHide(){
+				$("#popup").hide();
 			}
 			function showContact() {
 				PopUpShow();
@@ -101,7 +122,24 @@
                  ?>
             </div>
         </div>
-
+		<div id="popup" onclick="PopUpHide()" style=" width:100%;
+												height: 2000px;
+												background-color: rgba(0,0,0,0.5);
+												overflow:hidden;
+												position:fixed;
+												top:0px;">
+			<div id="ppc" style="margin:40px auto 0px auto;
+												width:250px;
+												height: 100px;
+												padding:10px;
+												
+												background-color: #c5c5c5;
+												border-radius:5px;
+												box-shadow: 0px 0px 10px #000;">
+				<div id="ppt" style="align:center;" ></div>
+			
+			</div>
+		</div>
     </body>
 </html>
 
