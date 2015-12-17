@@ -2,47 +2,56 @@
 	if(!$_SESSION['login']==true) {
 		header("Location: index.php");
 	}
+	$error = "";
 
-    if(isset($_POST['save'])){
+    if(isset($_POST['save'])) {
         $counter = $_GET['c'];
         $image = "";
         if(!empty($_FILES['mainImage']['tmp_name']))
             $image = addslashes(file_get_contents($_FILES['mainImage']['tmp_name']));
         $query = "";
-        $query = $query."
-                            INSERT INTO `swegehos_swe`.`offers`
-                            (`userid`,`maintext`, `mainimage`,
-                             `price`, `latitude`, `longtitude`,
-                              `amount`)
-                            VALUES(". $_SESSION['idu'] .", '". $_POST['mainTitle'] ."', '". $image ."', " . $_POST['price'] . ",
-                                12,21, " . $_POST['amount'] . "
-                            )
-                        ;";
-        //var_dump($_POST);
-        include("includes/ConectionOpen.php");
-        $res = $conn->query($query);
-        $offerID = $conn->insert_id;
-        $query = "";// var_dump($_FILES);
-        for($i = 1; $i <= $counter; $i++){
-            if(isset($_FILES['file' . $i]) && !empty($_FILES['file' . $i]['tmp_name'])){
-				//echo $_FILES['file' . $i]['tmp_name']. " " . $i . "<br />";
-                $file = addslashes(file_get_contents($_FILES['file' . $i]['tmp_name']));
-                $query = " INSERT INTO images(offersid, image, insideid) 
-                                    VALUES(". $offerID .", '". $file ."', ". $i .");";
-                $conn->query($query);
-                //echo $query;
-            }
-            if(isset($_POST['txt' . $i])){
-				//echo "somethingTXT" .$i;
-                $query = " INSERT INTO detailedtexts(offersid, detailledtext, insideid)
-                                  VALUES(". $offerID .", '". $_POST['txt'.$i] ."', ". $i .") ;";
-                $conn->query($query);
-//                var_dump($query);
-				//echo $query;
-            }    
-        }
-            
-        $conn->close(); 
+		$price = $_POST['price'];
+		$amount = $_POST['amount'];
+		if ($price != null && !is_float($price)) {
+			$error = "price";
+		} elseif ($amount != null && !is_int($amount)) {
+			$error = "amount";
+		} 
+		if (!isset($error)) {
+	        $query = $query."
+		                INSERT INTO `swegehos_swe`.`offers`
+		                (`userid`,`maintext`, `mainimage`,
+		                 `price`, `latitude`, `longtitude`,
+		                  `amount`)
+		                VALUES(". $_SESSION['idu'] .", '". $_POST['mainTitle'] ."', '". $image ."', " . $price . ",
+		                    12,21, " . $amount . "
+		                )
+		            ;";
+			include("includes/ConectionOpen.php");
+			$res = $conn->query($query);
+			$offerID = $conn->insert_id;
+			$query = "";// var_dump($_FILES);
+			for($i = 1; $i <= $counter; $i++){
+				if(isset($_FILES['file' . $i]) && !empty($_FILES['file' . $i]['tmp_name'])){
+					//echo $_FILES['file' . $i]['tmp_name']. " " . $i . "<br />";
+				    $file = addslashes(file_get_contents($_FILES['file' . $i]['tmp_name']));
+				    $query = " INSERT INTO images(offersid, image, insideid) 
+				                        VALUES(". $offerID .", '". $file ."', ". $i .");";
+				    $conn->query($query);
+				    //echo $query;
+				}
+				if(isset($_POST['txt' . $i])){
+					//echo "somethingTXT" .$i;
+				    $query = " INSERT INTO detailedtexts(offersid, detailledtext, insideid)
+				                      VALUES(". $offerID .", '". $_POST['txt'.$i] ."', ". $i .") ;";
+				    $conn->query($query);
+		//                var_dump($query);
+					//echo $query;
+				}    
+			}
+				
+			$conn->close(); 	
+		}
     }    
 
 ?>
@@ -53,7 +62,35 @@
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
         <link rel="stylesheet" href="css/additem.css" type="text/css" />
+		<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
         <script language="javascript" type="text/javascript">
+			$(document).ready(function(){
+			    PopUpHide();
+			<?php
+				if($error == "price") {
+					echo "document.getElementById('ppt').innerHTML='Bitte eine Zahl in der Form \"12.34\" für den Preis eingeben!';
+					PopUpShow();";
+					$error = "";
+				} elseif($error == "amount") {
+					echo "document.getElementById('ppt').innerHTML='Bitte eine Zahl für die Anzahl eingeben!';
+					PopUpShow();";
+					$error = "";
+				}	
+				?>			
+			});
+			
+			function PopUpShow(){
+				$("#popup").show();
+			}
+			function PopUpHide(){
+				$("#popup").hide();
+			}
+			function showContact() {
+				PopUpShow();
+			}
+
+
+			
             var counter = 0;
 			var imgTmp = "";
 			
@@ -76,7 +113,7 @@
                       // Render thumbnail.
                       //var span = document.createElement('span');
                       imgTmp.innerHTML = ['<img name="img" class="thumb" src="', e.target.result,
-                                        '" title="', escape(theFile.name), '" style="max-width: 600px; max-height: 600px; width: auto; height: auto;" />'].join('');
+                                        '" title="', escape(theFile.name), '" style="max-width: 200px; max-height: 200px; width: auto; height: auto;" />'].join('');
                       document.getElementById('mainOutput').insertBefore(imgTmp, null);
                     };
                   })(f);
@@ -331,7 +368,7 @@
                       // Render thumbnail.
                       var span = document.createElement('span');
                       span.innerHTML = ['<img name="img' + counter++ + '" class="thumb" src="', e.target.result,
-                                        '" title="', escape(theFile.name), '" style="max-width: 300px; max-height: 300px; width: auto; height: auto;" />'].join('');
+                                        '" title="', escape(theFile.name), '" style="max-width: 100px; max-height: 100px; width: auto; height: auto;" />'].join('');
                       document.getElementById('imgOutput' + (counter - 1)).insertBefore(span, null);
                     };
                   })(f);
@@ -396,6 +433,24 @@
                 </div>
             </div>
         </div>
+		<div id="popup" onclick="PopUpHide()" style=" width:100%;
+												height: 2000px;
+												background-color: rgba(0,0,0,0.5);
+												overflow:hidden;
+												position:fixed;
+												top:0px;">
+			<div id="ppc" style="margin:40px auto 0px auto;
+												width:250px;
+												height: 100px;
+												padding:10px;
+												
+												background-color: #c5c5c5;
+												border-radius:5px;
+												box-shadow: 0px 0px 10px #000;">
+				<div id="ppt" style="align:center;" ></div>
+			
+			</div>
+		</div>
     </body>
 </html>
 

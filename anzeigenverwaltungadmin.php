@@ -48,7 +48,7 @@
 						if (isset($offers) && isset($images)) {
 							foreach ($offers as $key => $value) {
 								echo '<tr>';
-								echo '<td><img style="max-width: 300px; max-height: 300px;" src="data:image/jpeg;base64,'.base64_encode( $images[$key] ).'"/></td>';
+								echo '<td><img style="max-width: 200px; max-height: 200px;" src="data:image/jpeg;base64,'.base64_encode( $images[$key] ).'"/></td>';
 								echo '<td>'.$value.'</td>';
 								echo '<td>
 										<form id="delete" action="" method="post" enctype="multipart/form-data" >

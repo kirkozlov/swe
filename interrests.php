@@ -1,4 +1,6 @@
 <?php session_start(); 
+	$contact = "";
+	$contactdetails = false;
 	if($_SESSION['login']!=true)
 		header('Location: login.php');
 	$uid=$_SESSION['idu'];
@@ -26,8 +28,8 @@
 		$sql = "SELECT email FROM users WHERE id='".$id."'";
 		$res = $conn->query($sql);
 		$email = mysqli_fetch_array($res);
-		//echo $email[0];
-		//TODO: POPUP mit $email
+		$contact = $email[0];
+		$contactdetails = true;
 	}
 	
     $conn->close();?>
@@ -37,6 +39,29 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
+		<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+		
+		<script>
+			$(document).ready(function(){
+			    PopUpHide();
+			<?php
+				if($contactdetails) {
+					echo "document.getElementById('ppt').innerHTML='Die Kontaktdaten des Verkäufers: ".$contact."';
+					PopUpShow();";
+				}	
+				?>			
+			});
+			
+			function PopUpShow(){
+				$("#popup").show();
+			}
+			function PopUpHide(){
+				$("#popup").hide();
+			}
+			function showContact() {
+				PopUpShow();
+			}
+		</script>
     </head>
     <body>
         <?php 
@@ -67,6 +92,24 @@
                  ?>
             </div>
         </div>
+		<div id="popup" onclick="PopUpHide()" style=" width:100%;
+												height: 2000px;
+												background-color: rgba(0,0,0,0.5);
+												overflow:hidden;
+												position:fixed;
+												top:0px;">
+			<div id="ppc" style="margin:40px auto 0px auto;
+												width:250px;
+												height: 100px;
+												padding:10px;
+												
+												background-color: #c5c5c5;
+												border-radius:5px;
+												box-shadow: 0px 0px 10px #000;">
+				<div id="ppt" style="align:center;" ></div>
+			
+			</div>
+		</div>
     </body>
 </html>
 
