@@ -16,14 +16,19 @@
 		}
 	}
     $sql = "SELECT id, maintext, price, mainimage FROM offers ORDER BY id LIMIT ".$_SESSION['anzeigencounter'].", 1";
+<<<<<<< HEAD
     $sth = $conn->query($sql);
     if (isset($sth) && $sth != null && $row = $sth->fetch_row()) {
     	$dbempty = false;
+=======
+    $row = $conn->query($sql)->fetch_row();
+    if ($row) {
+>>>>>>> 0610d30840c35faa551f158a0eccf06d0d1e1b27
 		$id = $row[0];
 		$interMaintext = $row[1];	
 		$interPrice = $row[2];	
 		$interImage = $row[3];	
-    }
+    } 
    	/*
 	um mit filter zu vergleichen:
 	
