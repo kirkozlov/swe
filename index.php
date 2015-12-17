@@ -11,8 +11,8 @@
 		$_SESSION['anzeigencounter'] = $tmp;
 	}
     $sql = "SELECT id, maintext, price, mainimage FROM offers ORDER BY id LIMIT ".$_SESSION['anzeigencounter'].", 1";
-    $sth = $conn->query($sql);
-    if ($row = $sth->fetch_row()) {
+    $row = $conn->query($sql)->fetch_row();
+    if ($row) {
 		$id = $row[0];
 		$interMaintext = $row[1];	
 		$interPrice = $row[2];	
