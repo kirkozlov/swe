@@ -1,5 +1,6 @@
 <?php session_start(); 
 	$contact = "";
+	$contactdetails = false;
 	if($_SESSION['login']!=true)
 		header('Location: login.php');
 	$uid=$_SESSION['idu'];
@@ -28,6 +29,7 @@
 		$res = $conn->query($sql);
 		$email = mysqli_fetch_array($res);
 		$contact = $email[0];
+		$contactdetails = true;
 	}
 	
     $conn->close();?>
@@ -43,7 +45,7 @@
 			$(document).ready(function(){
 			    PopUpHide();
 			<?php
-				if(isset($contact)) {
+				if($contactdetails) {
 					echo "document.getElementById('ppt').innerHTML='Die Kontaktdaten des Verkäufers: ".$contact."';
 					PopUpShow();";
 				}	
