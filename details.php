@@ -88,38 +88,38 @@
         ?>
         <div class="main">
             <div class="content">
-                <?php                   
-                    echo '<table>
-                            <tr>
-                                <td colspan=2><img style="max-width: 600px; max-height: 600px;" src="data:image/jpeg;base64,'.base64_encode( $interImage ).'"/></td>
-                            </tr>
-                            <tr>
-                                <td>'.$interMaintext.'</td><td>'.$interPrice.'€</td>
-                            </tr>';
-                           
-                      		for ($i = 1; $i <= 10; $i++) {
-                      			if (isset($interTexts[$i])) {
-                      				echo '<tr><td colspan=2>'.$interTexts[$i].'</td></tr>';
-                      			}
-                      			if (isset($interImages[$i])) {
-                      				echo '<tr><td colspan=2><img style="max-width: 300px; max-height: 300px;" src="data:image/jpeg;base64,'.base64_encode( $interImages[$i] ).'"/></td></tr>';
-                      			}
-                      		}
-                      		
-                 	echo '<tr>
-                            	<td align="left">
-                            		<form id="like" action="" method="get" enctype="multipart/form-data" >
-                            			<button onclick="showContact()" value="'.$id.'" name="like">♥</button>  
-                        			</form>                         	
-                            	</td>
-                            	<td align="right">
-									<form id="back" action="index.php" method="get" enctype="multipart/form-data" >
-										<button value="" name="next"/>✗</button>
-									</form>
-								</td>
-                            </tr>
-               		</table>';                      
-                 ?>
+                <table>
+                    <tr>
+               	 		<td colspan=2>
+                    		<?php echo '<img style="max-width: 600px; max-height: 600px;" src="data:image/jpeg;base64,'.base64_encode( $interImage ).'"/>'; ?>
+                    	</td>
+                    </tr>
+                    <tr>
+                    	<td><?php echo $interMaintext; ?></td><td><?php echo $interPrice; ?></td>
+                    </tr>
+                    <?php
+                  		for ($i = 1; $i <= 10; $i++) {
+                  			if (isset($interTexts[$i])) {
+                  				echo '<tr><td colspan=2>'.$interTexts[$i].'</td></tr>';
+                  			}
+                  			if (isset($interImages[$i])) {
+                  				echo '<tr><td colspan=2><img style="max-width: 300px; max-height: 300px;" src="data:image/jpeg;base64,'.base64_encode( $interImages[$i] ).'"/></td></tr>';
+                  			}
+                  		}
+                    ?>
+                    <tr>
+		            	<td align="left">
+		            		<form id="like" action="" method="get" enctype="multipart/form-data" >		
+		            			<?php echo '<button onclick="showContact()" value="'.$id.'" name="like">♥</button>'; ?>
+	            			</form>                         	
+                    	</td>
+                    	<td align="right">
+							<form id="back" action="index.php" method="get" enctype="multipart/form-data" >
+									<button value="" name="next"/>✗</button>
+							</form>
+						</td>
+                    </tr>
+           		</table>
             </div>
         </div>
 		<div id="popup" onclick="PopUpHide()" style=" width:100%;
