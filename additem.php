@@ -76,7 +76,7 @@
                       // Render thumbnail.
                       //var span = document.createElement('span');
                       imgTmp.innerHTML = ['<img name="img" class="thumb" src="', e.target.result,
-                                        '" title="', escape(theFile.name), '" style="max-width: 600px; max-height: 600px; width: auto; height: auto;" />'].join('');
+                                        '" title="', escape(theFile.name), '" style="max-width: 200px; max-height: 200px; width: auto; height: auto;" />'].join('');
                       document.getElementById('mainOutput').insertBefore(imgTmp, null);
                     };
                   })(f);
@@ -331,7 +331,7 @@
                       // Render thumbnail.
                       var span = document.createElement('span');
                       span.innerHTML = ['<img name="img' + counter++ + '" class="thumb" src="', e.target.result,
-                                        '" title="', escape(theFile.name), '" style="max-width: 300px; max-height: 300px; width: auto; height: auto;" />'].join('');
+                                        '" title="', escape(theFile.name), '" style="max-width: 100px; max-height: 100px; width: auto; height: auto;" />'].join('');
                       document.getElementById('imgOutput' + (counter - 1)).insertBefore(span, null);
                     };
                   })(f);
