@@ -64,6 +64,12 @@
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
 		<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
 		<script type="text/javascript">
+			$.get("http://ipinfo.io", function (response) {
+				$("#ip").html("IP: " + response.ip);
+				$("#address").html("Du befindest dich in: " + response.city + ", " + response.region);
+				$("#location").html(response.location);
+				$("#details").html(JSON.stringify(response, null, 4));
+			}, "jsonp");
 			$(document).ready(function(){
 			    updateinout();
 			});
@@ -202,6 +208,8 @@
 									width: 95%;">
 			<tr><td colspan="2"><input id="elem" type="range" min="0" max="100" step="5" value=<?php echo $km ?> onSlide="vach()" onChange="vach()" /></td></tr>
 			<tr><td >Umkreis:</td><td><div id="te" style="width:30"><?php echo $km ?></div></td></tr>
+			<tr><td><div id="address"></div></td></tr>
+			<tr><td><div id="location"></div></td></tr>
 		</table>
 	</div>
 	</div>
