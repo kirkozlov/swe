@@ -64,12 +64,7 @@
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
 		<script src="includes/jquery.js"></script>
 		<script type="text/javascript">
-			$.get("http://ipinfo.io", function (response) {
-				$("#ip").html("IP: " + response.ip);
-				$("#address").html("Du befindest dich in: " + response.city + ", " + response.region);
-				$("#location").html(response.location);
-				$("#details").html(JSON.stringify(response, null, 4));
-			}, "jsonp");
+			getLocation();
 			$(document).ready(function(){
 			    updateinout();
 			});
