@@ -48,7 +48,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
-		<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+		<script src="includes/jquery.js"></script>
 		<script>
 			$(document).ready(function(){
 			    PopUpHide();
