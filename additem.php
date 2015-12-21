@@ -12,12 +12,12 @@
         $query = "";
 		$price = $_POST['price'];
 		$amount = $_POST['amount'];
-		if ($price != null && !is_float($price)) {
+		/*if ($price != null && !is_float($price)) {
 			$error = "price";
 		} elseif ($amount != null && !is_int($amount)) {
 			$error = "amount";
-		} 
-		if (!isset($error)) {
+		} */
+		if (true || !isset($error)) {
 	        $query = $query."
 		                INSERT INTO `swegehos_swe`.`offers`
 		                (`userid`,`maintext`, `mainimage`,
@@ -63,11 +63,14 @@
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
         <link rel="stylesheet" href="css/additem.css" type="text/css" />
 		<script src="includes/jquery.js"></script>
+		<script src="includes/googleMap.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAizLFKOw4W4Pb7juAOcSpUR6t41c_yQY&signed_in=true&callback=initMap" async defer></script>
         <script language="javascript" type="text/javascript">
+		
 			$(document).ready(function(){
 			    PopUpHide();
 			<?php
-				if($error == "price") {
+				/*if($error == "price") {
 					echo "document.getElementById('ppt').innerHTML='Bitte eine Zahl in der Form \"12.34\" für den Preis eingeben!';
 					PopUpShow();";
 					$error = "";
@@ -75,7 +78,7 @@
 					echo "document.getElementById('ppt').innerHTML='Bitte eine Zahl für die Anzahl eingeben!';
 					PopUpShow();";
 					$error = "";
-				}	
+				}*/	
 				?>			
 			});
 			
@@ -89,7 +92,89 @@
 				PopUpShow();
 			}
 
-
+			var changed = [false, false, false, false]; //[0] = title, [1] = price, [2] = amount, [3] = img
+			
+			function getErrors(){
+				var errorMainText = document.getElementById("errorMainText");
+				var errorPrice = document.getElementById("errorPrice");
+				var errorAmount = document.getElementById("errorAmount");
+				var errorMainImg = document.getElementById("errorMainImg");
+				if( errorMainText.style.visibility == "visible" ||
+					errorPrice.style.visibility == "visible" ||
+					errorAmount.style.visibility == "visible" ||
+					errorMainImg.style.visibility == "visible" ||
+					!changed[0] || !changed[1] || !changed[2] || !changed[3]
+					)
+					return false;
+				else{
+					sendCounter();
+					return true;
+				}
+			}
+			
+			function checkErrors(elem){
+				switch (elem.name){
+					case "mainTitle":
+						changed[0] = true;
+						var errorMainText = document.getElementById("errorMainText");
+						if(elem.value.length > 100){
+							errorMainText.style.visibility = "visible";
+							document.getElementById('ppt').innerHTML='Der Titel darf nicht länger als 100 Zeichen sein.';
+							PopUpShow();
+						}
+						else if(!elem.value.trim()){
+							errorMainText.style.visibility = "visible";
+							document.getElementById('ppt').innerHTML='Der Titel darf nicht leer sein.';
+							PopUpShow();
+						}
+						else{
+							errorMainText.style.visibility = "hidden";
+						}
+					break;
+					
+					case "price":
+						changed[1] = true;
+						var errorPrice = document.getElementById("errorPrice");
+						if(isNaN(elem.value)){
+							errorPrice.style.visibility = "visible";
+							document.getElementById('ppt').innerHTML='Bitte eine Zahl in der Form \"12.34\" für den Preis eingeben!';
+							PopUpShow();
+						}
+						else if(!elem.value.trim()){
+							errorPrice.style.visibility = "visible";
+							document.getElementById('ppt').innerHTML='Preis darf nicht leer sein.';
+							PopUpShow();
+						}
+						else{
+							errorPrice.style.visibility = "hidden";
+						}
+					break;
+					
+					case "amount":
+						changed[2] = true;
+						var errorAmount = document.getElementById("errorAmount");
+						if(!(elem.value == parseInt(elem.value, 10))){
+							errorAmount.style.visibility = "visible";
+							document.getElementById('ppt').innerHTML='Bitte eine ganze Zahl für die Anzahl eingeben!';
+							PopUpShow();
+						}
+						else{
+							errorAmount.style.visibility = "hidden";
+						}
+					break;
+					
+					case "mainImage":
+						changed[3] = true;
+						var errorMainImg = document.getElementById("errorMainImg");
+						if(!elem.value.trim()){
+							errorMainImg.style.visibility = "visible";
+						}
+						else{
+							errorMainImg.style.visibility = "hidden";
+						}
+					break;
+				}
+			}
 			
             var counter = 0;
 			var imgTmp = "";
@@ -415,11 +500,12 @@
                 <div class="additem">
                     <form id="saveForm" action="" method="post" enctype="multipart/form-data" >
                         <table class="anzeige" id="anzeige">
-                            <tr><td colspan="3"><input type="submit" value="Speichern" name="save" onclick="sendCounter()" /></td></tr>
-                            <tr><td>Beschreibung:</td><td><input type="text" name="mainTitle"/></td></tr>
-                            <tr><td>Preis (in €):</td><td><input type="text" name="price" /></td></tr>
-                            <tr><td>Anzahl:</td><td><input type="text" name="amount" /></td></tr>
-                            <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" name="mainImage" /></td></tr>
+                            <tr><td colspan="3"><input type="submit" value="Speichern" name="save" onclick="return getErrors();" /></td></tr>
+                            <tr><td>Beschreibung:</td><td><input type="text" name="mainTitle" onblur="checkErrors(this);" /><img id="errorMainText" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
+                            <tr><td>Preis (in €):</td><td><input type="text" name="price" onblur="checkErrors(this);" /><img id="errorPrice" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
+                            <tr><td>Anzahl:</td><td><input type="text" name="amount" onblur="checkErrors(this);" /><img id="errorAmount" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
+							<tr><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr></script>
+                            <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" name="mainImage" onblur="checkErrors(this);" /><img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
 							<tr><td colspan="2"><output id="mainOutput"><span id="spanMain"></span></output></td></tr>
                         </table>
 						<span id ="images" hidden="hidden"></span>
@@ -432,6 +518,7 @@
                     <button onclick="showItems()">Element hinzuf&uuml;gen</button>
                 </div>
             </div>
+			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAizLFKOw4W4Pb7juAOcSpUR6t41c_yQY&signed_in=true&callback=initMap" async defer>
         </div>
 		<div id="popup" onclick="PopUpHide()" style=" width:100%;
 												height: 2000px;
