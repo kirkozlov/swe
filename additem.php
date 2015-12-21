@@ -504,7 +504,7 @@
                             <tr><td>Beschreibung:</td><td><input type="text" name="mainTitle" onblur="checkErrors(this);" /><img id="errorMainText" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
                             <tr><td>Preis (in €):</td><td><input type="text" name="price" onblur="checkErrors(this);" /><img id="errorPrice" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
                             <tr><td>Anzahl:</td><td><input type="text" name="amount" onblur="checkErrors(this);" /><img id="errorAmount" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
-							<tr><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr></script>
+							<tr><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
                             <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" name="mainImage" onblur="checkErrors(this);" /><img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
 							<tr><td colspan="2"><output id="mainOutput"><span id="spanMain"></span></output></td></tr>
                         </table>
@@ -518,7 +518,6 @@
                     <button onclick="showItems()">Element hinzuf&uuml;gen</button>
                 </div>
             </div>
-			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAizLFKOw4W4Pb7juAOcSpUR6t41c_yQY&signed_in=true&callback=initMap" async defer>
         </div>
 		<div id="popup" onclick="PopUpHide()" style=" width:100%;
 												height: 2000px;
