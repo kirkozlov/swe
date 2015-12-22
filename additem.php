@@ -4,11 +4,24 @@
 	}
 	$error = "";
 
+	include_once("includes/imgResize.php");
+	include_once("includes/ConectionOpen.php");
+	
+	$query = "SELECT * FROM `tags`";
+	$res = $conn->query($query);
+
+	$katList;
+
+	for($i = 0;$row = $res->fetch_row(); $i++){
+		$katList[$i][0] = $row[0];
+		$katList[$i][1] = $row[1];
+	}
+	
     if(isset($_POST['save'])) {
         $counter = $_GET['c'];
         $image = "";
         if(!empty($_FILES['mainImage']['tmp_name']))
-            $image = addslashes(file_get_contents($_FILES['mainImage']['tmp_name']));
+            $image = addslashes(resize_image($_FILES['mainImage']['tmp_name'], 600, 600));//addslashes(file_get_contents($_FILES['mainImage']['tmp_name']));
         $query = "";
 		$price = $_POST['price'];
 		$amount = $_POST['amount'];
@@ -27,14 +40,15 @@
 		                    12,21, " . $amount . "
 		                )
 		            ;";
-			include("includes/ConectionOpen.php");
+			
 			$res = $conn->query($query);
 			$offerID = $conn->insert_id;
+//			echo $query;
 			$query = "";// var_dump($_FILES);
 			for($i = 1; $i <= $counter; $i++){
 				if(isset($_FILES['file' . $i]) && !empty($_FILES['file' . $i]['tmp_name'])){
 					//echo $_FILES['file' . $i]['tmp_name']. " " . $i . "<br />";
-				    $file = addslashes(file_get_contents($_FILES['file' . $i]['tmp_name']));
+				    $file = addslashes(resize_image($_FILES['file' . $i]['tmp_name'],300,300));//addslashes(file_get_contents($_FILES['file' . $i]['tmp_name']));
 				    $query = " INSERT INTO images(offersid, image, insideid) 
 				                        VALUES(". $offerID .", '". $file ."', ". $i .");";
 				    $conn->query($query);
@@ -49,10 +63,12 @@
 					//echo $query;
 				}    
 			}
-				
-			$conn->close(); 	
+			$query = "INSERT INTO `offers_tags` (`id`, `offersid`, `tagsid`) VALUES (NULL, '".$offerID."', '".$_POST['kat']."');";
+			$conn->query($query);
 		}
-    }    
+    }
+	
+	$conn->close(); 
 
 ?>
 <html>
@@ -475,6 +491,7 @@
 				img.setAttribute("type","file");
 				img.setAttribute("id",id);
 				img.setAttribute("name","file"+counter);
+				img.setAttribute("accept","image/*" );
 				images.insertBefore(img,null);
                 //cell.innerHTML = cell.innerHTML + '<input onchange="" type="file" id="'+ id +'" name="file' + counter + '" />';
 				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementUp(this)" value="Hoch" />';
@@ -504,8 +521,14 @@
                             <tr><td>Beschreibung:</td><td><input type="text" name="mainTitle" onblur="checkErrors(this);" /><img id="errorMainText" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
                             <tr><td>Preis (in €):</td><td><input type="text" name="price" onblur="checkErrors(this);" /><img id="errorPrice" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
                             <tr><td>Anzahl:</td><td><input type="text" name="amount" onblur="checkErrors(this);" /><img id="errorAmount" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
+							<tr><td>Kategorie:</td>
+								<td>
+									<select name="kat">
+										<?php foreach($katList as $kat) echo "<option value='$kat[0]'>$kat[1]</option>"; ?>
+									</select>
+								</td>
 							<tr><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
-                            <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" name="mainImage" onblur="checkErrors(this);" /><img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
+                            <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" accept="image/*" name="mainImage" onblur="checkErrors(this);" /><img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
 							<tr><td colspan="2"><output id="mainOutput"><span id="spanMain"></span></output></td></tr>
                         </table>
 						<span id ="images" hidden="hidden"></span>
