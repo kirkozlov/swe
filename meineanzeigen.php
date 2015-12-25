@@ -16,6 +16,8 @@
 		$query = "DELETE FROM interests WHERE offersid ='".$id."'";
 		//echo $query;
 		$res = $conn->query($query);
+		$query = "DELETE FROM offers_tags WHERE offersid ='".$id."'";
+		$res = $conn->query($query);
 		$query = "DELETE FROM offers WHERE id ='".$id."'";
 		//echo $query;
 		$res = $conn->query($query);

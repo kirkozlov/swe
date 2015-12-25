@@ -12,6 +12,7 @@
 		if (!isset($_SESSION['idu'])) {
 			header("Location: login.php");
 		} else {
+			$_SESSION['anzeigencounter'] = $_SESSION['anzeigencounter'] + 1;
 			$userid = $_SESSION['idu'];
 			$sql = "INSERT INTO interests (offersid, userid) VALUES ('$id', '$userid')";
 			$res = $conn->query($sql);

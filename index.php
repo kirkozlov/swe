@@ -15,6 +15,7 @@
 			$_SESSION['anzeigencounter'] = $tmp;
 		}
 	}
+	echo $_SESSION['anzeigencounter'];
     $sql = "SELECT id, maintext, price, mainimage FROM offers ORDER BY id LIMIT ".$_SESSION['anzeigencounter'].", 1";
     $sth = $conn->query($sql);
     if (isset($sth) && $sth != null && $row = $sth->fetch_row()) {
@@ -90,7 +91,7 @@
                	</table>
 				   <?php
 				   		if ($dbempty) {
-				   			echo 'Bedauerlicherweise sind keine Anzeigen vorhanden.';
+				   			echo 'Bedauerlicherweise sind keine Anzeige vorhanden.';
 				   		}
 				   ?>
             </div>
