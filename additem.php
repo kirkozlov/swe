@@ -120,14 +120,17 @@
 					errorAmount.style.visibility == "visible" ||
 					errorMainImg.style.visibility == "visible" ||
 					!changed[0] || !changed[1] || !changed[2] || !changed[3]
-					)
-					return false;
+					) {
+						document.getElementById('ppt').innerHTML='Bitte alle Pflichtfelder ausfüllen: Beschreibung, Preis, Anzahl und Bild.';
+						PopUpShow();
+						return false;
+					}
+					
 				else{
 					sendCounter();
 					return true;
 				}
 			}
-			
 			function checkErrors(elem){
 				switch (elem.name){
 					case "mainTitle":
