@@ -15,8 +15,7 @@
 			$_SESSION['anzeigencounter'] = $tmp;
 		}
 	}
-	echo $_SESSION['anzeigencounter'];
-    $sql = "SELECT id, maintext, price, mainimage FROM offers ORDER BY id LIMIT ".$_SESSION['anzeigencounter'].", 1";
+    $sql = "SELECT id, maintext, price, mainimage, userid FROM offers ORDER BY id LIMIT ".$_SESSION['anzeigencounter'].", 1";
     $sth = $conn->query($sql);
     if (isset($sth) && $sth != null && $row = $sth->fetch_row()) {
     	$dbempty = false;
@@ -24,7 +23,13 @@
 		$interMaintext = $row[1];	
 		$interPrice = $row[2];	
 		$interImage = $row[3];	
+		$userid = $row[4];
     }
+    $sql = "SELECT goldflag FROM users WHERE id='".$userid."'";
+    $sth = $conn->query($sql);
+	if (isset($sth) && $sth != null && $row = $sth->fetch_row()) {
+		$goldflag = $row[0];
+	}
    	/*
 	um mit filter zu vergleichen:
 	
@@ -56,6 +61,15 @@
 									echo '<img style="max-width: 600px; max-height: 600px;" src="data:image/jpeg;base64,'.base64_encode( $interImage ).'"/>';
 								}
 							?>					
+						</td>
+            		</tr>
+            		<tr>
+						<td colspan=2>
+							<?php
+								if($goldflag == 1) {
+									echo ' 	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  ';
+								}
+							?>
 						</td>
             		</tr>
             		<tr>
