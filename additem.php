@@ -37,7 +37,7 @@
 		                 `price`, `latitude`, `longtitude`,
 		                  `amount`)
 		                VALUES(". $_SESSION['idu'] .", '". $_POST['mainTitle'] ."', '". $image ."', " . $price . ",
-		                    12,21, " . $amount . "
+		                    ". $_POST['txtLat'] .",". $_POST['txtLng'] .", " . $amount . "
 		                )
 		            ;";
 			
@@ -80,7 +80,7 @@
         <link rel="stylesheet" href="css/additem.css" type="text/css" />
 		<script src="includes/jquery.js"></script>
 		<script src="includes/googleMap.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAizLFKOw4W4Pb7juAOcSpUR6t41c_yQY&signed_in=true&callback=initMap" async defer></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAizLFKOw4W4Pb7juAOcSpUR6t41c_yQY&libraries=places&callback=initAutocomplete" async defer></script>
         <script language="javascript" type="text/javascript">
 		
 			$(document).ready(function(){
@@ -115,6 +115,8 @@
 				var errorPrice = document.getElementById("errorPrice");
 				var errorAmount = document.getElementById("errorAmount");
 				var errorMainImg = document.getElementById("errorMainImg");
+				var errorLat = document.getElementById("txtLat").value;
+				var errorLng = document.getElementById("txtLng").value;
 				if( errorMainText.style.visibility == "visible" ||
 					errorPrice.style.visibility == "visible" ||
 					errorAmount.style.visibility == "visible" ||
@@ -125,7 +127,11 @@
 						PopUpShow();
 						return false;
 					}
-					
+				else if(!errorLat || !errorLng){
+					document.getElementById('ppt').innerHTML='Bitte einen Ort in der Karte eingeben.';
+					PopUpShow();
+					return false;
+				}
 				else{
 					sendCounter();
 					return true;
@@ -520,7 +526,12 @@
                 <div class="additem">
                     <form id="saveForm" action="" method="post" enctype="multipart/form-data" >
                         <table class="anzeige" id="anzeige">
-                            <tr><td colspan="3"><input type="submit" value="Speichern" name="save" onclick="return getErrors();" /></td></tr>
+                            <tr><td colspan="3">
+									<input type="submit" value="Speichern" name="save" onclick="return getErrors();" />
+									<input type="text" name="txtLat" id="txtLat" hidden="hidden" />
+									<input type="text" name="txtLng" id="txtLng" hidden="hidden" />
+								</td>
+							</tr>
                             <tr><td>Beschreibung:</td><td><input type="text" name="mainTitle" onblur="checkErrors(this);" /><img id="errorMainText" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
                             <tr><td>Preis (in €):</td><td><input type="text" name="price" onblur="checkErrors(this);" /><img id="errorPrice" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
                             <tr><td>Anzahl:</td><td><input type="text" name="amount" onblur="checkErrors(this);" /><img id="errorAmount" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
@@ -530,7 +541,7 @@
 										<?php foreach($katList as $kat) echo "<option value='$kat[0]'>$kat[1]</option>"; ?>
 									</select>
 								</td>
-							<tr><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
+							<tr><input id="pac-input" class="controls" type="text" placeholder="Search Box"><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
                             <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" accept="image/*" name="mainImage" onblur="checkErrors(this);" /><img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
 							<tr><td colspan="2"><output id="mainOutput"><span id="spanMain"></span></output></td></tr>
                         </table>
