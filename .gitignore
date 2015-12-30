@@ -49,4 +49,4 @@ Temporary Items
 *.swp
 .vscode
 .idea
-
+Makefile

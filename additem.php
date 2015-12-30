@@ -61,7 +61,7 @@
 				    $conn->query($query);
 		//                var_dump($query);
 					//echo $query;
-				}    
+				}
 			}
 			$query = "INSERT INTO `offers_tags` (`id`, `offersid`, `tagsid`) VALUES (NULL, '".$offerID."', '".$_POST['kat']."');";
 			$conn->query($query);

@@ -25,11 +25,17 @@
 		$interImage = $row[3];	
 		$userid = $row[4];
     }
-    $sql = "SELECT goldflag FROM users WHERE id='".$userid."'";
-    $sth = $conn->query($sql);
-	if (isset($sth) && $sth != null && $row = $sth->fetch_row()) {
-		$goldflag = $row[0];
+    
+    if (isset($userid)) {
+		$sql = "SELECT goldflag FROM users WHERE id='".$userid."'";
+		$sth = $conn->query($sql);
+		if (isset($sth) && $sth != null && $row = $sth->fetch_row()) {
+			$goldflag = $row[0];
+		}
+	} else {
+		$goldflag = 0;
 	}
+
    	/*
 	um mit filter zu vergleichen:
 	

@@ -50,6 +50,11 @@
 		$interImages[$row[0]] = $row[1];
 	}
 
+	$sql = "SELECT tags.name FROM tags INNER JOIN offers_tags ON tags.id = offers_tags.tagsid WHERE offers_tags.offersid = '".$id."'";
+	$res = $conn->query($sql);
+	if($res != null && $row = $res->fetch_row()) {
+		$category = $row[0];
+	}
     
     $conn->close();
     
@@ -104,7 +109,13 @@
 						<td colspan=2><?php echo $interMaintext; ?></td>
                     </tr>
                     <tr>
-                    	<td>Anzahl: <?php echo $interAmount?></td><td><?php echo $interPrice; ?>€</td>
+                    	<td>Anzahl:</td><td><?php echo $interAmount?></td>
+                    </tr>
+                    <tr>
+						<td>Preis:</td><td><?php echo $interPrice; ?>€</td>
+                    </tr>
+                    <tr>
+                    	<td>Kategorie:</td><td><?php echo $category?></td>
                     </tr>
                     <?php
                   		for ($i = 1; $i <= 10; $i++) {
