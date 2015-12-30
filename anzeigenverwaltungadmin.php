@@ -22,11 +22,13 @@
 		//echo $query;
 		$res = $conn->query($query);
 	}
-    $str1 = "SELECT id, maintext, mainimage FROM offers" ;
+    $str1 = "SELECT id, maintext, mainimage, amount, price FROM offers" ;
     $res = $conn->query($str1);
 	while($row=$res->fetch_row()){
 		$offers[$row[0]] = $row[1];
 		$images[$row[0]] = $row[2];
+		$amount[$row[0]] = $row[3];
+		$price[$row[0]] = $row[4];
 	}
 	
     $conn->close();?>
@@ -48,10 +50,13 @@
 				<table>
  					<?php
 						if (isset($offers) && isset($images)) {
+							echo '<tr><td>Bild</td><td>Beschreibung</td><td>Preis</td><td>Anzahl</td></tr>';
 							foreach ($offers as $key => $value) {
 								echo '<tr>';
-								echo '<td><img style="max-width: 200px; max-height: 200px;" src="data:image/jpeg;base64,'.base64_encode( $images[$key] ).'"/></td>';
+								echo '<td><img style="max-width: 100px; max-height: 100px;" src="data:image/jpeg;base64,'.base64_encode( $images[$key] ).'"/></td>';
 								echo '<td>'.$value.'</td>';
+								echo '<td>'.$price[$key].'€</td>';
+								echo '<td>'.$amount[$key].'</td>';
 								echo '<td>
 										<form id="delete" action="" method="post" enctype="multipart/form-data" >
 											<button value="'.$key.'" name="delete"/>Löschen</button>
