@@ -7,7 +7,7 @@
 	include_once("includes/imgResize.php");
 	include_once("includes/ConectionOpen.php");
 	
-	$query = "SELECT * FROM `tags`";
+	$query = "SELECT * FROM `tags` ORDER BY 2";
 	$res = $conn->query($query);
 
 	$katList;
@@ -521,9 +521,9 @@
                     <form id="saveForm" action="" method="post" enctype="multipart/form-data" >
                         <table class="anzeige" id="anzeige">
                             <tr><td colspan="3"><input type="submit" value="Speichern" name="save" onclick="return getErrors();" /></td></tr>
-                            <tr><td>Beschreibung:</td><td><input type="text" name="mainTitle" onblur="checkErrors(this);" /><img id="errorMainText" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
-                            <tr><td>Preis (in €):</td><td><input type="text" name="price" onblur="checkErrors(this);" /><img id="errorPrice" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
-                            <tr><td>Anzahl:</td><td><input type="text" name="amount" onblur="checkErrors(this);" /><img id="errorAmount" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
+                            <tr><td>Beschreibung:</td><td><input type="text" name="mainTitle" onblur="checkErrors(this);" /><img id="errorMainText" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
+                            <tr><td>Preis (in €):</td><td><input type="text" name="price" onblur="checkErrors(this);" /><img id="errorPrice" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
+                            <tr><td>Anzahl:</td><td><input type="text" name="amount" onblur="checkErrors(this);" /><img id="errorAmount" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
 							<tr><td>Kategorie:</td>
 								<td>
 									<select name="kat">
@@ -531,7 +531,7 @@
 									</select>
 								</td>
 							<tr><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
-                            <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" accept="image/*" name="mainImage" onblur="checkErrors(this);" /><img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="err.png" ></td></tr>
+                            <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" accept="image/*" name="mainImage" onblur="checkErrors(this);" /><img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
 							<tr><td colspan="2"><output id="mainOutput"><span id="spanMain"></span></output></td></tr>
                         </table>
 						<span id ="images" hidden="hidden"></span>
