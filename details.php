@@ -22,6 +22,10 @@
 			$email = mysqli_fetch_array($res);
 			$contact = $email[0];
 			$gekauft = true;
+			
+			//Anzahl verringern wenn größer 0
+			$sql = "UPDATE offers SET amount = amount - 1 WHERE id='".$id."' and amount > 0";
+			$res = $conn->query($sql);
 		}
 	}
 	
