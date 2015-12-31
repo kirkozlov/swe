@@ -29,13 +29,15 @@
 		}
 	}
 	
-    $sql = "SELECT maintext, price, mainimage, amount FROM offers WHERE id='".$id."'";
+    $sql = "SELECT maintext, price, mainimage, amount, latitude, longtitude FROM offers WHERE id='".$id."'";
 	$res = $conn->query($sql);
 	if($row=$res->fetch_row()) {
 		$interMaintext = $row[0];	
 		$interPrice = $row[1];	
 		$interImage = $row[2];	
 		$interAmount = $row[3];
+		$lat = $row[4];
+		$lng = $row[5];
 	}
 	
 	$sql = "SELECT insideid, detailledtext FROM detailedtexts WHERE offersid='".$id."'";
@@ -107,6 +109,16 @@
                     </tr>
                     <tr>
 						<td colspan=2><?php echo $interMaintext; ?></td>
+                    </tr>
+                    <tr>
+						<td>Ort:</td>
+						<?php 
+							$url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lng."&sensor=true";
+							$json = file_get_contents($url);
+							$obj = json_decode($json, true);
+							$adr = $obj['results'][0]['formatted_address'];
+							echo '<td>'.$adr.'</td>';
+						?>
                     </tr>
                     <tr>
                     	<td>Anzahl:</td><td><?php echo $interAmount?></td>
