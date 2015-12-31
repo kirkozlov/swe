@@ -30,4 +30,7 @@ END
 
 DELIMITER ;
 
-SELECT calculateTheDistance(77.1539, -139.398, -77.1804, -139.55);
+#SELECT calculateTheDistance(77.1539, -139.398, -77.1804, -139.55);
+
+#							CURRENT POSITION 	Latitude	Longtitude,	DB Fields					Entfernung aus dem FIlter in meter
+SELECT * FROM offers WHERE calculateTheDistance(50.76774370, 6.09138290, latitude, longtitude) <= 65000
