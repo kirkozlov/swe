@@ -4,81 +4,19 @@
 	}
 	$error = "";
 	
-	if(!$_POST['edit']){
-		header("Location: index.php");
+	$offerID = "";
+	
+	if(!isset($_POST['edit'])){
+		if($_POST['save'])
+			$offerID = $_POST['offerID'];
+		else
+			header("Location: index.php");
+	}
+	else{
+		$offerID = $_POST['edit'];
 	}
 	include_once("includes/imgResize.php");
 	include_once("includes/ConectionOpen.php");
-	
-	$query = "SELECT * FROM `offers` WHERE id = ". $_POST['edit'];
-	$res = $conn->query($query);
-
-	$offer;
-
-	for($i = 0;$row = $res->fetch_row(); $i++){
-		$offer[0] = $row[0];
-		$offer[1] = $row[1];
-		$offer[2] = $row[2];
-		$offer[3] = $row[3];
-		$offer[4] = $row[4];
-		$offer[5] = $row[5];
-		$offer[6] = $row[6];
-		$offer[7] = $row[7];
-		$offer[8] = $row[8];
-		$offer[9] = $row[9];
-	}
-	
-	$query = "SELECT * FROM `offers_tags` WHERE offersid =". $_POST['edit'];
-	$res = $conn->query($query);
-
-	$offerKat;
-
-	for($i = 0;$row = $res->fetch_row(); $i++){
-		$offerKat[0] = $row[0];
-		$offerKat[1] = $row[1];
-		$offerKat[2] = $row[2];
-	}
-	
-	$query = "SELECT * FROM `detailedtexts` WHERE offersid = ". $_POST['edit'] ." ORDER BY 4";
-	$res = $conn->query($query);
-
-	$elements = false;
-	$elemCounter = 0;
-
-	while($row = $res->fetch_row()){
-		$elements[$row[3]][0] = $row[0];
-		$elements[$row[3]][1] = $row[1];
-		$elements[$row[3]][2] = $row[2];
-		$elements[$row[3]][3] = $row[3];
-		$elements[$row[3]]["img"] = false;
-		if($elemCounter < $elements[$row[3]][3]){
-			$elemCounter = $elements[$row[3]][3];
-		}
-	}
-	
-	$query = "SELECT * FROM images WHERE offersid = ". $_POST['edit'] ." ORDER BY 4";
-	$res = $conn->query($query);
-	
-	while($row = $res->fetch_row()){
-		$elements[$row[3]][0] = $row[0];
-		$elements[$row[3]][1] = $row[1];
-		$elements[$row[3]][2] = $row[2];
-		$elements[$row[3]][3] = $row[3];
-		$elements[$row[3]]["img"] = true;
-		if($elemCounter < $elements[$row[3]][3]){
-			$elemCounter = $elements[$row[3]][3];
-		}
-	}
-	echo $elemCounter;
-	
-	$query = "SELECT * FROM `tags` ORDER BY 2";
-	$res = $conn->query($query);
-	$katList;
-
-	for($i = 0;$row = $res->fetch_row(); $i++){
-		$katList[$i][0] = $row[0];
-		$katList[$i][1] = $row[1];
-	}
 	
     if(isset($_POST['save'])) {
         $counter = $_GET['c'];
@@ -90,7 +28,7 @@
 		$amount = $_POST['amount'];
 
 		if (true || !isset($error)) {
-	        $query = $query."
+/*	        $query = $query."
 		                INSERT INTO `swegehos_swe`.`offers`
 		                (`userid`,`maintext`, `mainimage`,
 		                 `price`, `latitude`, `longtitude`,
@@ -99,10 +37,26 @@
 		                    ". $_POST['txtLat'] .",". $_POST['txtLng'] .", " . $amount . "
 		                )
 		            ;";
+*/
+			
+			$query = "UPDATE `offers` 
+						SET `maintext` = '". $_POST["mainTitle"] ."', 
+						`price` = '". $price ."', 
+						`latitude` = '". $_POST['txtLat'] ."', 
+						`longtitude` = '". $_POST['txtLng'] ."', 
+						`amount` = '". $amount ."' ";
+			if($image != "")
+				$query = $query .", `mainimage` = '". $image ."' ";
+			
+			$query = $query ."WHERE `offers`.`id` = ". $_POST["offerID"] .";";
 			
 			$res = $conn->query($query);
-			$offerID = $conn->insert_id;
-//			echo $query;
+			
+			$query = "UPDATE `offers_tags` 
+						 SET `tagsid` = '". $_POST['kat'] ."' 
+					   WHERE `offers_tags`.`offersid` = ". $offerID .";";
+			$conn->query($query);
+/*/			echo $query;
 			$query = "";// var_dump($_FILES);
 			for($i = 1; $i <= $counter; $i++){
 				if(isset($_FILES['file' . $i]) && !empty($_FILES['file' . $i]['tmp_name'])){
@@ -124,8 +78,78 @@
 			}
 			$query = "INSERT INTO `offers_tags` (`id`, `offersid`, `tagsid`) VALUES (NULL, '".$offerID."', '".$_POST['kat']."');";
 			$conn->query($query);
+*/
 		}
     }
+	
+	$query = "SELECT * FROM `offers` WHERE id = ". $offerID;
+	$res = $conn->query($query);
+
+	$offer;
+
+	for($i = 0;$row = $res->fetch_row(); $i++){
+		$offer[0] = $row[0];
+		$offer[1] = $row[1];
+		$offer[2] = $row[2];
+		$offer[3] = $row[3];
+		$offer[4] = $row[4];
+		$offer[5] = $row[5];
+		$offer[6] = $row[6];
+		$offer[7] = $row[7];
+		$offer[8] = $row[8];
+		$offer[9] = $row[9];
+	}
+	
+	$query = "SELECT * FROM `offers_tags` WHERE offersid =". $offerID;
+	$res = $conn->query($query);
+
+	$offerKat;
+
+	for($i = 0;$row = $res->fetch_row(); $i++){
+		$offerKat[0] = $row[0];
+		$offerKat[1] = $row[1];
+		$offerKat[2] = $row[2];
+	}
+	
+	$query = "SELECT * FROM `detailedtexts` WHERE offersid = ". $offerID ." ORDER BY 4";
+	$res = $conn->query($query);
+
+	$elements = false;
+	$elemCounter = 0;
+
+	while($row = $res->fetch_row()){
+		$elements[$row[3]][0] = $row[0];
+		$elements[$row[3]][1] = $row[1];
+		$elements[$row[3]][2] = $row[2];
+		$elements[$row[3]][3] = $row[3];
+		$elements[$row[3]]["img"] = false;
+		if($elemCounter < $elements[$row[3]][3]){
+			$elemCounter = $elements[$row[3]][3];
+		}
+	}
+	
+	$query = "SELECT * FROM images WHERE offersid = ". $offerID ." ORDER BY 4";
+	$res = $conn->query($query);
+	
+	while($row = $res->fetch_row()){
+		$elements[$row[3]][0] = $row[0];
+		$elements[$row[3]][1] = $row[1];
+		$elements[$row[3]][2] = $row[2];
+		$elements[$row[3]][3] = $row[3];
+		$elements[$row[3]]["img"] = true;
+		if($elemCounter < $elements[$row[3]][3]){
+			$elemCounter = $elements[$row[3]][3];
+		}
+	}
+	
+	$query = "SELECT * FROM `tags` ORDER BY 2";
+	$res = $conn->query($query);
+	$katList;
+
+	for($i = 0;$row = $res->fetch_row(); $i++){
+		$katList[$i][0] = $row[0];
+		$katList[$i][1] = $row[1];
+	}
 	
 	$conn->close(); 
 
@@ -141,6 +165,8 @@
 		<script src="includes/googleMap.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAizLFKOw4W4Pb7juAOcSpUR6t41c_yQY&libraries=places&callback=initAutocomplete" async defer></script>
         <script language="javascript" type="text/javascript">
+		
+			//setLocation(document.getElementById("txtLat").value, document.getElementById("txtLng").value);
 		
 			$(document).ready(function(){
 			    PopUpHide();	
@@ -572,8 +598,9 @@
                         <table class="anzeige" id="anzeige">
                             <tr><td colspan="3">
 									<input type="submit" value="Speichern" name="save" onclick="return getErrors();" />
-									<input type="text" name="txtLat" id="txtLat" hidden="hidden" value="<?php echo $offer[6]; ?>" />
-									<input type="text" name="txtLng" id="txtLng" hidden="hidden" value="<?php echo $offer[7]; ?>" />
+									<input type="text" name="txtLat" id="txtLat" hidden="hidden" value="<?php echo $offer[5]; ?>" />
+									<input type="text" name="txtLng" id="txtLng" hidden="hidden" value="<?php echo $offer[6]; ?>" />
+									<input type="text" name="offerID" id="offerID" hidden="hidden" value="<?php echo $offer[0]; ?>" />
 								</td>
 							</tr>
                             <tr><td>Beschreibung:</td><td><input type="text" name="mainTitle" onblur="checkErrors(this);" value="<?php echo $offer[3]; ?>" /><img id="errorMainText" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>

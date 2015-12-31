@@ -24,20 +24,29 @@ function initAutocomplete() {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
+	  //if(!txtLat.value){alert(txtLat.value);}
+	  if(txtLat.value && txtLng.value){		  
+		foundPlace = {
+			lat: txtLat.value,
+			lng: txtLng.value
+		};
+	  }
+	  else{
+		foundPlace = {
+			lat: position.coords.latitude,
+			lng: position.coords.longitude
+		};
+		  
+		txtLat.value = foundPlace.lat;
+		txtLng.value = foundPlace.lng;
+	  }
 	  
-	  foundPlace = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-	  
-	  txtLat.value = foundPlace.lat;
-	  txtLng.value = foundPlace.lng;
 
 //	  alert(foundPlace.lat, foundPlace.lng);
 	  
-	  infoWindow.setPosition(pos);
-      infoWindow.setContent('Ihre Position.');
-      map.setCenter(pos);
+	  infoWindow.setPosition(new google.maps.LatLng(foundPlace.lat,foundPlace.lng));
+      infoWindow.setContent('Verkaufsort.');
+      map.setCenter(new google.maps.LatLng(foundPlace.lat,foundPlace.lng));
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
@@ -87,7 +96,7 @@ function initAutocomplete() {
       // Create a marker for each place.
       markers.push(new google.maps.Marker({
         map: map,
-        icon: icon,
+//        icon: large_red,
         title: place.name,
         position: place.geometry.location
       }));
