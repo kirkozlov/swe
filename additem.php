@@ -64,7 +64,9 @@
 				}
 			}
 			$query = "INSERT INTO `offers_tags` (`id`, `offersid`, `tagsid`) VALUES (NULL, '".$offerID."', '".$_POST['kat']."');";
-			$conn->query($query);
+			$conn->query($query);			
+			
+			header("Location: meineanzeigen.php");
 		}
     }
 	

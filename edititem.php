@@ -39,21 +39,40 @@
 		$offerKat[2] = $row[2];
 	}
 	
-	$query = "SELECT * FROM `detailedtexts` WHERE offersid = ". $_POST['edit'] ." UNION SELECT * FROM images WHERE offersid = 77 ORDER BY 4";
+	$query = "SELECT * FROM `detailedtexts` WHERE offersid = ". $_POST['edit'] ." ORDER BY 4";
 	$res = $conn->query($query);
 
-	$elements;
+	$elements = false;
+	$elemCounter = 0;
 
-	for($i = 0;$row = $res->fetch_row(); $i++){
-		$elements[$i][0] = $row[0];
-		$elements[$i][1] = $row[1];
-		$elements[$i][2] = $row[2];
-		$elements[$i][3] = $row[3];
+	while($row = $res->fetch_row()){
+		$elements[$row[3]][0] = $row[0];
+		$elements[$row[3]][1] = $row[1];
+		$elements[$row[3]][2] = $row[2];
+		$elements[$row[3]][3] = $row[3];
+		$elements[$row[3]]["img"] = false;
+		if($elemCounter < $elements[$row[3]][3]){
+			$elemCounter = $elements[$row[3]][3];
+		}
 	}
-
+	
+	$query = "SELECT * FROM images WHERE offersid = ". $_POST['edit'] ." ORDER BY 4";
+	$res = $conn->query($query);
+	
+	while($row = $res->fetch_row()){
+		$elements[$row[3]][0] = $row[0];
+		$elements[$row[3]][1] = $row[1];
+		$elements[$row[3]][2] = $row[2];
+		$elements[$row[3]][3] = $row[3];
+		$elements[$row[3]]["img"] = true;
+		if($elemCounter < $elements[$row[3]][3]){
+			$elemCounter = $elements[$row[3]][3];
+		}
+	}
+	echo $elemCounter;
+	
 	$query = "SELECT * FROM `tags` ORDER BY 2";
 	$res = $conn->query($query);
-
 	$katList;
 
 	for($i = 0;$row = $res->fetch_row(); $i++){
@@ -169,7 +188,6 @@
 			function checkErrors(elem){
 				switch (elem.name){
 					case "mainTitle":
-						changed[0] = true;
 						var errorMainText = document.getElementById("errorMainText");
 						if(elem.value.length > 100){
 							errorMainText.style.visibility = "visible";
@@ -187,7 +205,6 @@
 					break;
 					
 					case "price":
-						changed[1] = true;
 						var errorPrice = document.getElementById("errorPrice");
 						if(isNaN(elem.value)){
 							errorPrice.style.visibility = "visible";
@@ -205,7 +222,6 @@
 					break;
 					
 					case "amount":
-						changed[2] = true;
 						var errorAmount = document.getElementById("errorAmount");
 						if(!(elem.value == parseInt(elem.value, 10))){
 							errorAmount.style.visibility = "visible";
@@ -218,7 +234,6 @@
 					break;
 					
 					case "mainImage":
-						changed[3] = true;
 						var errorMainImg = document.getElementById("errorMainImg");
 						if(!elem.value.trim()){
 							errorMainImg.style.visibility = "visible";
@@ -568,6 +583,7 @@
 								<td>
 									<select name="kat">
 										<?php 
+										var_dump($katList);
 											foreach($katList as $kat){
 												if($kat[0] == $offerKat[2]){
 													echo "<option selected='selected' value='$kat[0]'>$kat[1]</option>";
@@ -584,6 +600,23 @@
 								<img name="img" class="thumb" src="data:image/jpeg;base64,<?php echo base64_encode($offer[2]);
 								?>" title="%5Bwall001.com%5D_blood_rayne_2017_1024.jpg" style="max-width: 200px; max-height: 200px; width: auto; height: auto;">
 							</span></output></td></tr>
+							<?php 
+								for($i = 0;$i <= $elemCounter;$i++){
+									if(isset($elements[$i])){
+										echo "<tr id = ". ($i - 1) ."><td colspan ='3' id = ". ($i - 1) . ">
+											  <input type='button' onclick='return deleteElement(this)' value='Löschen'>";
+											if($elements[$i]["img"]){
+												echo "<img name=$i src='data:image/jpeg;base64,". base64_encode($elements[$i][2]) ."' class='thumb' style='max-width: 100px; max-height: 100px; width: auto; height: auto;' />";
+											}
+											else{
+												echo "<textarea name='txt$i'>". $elements[$i][2] ."</textarea>";
+											}
+										echo '<input type="button" onclick="return elementUp(this)" value="Hoch">
+										      <input type="button" onclick="return elementDown(this)" value="Runter">';
+										echo "</td></tr>";
+									}
+								}
+							?>
                         </table>
 						<span id ="images" hidden="hidden"></span>
                     </form>
