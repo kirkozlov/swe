@@ -64,7 +64,7 @@
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
 		<script src="includes/jquery.js"></script>
 		<script type="text/javascript">
-			getLocation();
+			//getLocation();
 			$(document).ready(function(){
 			    updateinout();
 			});
@@ -237,7 +237,7 @@
 		if (isset($filtr)) {
 			foreach ($filtr as $key => $value)
 			{
-				echo '<li id="liout'.$key.'" style="display: none;"> <a href="javascript:deletefilter('.$key.')">'.$value.'hhfghfhfh </a> </li>';
+				echo '<li id="liout'.$key.'" style="display: none;"> <a href="javascript:deletefilter('.$key.')">'.$value.' </a> </li>';
 			}
 		}
 		?>
