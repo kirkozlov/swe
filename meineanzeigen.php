@@ -72,7 +72,7 @@
 								echo '<td><img style="max-width: 100px; max-height: 100px;" src="data:image/jpeg;base64,'.base64_encode( $interImage[$key] ).'"/></td>';
 								echo '<td>'.$value.'</td>';
 								echo '<td>
-										<form id="edit" action="" method="post" enctype="multipart/form-data" >
+										<form id="edit" action="edititem.php" method="post" enctype="multipart/form-data" >
 											<button value="'.$interid[$key].'" name="edit"/>Editieren</button>
 										</form>
 									</td>';
