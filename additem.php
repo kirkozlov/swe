@@ -36,12 +36,16 @@
 		                (`userid`,`maintext`, `mainimage`,
 		                 `price`, `latitude`, `longtitude`,
 		                  `amount`)
-		                VALUES(". $_SESSION['idu'] .", '". $_POST['mainTitle'] ."', '". $image ."', " . $price . ",
-		                    ". $_POST['txtLat'] .",". $_POST['txtLng'] .", " . $amount . "
+		                VALUES(". $_SESSION['idu'] .", ?, '". $image ."', 
+							" . $price . ",
+		                    ?,?, " . $amount . "
 		                )
 		            ;";
+			$stmt = $conn->prepare($query);
+			$stmt->bind_param("sss", $_POST["mainTitle"],$_POST['txtLat'],$_POST['txtLng']);
+			$stmt->execute();
 			
-			$res = $conn->query($query);
+//			$res = $conn->query($query);
 			$offerID = $conn->insert_id;
 //			echo $query;
 			$query = "";// var_dump($_FILES);
@@ -57,14 +61,20 @@
 				if(isset($_POST['txt' . $i])){
 					//echo "somethingTXT" .$i;
 				    $query = " INSERT INTO detailedtexts(offersid, detailledtext, insideid)
-				                      VALUES(". $offerID .", '". $_POST['txt'.$i] ."', ". $i .") ;";
-				    $conn->query($query);
+				                      VALUES(". $offerID .", ?, ". $i .") ;";
+					$stmt = $conn->prepare($query);
+					$stmt->bind_param("s", $_POST['txt'.$i]);
+					$stmt->execute();
+				    //$conn->query($query);
 		//                var_dump($query);
 					//echo $query;
 				}
 			}
-			$query = "INSERT INTO `offers_tags` (`id`, `offersid`, `tagsid`) VALUES (NULL, '".$offerID."', '".$_POST['kat']."');";
-			$conn->query($query);			
+			$query = "INSERT INTO `offers_tags` (`id`, `offersid`, `tagsid`) VALUES (NULL, '".$offerID."', ?);";
+			$stmt = $conn->prepare($query);
+			$stmt->bind_param("s", $_POST["kat"]);
+			$stmt->execute();
+//			$conn->query($query);			
 			
 			header("Location: meineanzeigen.php");
 		}

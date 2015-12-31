@@ -40,22 +40,30 @@
 */
 			
 			$query = "UPDATE `offers` 
-						SET `maintext` = '". $_POST["mainTitle"] ."', 
+						SET `maintext` = ?, 
 						`price` = '". $price ."', 
-						`latitude` = '". $_POST['txtLat'] ."', 
-						`longtitude` = '". $_POST['txtLng'] ."', 
+						`latitude` = ?, 
+						`longtitude` = ?, 
 						`amount` = '". $amount ."' ";
 			if($image != "")
 				$query = $query .", `mainimage` = '". $image ."' ";
 			
 			$query = $query ."WHERE `offers`.`id` = ". $_POST["offerID"] .";";
 			
-			$res = $conn->query($query);
+			$stmt = $conn->prepare($query);
+			$stmt->bind_param("sss", $_POST["mainTitle"],$_POST['txtLat'],$_POST['txtLng']);
+			$stmt->execute();
+			
+//			res = $conn->query($query);
 			
 			$query = "UPDATE `offers_tags` 
-						 SET `tagsid` = '". $_POST['kat'] ."' 
+						 SET `tagsid` = ?
 					   WHERE `offers_tags`.`offersid` = ". $offerID .";";
-			$conn->query($query);
+//			$conn->query($query);
+			$stmt = $conn->prepare($query);
+			$stmt->bind_param("s", $_POST["kat"]);
+			$stmt->execute();
+			
 /*/			echo $query;
 			$query = "";// var_dump($_FILES);
 			for($i = 1; $i <= $counter; $i++){

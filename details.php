@@ -132,7 +132,8 @@
                     <?php
                   		for ($i = 1; $i <= 10; $i++) {
                   			if (isset($interTexts[$i])) {
-                  				echo '<tr><td colspan=2>'.$interTexts[$i].'</td></tr>';
+								$txt = ereg_replace("\n", "<br />", $interTexts[$i]); //Einsetzen von Zeilenumbruch
+                  				echo '<tr><td colspan=2>'.$txt.'</td></tr>';
                   			}
                   			if (isset($interImages[$i])) {
                   				echo '<tr><td colspan=2><img style="max-width: 300px; max-height: 300px;" src="data:image/jpeg;base64,'.base64_encode( $interImages[$i] ).'"/></td></tr>';
