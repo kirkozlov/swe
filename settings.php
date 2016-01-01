@@ -8,8 +8,7 @@
 	$o="";
 	$p="";
 	$pw="";
-	$stree="";
-	$strep="";
+	
 	$error=0; 
 	$streo = "";
 	include ('includes/ConectionOpen.php');
@@ -27,20 +26,21 @@
 		}
 		else
 		{
-			$streo="alte pass falsh";
+			$streo="alte pass falsh;";
 			$error=1;
 		}
 		if($p!=$pw )
 		{
 			$error=1;
-			$strep="wiederholung ist falsh";
-			
-			
-			
+			$streo=$streo." wiederholung ist falsh";
 		}
 		if($error==0){
 			$str1="UPDATE `users`SET `password`='".$p."' WHERE id='".$idu."'";
 			$res=$conn->query($str1);
+			$o="";
+			$p="";
+			$pw="";
+			$streo="pass changed";
 		}
 		
 		
@@ -67,7 +67,44 @@
 			//getLocation();
 			$(document).ready(function(){
 			    updateinout();
+				PopUpHide();
+				<?php
+				if($streo==""){
+					
+				}
+				else
+				{
+					echo "document.getElementById('ppt').innerHTML='".$streo."';
+							PopUpShow();";
+				}
+				
+				?>
 			});
+			function PopUpShow(){
+				$("#popup").show();
+			}
+		
+			function PopUpHide(){
+				$("#popup").hide();
+			}
+			function clickbutton(e){
+				var p0=document.getElementById("p0").value;
+				var p1=document.getElementById("p").value;
+				var p2=document.getElementById("pw").value;
+				if(p1=="" || p2==""|| p0=="" ){
+					document.getElementById("ppt").innerHTML="Bitte alle felder ausfüllen";
+					PopUpShow();
+					return false;
+				}
+				if(p1!=p2){
+					document.getElementById("ppt").innerHTML="Passwörter sind nicht identisch";
+					PopUpShow();
+					return false;
+				}
+				else{
+					return true;
+				}
+			}
 			$( window ).resize(function() {
 				var d = document.getElementById('newfiladd');
 				d.style.position = "absolute";
@@ -135,7 +172,7 @@
 				}
 				fil=fil|Math.pow(2,key-1);
 				var options={};
-				options.expires=24;
+				options.expires=24;//stunden
 				setCookie("filter", fil,options);
 				
 				updateinout();
@@ -147,7 +184,7 @@
 				}
 				fil=fil&(Math.pow(2,32)-1-Math.pow(2,key-1));
 				var options={};
-				options.expires=24;
+				options.expires=24;//stunden
 				setCookie("filter", fil,options);
 				
 				updateinout();
@@ -217,12 +254,12 @@
 									max-width: 280px;
 									width: 95%;">
 			<tr><td>Altes Passwort:</td></tr>
-			<tr><td><input type="password" name="oldpass" value=<?php echo "'".$o."'" ?>/></td></tr>
+			<tr><td><input id="p0"type="password" name="oldpass" value=<?php echo "'".$o."'" ?>/></td></tr>
 			<tr><td>Neues Passwort:</td></tr>
-			<tr><td><input type="password" name="password"value=<?php echo "'".$p."'" ?>/></td></tr>
+			<tr><td><input id="p" type="password" name="password"value=<?php echo "'".$p."'" ?>/></td></tr>
 			<tr><td>Wiederholung:</td></tr>
-			<tr><td><input type="password" name="passwordw"value=<?php echo "'".$pw."'" ?>/></td></tr>
-			<tr><td colspan="2"><input type="submit" name="activ"value="Speichern"/></td></tr>
+			<tr><td><input id="pw" type="password" name="passwordw"value=<?php echo "'".$pw."'" ?>/></td></tr>
+			<tr><td colspan="2"><input type="submit" name="activ"value="Speichern" onclick="return clickbutton(this)" /></td></tr>
 		</table>
 		</form>
     </div>
@@ -255,6 +292,24 @@
 		}
 		?>
 		</ul>
+	</div>
+		<div id="popup" onclick="PopUpHide()" style=" width:100%;
+												height: 2000px;
+												background-color: rgba(0,0,0,0.5);
+												overflow:hidden;
+												position:fixed;
+												top:0px;">
+			<div id="ppc" style="margin:40px auto 0px auto;
+												width:250px;
+												height: 40px;
+												padding:10px;
+												
+												background-color: #c5c5c5;
+												border-radius:5px;
+												box-shadow: 0px 0px 10px #000;">
+				<div id="ppt" style="align:center;" ></div>
+			
+			</div>
 	</div>
     </body>
 </html>
