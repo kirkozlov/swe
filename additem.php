@@ -287,15 +287,15 @@
 				var row = elem.parentNode.parentNode;
 				var table = row.parentNode.parentNode;//document.getElementById("anzeige");
 				//alert(table);
-				var currentRow = 6;
+				var currentRow = 8;
 				var tmp = 0;
-				for(i = 7; r = table.rows[i]; i++ ){
+				for(i = 9; r = table.rows[i]; i++ ){
 					//alert(r);
 					if(r == row){ tmp = i; break;}
 					currentRow = i;
 				}
 				//alert(table.rows[currentRow]);
-				if((currentRow + 1) > 6 && tmp > 0){
+				if((currentRow + 1) > 8 && tmp > 0){
 					//alert(table.rows[currentRow].innerHTML);
 					var textOben;
 					var textUnten;
