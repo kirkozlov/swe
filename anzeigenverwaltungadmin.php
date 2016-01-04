@@ -52,25 +52,27 @@
 				<table>
  					<?php
 						if (isset($offers) && isset($images)) {
-							echo '<tr><td>Bild</td><td>Beschreibung</td><td>Ort</td><td>Preis</td><td>Anzahl</td></tr>';
+							#echo '<tr><td>Bild</td><td>Beschreibung</td><td>Anzahl</td></tr>';
 							foreach ($offers as $key => $value) {
 								echo '<tr>';
 								echo '<td><img style="max-width: 100px; max-height: 100px;" src="data:image/jpeg;base64,'.base64_encode( $images[$key] ).'"/></td>';
 								echo '<td>'.$value.'</td>';
+								echo '<td>Anzahl: '.$amount[$key].'</td></tr>';
+								echo '<tr><td>'.$price[$key].'€</td>';
 										$url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat[$key].",".$lng[$key]."&sensor=true";
 										$json = file_get_contents($url);
 										$obj = json_decode($json, true);
 										$adr = $obj['results'][0]['formatted_address'];
 										echo '<td>'.$adr.'</td>';
-								echo '<td>'.$price[$key].'€</td>';
-								echo '<td>'.$amount[$key].'</td>';
 								echo '<td>
 										<form id="delete" action="" method="post" enctype="multipart/form-data" >
 											<button value="'.$key.'" name="delete"/>Löschen</button>
 										</form>
 									</td>';
 								echo '</tr>';
+								echo '<tr><td colspan=3><hr></td></tr>';
 							}
+							#echo '<tr><td colspan=3><hr></td></tr>';
 						}             
 					 ?>
 				</table>
