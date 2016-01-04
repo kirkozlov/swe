@@ -5,9 +5,41 @@
 	if(isset($_POST['delete'])) {
 		$id = "";
 		$id = $id.$_POST["delete"];
-		$query = "";				  
+		
+		//alle Anzeigen des Benutzers löschen
+		$sql = "SELECT id FROM offers WHERE userid='".$id."'";
+		$res = $conn->query($sql);
+		if ($res != null || isset($res)){
+			$i = 0;
+			$offers = [];
+			while($row=$res->fetch_row()) {
+				$offers[$i] = $row[0];
+				$i++;
+			}
+			foreach($offers as $offersid) {
+				$query = "DELETE FROM detailedtexts WHERE offersid='".$offersid."'";
+				//echo $query;
+				$res = $conn->query($query);
+				$query = "DELETE FROM images WHERE offersid='".$offersid."'";
+				//echo $query;
+				$res = $conn->query($query);
+				$query = "DELETE FROM interests WHERE offersid ='".$offersid."'";
+				//echo $query;
+				$res = $conn->query($query);
+				$query = "DELETE FROM offers_tags WHERE offersid ='".$offersid."'";
+				//echo $query;
+				$res = $conn->query($query);
+				$query = "DELETE FROM offers WHERE id ='".$offersid."'";
+				//echo $query;
+				$res = $conn->query($query);
+			}
+		}
+
+		//$query = "DELETE FROM offers WHERE userid'".$id."'";
+		//$res = $conn->query($query);
+		$query = "DELETE FROM interests WHERE userid'".$id."'";
+		$res = $conn->query($query);
 		$query = "DELETE FROM users WHERE id='".$id."'";
-		//echo $query;
 		$res = $conn->query($query);
 	}
 	if(isset($_POST['changeFlag'])) {

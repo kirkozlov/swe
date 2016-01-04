@@ -5,8 +5,6 @@
 	if(isset($_POST['delete'])) {
 		$id = "";
 		$id = $id.$_POST["delete"];
-		$query = "";				  
-		$query = "";	  
 		$query = "DELETE FROM detailedtexts WHERE offersid='".$id."'";
 		//echo $query;
 		$res = $conn->query($query);
