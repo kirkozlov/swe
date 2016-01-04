@@ -49,6 +49,7 @@
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
 		<script src="includes/jquery.js"></script>
+		<script src="includes/sha2.js"></script>
 		<script>
 			$(document).ready(function(){
 			    PopUpHide();
@@ -88,6 +89,7 @@
 					return false;
 				}
 				else{
+					document.getElementById("p1").value=CryptoJS.SHA256(p1);
 					return true;
 				}
 			}
@@ -107,9 +109,9 @@
 					<tr><td >E-Mail:</td></tr>
 					<tr><td><input id="em" type="text" name="email" value=<?php echo "'".$e."'" ?>/></td></td>
 					<tr><td>Passwort:</td></tr>
-					<tr><td><input id="p1"type="password" name="password"value=<?php echo "'".$p."'" ?>/></td></td>
+					<tr><td><input id="p1"type="password" name="password"/></td></td>
 					<tr><td>Wiederholung:</td></tr>
-					<tr><td><input id="p2"type="password" name="passwordw"value=<?php echo "'".$pw."'" ?>/></td>
+					<tr><td><input id="p2"type="password" name="passwordw"/></td>
 					<tr><td colspan="2"><input type="submit" name="activ"value="Registrieren" onclick="return clickbutton(this)"/></td></tr>
 				</table>
 				</form>
