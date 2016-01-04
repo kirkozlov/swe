@@ -1,0 +1,6 @@
+ALTER TABLE `users` CHANGE `password` `password` VARCHAR(64) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+
+ALTER TABLE `offers` CHANGE `createdata` `createdata` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE `offers` CHANGE `changedata` `changedata` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
