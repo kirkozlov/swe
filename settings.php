@@ -63,6 +63,7 @@
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
 		<script src="includes/jquery.js"></script>
+		<script src="includes/sha2.js"></script>
 		<script type="text/javascript">
 			//getLocation();
 			$(document).ready(function(){
@@ -102,6 +103,9 @@
 					return false;
 				}
 				else{
+					document.getElementById("p0").value=CryptoJS.SHA256(p0);
+					document.getElementById("p").value=CryptoJS.SHA256(p1);
+					document.getElementById("pw").value=CryptoJS.SHA256(p2);
 					return true;
 				}
 			}

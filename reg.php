@@ -90,6 +90,7 @@
 				}
 				else{
 					document.getElementById("p1").value=CryptoJS.SHA256(p1);
+					document.getElementById("p2").value=CryptoJS.SHA256(p2);
 					return true;
 				}
 			}
