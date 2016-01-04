@@ -3,8 +3,8 @@
 require_once "Mail.php";
 function sendmail($to,$mess){
 $from = '<fhswege3@gmail.com>';
-$subject = 'Hi!';
-$body = $mess;
+$subject = 'Ihre neue Password';
+$body = "Ihre neue Password lautet: ".$mess;
 
 $headers = array(
     'From' => $from,
