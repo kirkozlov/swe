@@ -3,8 +3,8 @@
 	$id = "";
 	$gekauft = false;
 	$contact = "";
-	if (isset($_GET['id'])) {
-		$id = $_GET['id'];
+	if (isset($_POST['id'])) {
+		$id = $_POST['id'];
 	}
 
 	if (isset($_GET['like'])) {
@@ -69,6 +69,12 @@
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
         <link rel="stylesheet" href="css/details.css" type="text/css" />
 		<script src="includes/jquery.js"></script>
+		<script src="includes/cookies.js"></script>
+		<script>
+			function setCookie(v){
+				createCookie('idList', readCookie('idList') ? readCookie('idList') + ", " + v : v , 30);
+			}
+		</script>
 		
 		<script>
 			$(document).ready(function(){
@@ -148,7 +154,7 @@
                     	</td>
                     	<td align="right">
 							<form id="back" action="index.php" method="get" enctype="multipart/form-data" >
-									<button value="" name="next"/>✗</button>
+									<button value="" name="next" onclick="setCookie('<?php echo $id; ?>')" />✗</button>
 							</form>
 						</td>
                     </tr>

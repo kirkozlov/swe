@@ -1,9 +1,9 @@
 <?php session_start(); 
 	include("includes/ConectionOpen.php");
 	$dbempty = true;
-    if (!isset($_SESSION['anzeigencounter'])) {        
+/*    if (!isset($_SESSION['anzeigencounter'])) {        
     	$_SESSION['anzeigencounter'] = 0;
-    }
+    
 	if(isset($_GET['next'])) {
 		$query = "SELECT COUNT(*) AS NumberOfOffers FROM offers;";
 		$res = $conn->query($query);
@@ -14,8 +14,31 @@
 			$tmp = ($_SESSION['anzeigencounter'] + 1) % $numberofoffers[0];
 			$_SESSION['anzeigencounter'] = $tmp;
 		}
+	}}*/
+
+	if(!isset($_COOKIE['pos'])){
+		$pageContent = file_get_contents('http://freegeoip.net/json/' );
+		$parsedJson  = json_decode($pageContent);
+		
+		setcookie('pos', $parsedJson->latitude.', '.$parsedJson->longitude, time() + 1*3600, "/");
 	}
-    $sql = "SELECT id, maintext, price, mainimage, userid FROM offers ORDER BY id LIMIT ".$_SESSION['anzeigencounter'].", 1";
+	if(!isset($_COOKIE['pos'])){
+		header('Location: index.php');
+	}
+	
+	
+	$sql = "SELECT offers.id, maintext, price, mainimage, userid 
+			  FROM offers, offers_tags, users
+			 WHERE offers.id = offers_tags.offersid 
+			   AND users.id = offers.userid "; 
+	if(isset($_COOKIE['idList'])){
+		$sql = $sql. " AND offers.id NOT IN (". $_COOKIE['idList'] .") ";
+	}
+	$sql = (isset($_COOKIE['filter']) && $_COOKIE['filter'] > 0 )? $sql ."AND ". $_COOKIE['filter'] ."&POW(2, offers_tags.tagsid - 1) " : $sql;
+	$sql = $sql . "AND calculateTheDistance(" . $_COOKIE['pos'] . ", offers.latitude, offers.longtitude) <= ". (isset($_COOKIE['km']) ? $_COOKIE['km']."000" : "50000");
+	$sql = $sql ." ORDER BY -LOG(RAND()) / IF(users.goldflag = 0, 10, 30) LIMIT 1";
+//	echo $sql;
+    //$sql = "SELECT id, maintext, price, mainimage, userid FROM offers ORDER BY id LIMIT ".$_SESSION['anzeigencounter'].", 1";
     $sth = $conn->query($sql);
     if (isset($sth) && $sth != null && $row = $sth->fetch_row()) {
     	$dbempty = false;
@@ -49,6 +72,31 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
+		<script src="includes/cookies.js"></script>
+		<script>	
+			function setCookie(v){
+				createCookie('idList', readCookie('idList') ? readCookie('idList') + ", " + v : v , 30);
+			}
+			
+			function handleLocationError(navExists, elem){
+				if(navExists){
+					elem.innerHTML = "Für eine genauere Ortfindung, erlauben Sie bitte dem Browser Ihre Position zu bestimmen.";
+				}
+			}
+			
+			function getLocation(){
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(function(position) {
+						createCookie('pos', position.coords.latitude + ", " + position.coords.longitude, 1);
+					}, function() {
+					  handleLocationError(true, document.getElementById('message'));
+					});
+				} else {
+					handleLocationError(false, document.getElementById('message'));
+				}
+			}
+			getLocation();
+		</script>
     </head>
     <body>
         <?php 
@@ -98,7 +146,7 @@
             		</tr>
                     <tr>
                     	<td>
-            				<form id="like" action="details.php" method="get" enctype="multipart/form-data" >
+            				<form id="like" action="details.php" method="post" enctype="multipart/form-data" >
             					<?php
             						if (isset($id)) {
             							echo '<button value="'.$id.'" name="id"/>♥</button>';
@@ -110,7 +158,7 @@
 							<form id="next" action="" method="get" enctype="multipart/form-data" >
             					<?php
             						if (isset($id)) {
-            							echo '<button value="" name="next"/>✗</button>';
+            							echo '<button value="" name="next" onclick="setCookie('.$id.');" />✗</button>';
             						}
             					?>							
 							</form>
@@ -120,9 +168,15 @@
                	</table>
 				   <?php
 				   		if ($dbempty) {
-				   			echo 'Bedauerlicherweise sind keine Anzeige vorhanden.';
+							echo '<form action="" method="post">';
+				   			echo 'Bedauerlicherweise sind keine neuen Anzeige vorhanden.<br/>';
+							echo 'Wollen Sie von Vorne anfangen?<br/>';
+							echo '<button onclick="eraseCookie(\'idList\');">ja</button>';
+							echo '<button onclick="document.location.href = \'settings.php\'; return false;">Filter anpassen</button>';
+							echo '</form>';
 				   		}
 				   ?>
+				<div id="message"></div>
             </div>
 		</div>
     </body>
