@@ -86,6 +86,15 @@
 		        				}
 		        			?>
 		        		</td>
+		        	</tr>
+		        	<tr>
+		        		<td colspan=2>
+							<?php
+		        				if (isset($interPrice)) {
+		        					echo ''.$interPrice.'€';
+		        				}
+		        			?>
+		        		</td>
             		</tr>
                     <tr>
                     	<td>
