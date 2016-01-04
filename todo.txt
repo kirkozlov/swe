@@ -13,7 +13,6 @@ Ich fange an.
 settings: popups für PassChange machen. 
 forgotpassword: text in emails andern.
 forgotpassword: es gibt Problemen mit Sendung-- google hat schon einmal dieses account blockiert. jetzt funktioniert das.
-forgotpassword,settings,reg: pass cheschieren.
 index: lesen aus datenbank andern(um nicht alles zu lesen).
 index: mit filtern vergleichen.
 index: counter besser mit _Get übergeben.
