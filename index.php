@@ -37,7 +37,7 @@
 	$sql = (isset($_COOKIE['filter']) && $_COOKIE['filter'] > 0 )? $sql ."AND ". $_COOKIE['filter'] ."&POW(2, offers_tags.tagsid - 1) " : $sql;
 	$sql = $sql . "AND calculateTheDistance(" . $_COOKIE['pos'] . ", offers.latitude, offers.longtitude) <= ". (isset($_COOKIE['km']) ? $_COOKIE['km']."000" : "50000");
 	$sql = $sql ." ORDER BY -LOG(RAND()) / IF(users.goldflag = 0, 10, 30) LIMIT 1";
-//	echo $sql;
+	echo $sql;
     //$sql = "SELECT id, maintext, price, mainimage, userid FROM offers ORDER BY id LIMIT ".$_SESSION['anzeigencounter'].", 1";
     $sth = $conn->query($sql);
     if (isset($sth) && $sth != null && $row = $sth->fetch_row()) {
