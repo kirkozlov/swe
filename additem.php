@@ -235,7 +235,7 @@
                       // Render thumbnail.
                       //var span = document.createElement('span');
                       imgTmp.innerHTML = ['<img name="img" class="thumb" src="', e.target.result,
-                                        '" title="', escape(theFile.name), '" style="max-width: 200px; max-height: 200px; width: auto; height: auto;" />'].join('');
+                                        '" title="', escape(theFile.name), '" style="max-width: 600px; max-height: 600px; width: 100%; " />'].join('');
                       document.getElementById('mainOutput').insertBefore(imgTmp, null);
                     };
                   })(f);
@@ -459,7 +459,7 @@
 				row.setAttribute("id", counter)
                 var cell = row.insertCell(-1);
                 cell.setAttribute("id", counter++);
-                cell.setAttribute("colspan", 2);
+                cell.setAttribute("colspan", 3);
                 return cell;
             }
             function insertText(){
@@ -490,7 +490,7 @@
                       // Render thumbnail.
                       var span = document.createElement('span');
                       span.innerHTML = ['<img name="img' + counter++ + '" class="thumb" src="', e.target.result,
-                                        '" title="', escape(theFile.name), '" style="max-width: 100px; max-height: 100px; width: auto; height: auto;" />'].join('');
+                                        '" title="', escape(theFile.name), '" style="max-width: 300px; max-height: 300px; width: 100%; " />'].join('');
                       document.getElementById('imgOutput' + (counter - 1)).insertBefore(span, null);
                     };
                   })(f);
@@ -555,7 +555,7 @@
 								</td>
 							<tr><input id="pac-input" class="controls" type="text" placeholder="Search Box"><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
                             <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" accept="image/*" name="mainImage" onblur="checkErrors(this);" /><img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
-							<tr><td colspan="2"><output id="mainOutput"><span id="spanMain"></span></output></td></tr>
+							<tr><td colspan="3"><output id="mainOutput"><span id="spanMain"></span></output></td></tr>
                         </table>
 						<span id ="images" hidden="hidden"></span>
                     </form>
