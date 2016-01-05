@@ -37,7 +37,7 @@
 	$sql = (isset($_COOKIE['filter']) && $_COOKIE['filter'] > 0 )? $sql ."AND ". $_COOKIE['filter'] ."&POW(2, offers_tags.tagsid - 1) " : $sql;
 	$sql = $sql . "AND calculateTheDistance(" . $_COOKIE['pos'] . ", offers.latitude, offers.longtitude) <= ". (isset($_COOKIE['km']) ? $_COOKIE['km']."000" : "50000");
 	$sql = $sql ." ORDER BY -LOG(RAND()) / IF(users.goldflag = 0, 10, 30) LIMIT 1";
-	echo $sql;
+//	echo $sql;
     //$sql = "SELECT id, maintext, price, mainimage, userid FROM offers ORDER BY id LIMIT ".$_SESSION['anzeigencounter'].", 1";
     $sth = $conn->query($sql);
     if (isset($sth) && $sth != null && $row = $sth->fetch_row()) {
@@ -70,9 +70,17 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-        <link rel="stylesheet" href="css/main.css" type="text/css" />
-        <link rel="stylesheet" href="css/menu.css" type="text/css" />
-		<script src="includes/cookies.js"></script>
+
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+        <!--Import materialize.css-->
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        
+        <!--Import materialize_own.css-->
+        <link href="css/materialize_own.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        
+			<script src="includes/cookies.js"></script>
 		<script>	
 			function setCookie(v){
 				createCookie('idList', readCookie('idList') ? readCookie('idList') + ", " + v : v , 30);
@@ -98,87 +106,117 @@
 			getLocation();
 		</script>
     </head>
-    <body>
-        <?php 
-            include("includes/menu.php");
-			//echo $_SESSION['idu']; 
-			//$_SESSION['filter']['1'] = 1;
-            //var_dump($_SESSION); 
-        ?>
-        <div class="main">
-            <div class="content">
-            	<table>
-            		<tr>
-            			<td colspan=2>
-            				<?php 
-								if(isset($interImage)) {
-									echo '<img style="max-width: 600px; max-height: 600px;" src="data:image/jpeg;base64,'.base64_encode( $interImage ).'"/>';
-								}
-							?>					
-						</td>
-            		</tr>
-            		<tr>
-						<td colspan=2>
-							<?php
-								if($goldflag == 1) {
-									echo ' 	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  ';
-								}
-							?>
-						</td>
-            		</tr>
-            		<tr>
-		        		<td colspan=2>
-		        			<?php
-		        				if (isset($interMaintext)) {
-		        					echo $interMaintext;
-		        				}
-		        			?>
-		        		</td>
-		        	</tr>
-		        	<tr>
-		        		<td colspan=2>
-							<?php
-		        				if (isset($interPrice)) {
-		        					echo ''.$interPrice.'€';
-		        				}
-		        			?>
-		        		</td>
-            		</tr>
-                    <tr>
-                    	<td>
-            				<form id="like" action="details.php" method="post" enctype="multipart/form-data" >
-            					<?php
-            						if (isset($id)) {
-            							echo '<button value="'.$id.'" name="id"/>♥</button>';
-            						}
-            					?>
-        					</form>                         	
-                    	</td>
-                    	<td>
-							<form id="next" action="" method="get" enctype="multipart/form-data" >
-            					<?php
-            						if (isset($id)) {
-            							echo '<button value="" name="next" onclick="setCookie('.$id.');" />✗</button>';
-            						}
-            					?>							
-							</form>
-						</td>
-                    </tr>
+	<body>
+            <?php 
+                include("includes/menu.php");
+                //echo $_SESSION['idu']; 
+                //$_SESSION['filter']['1'] = 1;
+                //var_dump($_SESSION); 
+            ?>
+            
+            <div class="main">
+                <div class="content">
+                    <div class="row">
+                        <div class="col s0 m3 l3"><p></p></div>
+                        <div class="col s12 m6 l6" >
+                            <div class="card pc">
+                                <div class="card-image">
+                                    <form class="fickdich_bild" id="like" action="details.php" method="get" enctype="multipart/form-data" > 
+                                        <?php 
+                                        if(isset($interImage)) {
+                                            echo '<input class="img_responsivness" type="image" src="data:image/jpeg;base64,'.base64_encode( $interImage ).'" value="'.$id.'" name="id"/>';
+                                        }
+                                        ?>
+                                    </form>
 
-               	</table>
-				   <?php
-				   		if ($dbempty) {
-							echo '<form action="" method="post">';
-				   			echo 'Bedauerlicherweise sind keine neuen Anzeige vorhanden.<br/>';
-							echo 'Wollen Sie von Vorne anfangen?<br/>';
-							echo '<button onclick="eraseCookie(\'idList\');">ja</button>';
-							echo '<button onclick="document.location.href = \'settings.php\'; return false;">Filter anpassen</button>';
-							echo '</form>';
-				   		}
-				   ?>
-				<div id="message"></div>
+                                    <form class="center-align">
+                                        <?php 
+                                            if($goldflag == 1) {
+                                                echo ' 	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  	★  ';
+                                            }
+                                        ?>
+                                    </form>
+                                </div>
+                                <div class="card-content">
+                                    <p class="center-align fickdich_text">
+                                        <?php 
+                                            if (isset($interMaintext)) {
+                                                echo $interMaintext;
+		        				         } ?>
+                                    </p>
+                                    <?php if ($dbempty) {                           
+                                            echo '<p class="center-align fickdich_text">
+                                                    Bedauerlicherweise sind keine neuen Anzeigen vorhanden.</p>';
+                                            echo '<p class="center-align fickdich_text">
+                                                    Wollen Sie von Vorne anfangen?</p>'; 
+                                    } ?>
+                                </div>
+                                <div class="card-action">
+                                    <?php if ($dbempty) {
+                                        echo '<div class="row">';
+                                            echo '<div class="col s6 m6 l6">';
+                                                echo '<form class="center_dings_neu" action="" method="post">';
+                                                    echo '<button class="waves-effect waves-light btn" onclick="eraseCookie(\'idList\');">ja</button>';
+                                                echo '</form>';
+                                            echo '</div>'; 
+                                            echo '<div class="col s6 m6 l6">'; 
+                                                echo '<form class="center_dings_neu" action="" method="post">';
+                                                    echo '<button class="waves-effect waves-light btn" onclick="document.location.href = \'settings.php\'; return false;">Filter anpassen</button>';
+                                                echo '</form>'; 
+                                            echo '</div>';
+                                        echo '</div>';   
+                                    } ?>
+    
+                                    <div class="row">
+                                        <div class="col s6 m6 l6 left-align"><h10><?php 
+                                            if (isset($interPrice)) {
+                                                echo 'Preis:';} ?></h10></div>
+                                                    
+                                        <div class="col s6 m6 l6 right-align"><h10><?php 
+                                            if (isset($interPrice)) {
+		        					             echo ''.$interPrice.'€';
+		        				            } ?></h10></div>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                        <div class="col s0 m3 l3"><p></p></div>
+                    </div>                  
+
+                    <div class="row">
+                    <div class="col s1 m1 l2"><h1/></div>
+                        <div class="col s3 m3 l3">
+                            <form class="center_dings" id="like" action="details.php" method="post" enctype="multipart/form-data" > 
+                                <?php
+                                    if (isset($id)) {
+                                    echo '<button value="'.$id.'" name="id" class="btn-floating btn-large waves-effect waves-light green accent-3">
+                                        <i class="material-icons">favorite</i>
+                                    </button>';}
+                                ?>
+                            </form>    
+                        </div>
+                        <div class="col s4 m4 l2"><h1/></div>
+                        <div class="col s3 m3 l3">
+                            <form class="center_dings" id="next" action="" method="get" enctype="multipart/form-data" >
+                                <?php
+                                    if (isset($id)) {
+                                    echo '<button value="" name="next" onclick="setCookie('.$id.');" class="btn-floating btn-large waves-effect waves-light red accent-3 center_dings">
+                                        <i class="material-icons">delete</i>
+                                    </button>';}
+                                ?>
+                            </form>                        	
+                        </div>
+                        <div class="col s1 m1 l2"><h1/></div>
+                    </div>
+                </div>
             </div>
-		</div>
+
+         
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script>
+            $(".button-collapse").sideNav();
+        </script>
     </body>
 </html>
 

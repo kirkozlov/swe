@@ -1,10 +1,5 @@
-Algemeine info:
-Machen wir zuerst ganze Funktionalitet, und nur dann das gute css(style).
-
-
-Hier schreiben wir, was wir noch ändern mussen, um Das nicht zu fergessen.
-Oder einfach was ihr gefält nicht.
-Ich fange an.
+Nach Kaufpopup Weiterleitung auf Index
+Popup Benutzerverwaltung als Bestätigung
 
 
 
