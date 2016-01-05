@@ -85,6 +85,11 @@
 										<button value="'.$userid[$key].'" name="contact"/>Kontakt</button>
 									</form>
 								</td>';
+							echo '<td>
+									<form id="like" action="details.php" method="get" enctype="multipart/form-data" >
+										<button value="'.$interid[$key].'" name="like"/>Details</button>
+									</form>
+								</td>';
                 			echo '</tr>';
                 		}
 						echo '</table>';
