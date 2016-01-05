@@ -107,6 +107,7 @@
 									position:relative;
 									max-width: 280px;
 									width: 95%;">
+					<tr><td><b>Hinweis: Zur Registrierung müssen Sie volljährig sein!</b></td></tr>
 					<tr><td >E-Mail:</td></tr>
 					<tr><td><input id="em" type="text" name="email" value=<?php echo "'".$e."'" ?>/></td></td>
 					<tr><td>Passwort:</td></tr>

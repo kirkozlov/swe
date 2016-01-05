@@ -12,20 +12,28 @@
 		if (!isset($_SESSION['idu'])) {
 			header("Location: login.php");
 		} else {
+<<<<<<< HEAD
 //			$_SESSION['anzeigencounter'] = $_SESSION['anzeigencounter'] + 1;
+=======
+			//$_SESSION['anzeigencounter'] = $_SESSION['anzeigencounter'] + 1;
+>>>>>>> origin/master
 			$userid = $_SESSION['idu'];
-			$sql = "INSERT INTO interests (offersid, userid) VALUES ('$id', '$userid')";
+			$sql = "SELECT * FROM interests WHERE userid='".$userid."' AND offersid='".$id."'";
 			$res = $conn->query($sql);
+			if ($res == null) {
+				$sql = "INSERT INTO interests (offersid, userid) VALUES ('$id', '$userid')";
+				$res = $conn->query($sql);
 			
+				
+				//Anzahl verringern wenn größer 0
+				$sql = "UPDATE offers SET amount = amount - 1 WHERE id='".$id."' and amount > 0";
+				$res = $conn->query($sql);
+			}
 			$sql = "SELECT email FROM users INNER JOIN offers ON offers.userid = users.id WHERE offers.id='".$id."'";
 			$res = $conn->query($sql);
 			$email = mysqli_fetch_array($res);
 			$contact = $email[0];
 			$gekauft = true;
-			
-			//Anzahl verringern wenn größer 0
-			$sql = "UPDATE offers SET amount = amount - 1 WHERE id='".$id."' and amount > 0";
-			$res = $conn->query($sql);
 		}
 	}
 	
@@ -38,6 +46,11 @@
 		$interAmount = $row[3];
 		$lat = $row[4];
 		$lng = $row[5];
+	}
+	$sql = "SELECT calculateTheDistance(" . $_COOKIE['pos'] . ", ".$lat.", ".$lng.")  as dis FROM offers WHERE calculateTheDistance(" . $_COOKIE['pos'] . ", ".$lat.", ".$lng.") <=  ". (isset($_COOKIE['km']) ? $_COOKIE['km']."000" : "50000");"";
+	$res = $conn->query($sql);
+	if($res != null && $row = $res->fetch_row()) {
+		$km = $row[0];
 	}
 	
 	$sql = "SELECT insideid, detailledtext FROM detailedtexts WHERE offersid='".$id."'";
@@ -125,6 +138,9 @@
 							$adr = $obj['results'][0]['formatted_address'];
 							echo '<td>'.$adr.'</td>';
 						?>
+                    </tr>
+                    <tr>
+						<td>Entfernung:</td><td><?php if(isset($km)) echo $km;?>m</td>
                     </tr>
                     <tr>
                     	<td>Anzahl:</td><td><?php echo $interAmount?></td>
