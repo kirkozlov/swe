@@ -1,11 +1,16 @@
 .center_dings {
     margin: Auto;
-    width: 55.5px;
+    width: 55.5;
     padding: Center;
 }
 .fickdich_bild {
     height: 45%;
     max-height: 45%;
+}
+.center_dings_neu {
+    margin: Auto;
+    width: 193.5;
+    padding: Center;
 }
 .fickdich_text {
     height: 5%;
