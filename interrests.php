@@ -23,8 +23,8 @@
 			}
 		}
 	}
-	if (isset($_GET['contact'])) {
-		$id = $_GET['contact'];
+	if (isset($_POST['contact'])) {
+		$id = $_POST['contact'];
 		$sql = "SELECT email FROM users WHERE id='".$id."'";
 		$res = $conn->query($sql);
 		$email = mysqli_fetch_array($res);
@@ -81,13 +81,13 @@
                 			echo '<td>'.$interPrice[$key].'€</td>';
                 			echo '<td>'.$interAmount[$key].'</td>';
 							echo '<td>
-									<form id="contact" action="" method="get" enctype="multipart/form-data" >
+									<form id="contact" action="" method="post" enctype="multipart/form-data" >
 										<button value="'.$userid[$key].'" name="contact"/>Kontakt</button>
 									</form>
 								</td>';
 							echo '<td>
-									<form id="like" action="details.php" method="get" enctype="multipart/form-data" >
-										<button value="'.$interid[$key].'" name="like"/>Details</button>
+									<form id="like" action="details.php" method="post" enctype="multipart/form-data" >
+										<button value="'.$interid[$key].'" name="id"/>Details</button>
 									</form>
 								</td>';
                 			echo '</tr>';

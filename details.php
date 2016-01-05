@@ -7,23 +7,20 @@
 		$id = $_POST['id'];
 	}
 
-	if (isset($_GET['like'])) {
-		$id = $_GET['like'];
+	if (isset($_POST['like'])) {
+		$id = $_POST['like'];
 		if (!isset($_SESSION['idu'])) {
 			header("Location: login.php");
 		} else {
-<<<<<<< HEAD
+
 //			$_SESSION['anzeigencounter'] = $_SESSION['anzeigencounter'] + 1;
-=======
-			//$_SESSION['anzeigencounter'] = $_SESSION['anzeigencounter'] + 1;
->>>>>>> origin/master
+
 			$userid = $_SESSION['idu'];
 			$sql = "SELECT * FROM interests WHERE userid='".$userid."' AND offersid='".$id."'";
 			$res = $conn->query($sql);
-			if ($res == null) {
+			if ($res->num_rows === 0){
 				$sql = "INSERT INTO interests (offersid, userid) VALUES ('$id', '$userid')";
 				$res = $conn->query($sql);
-			
 				
 				//Anzahl verringern wenn größer 0
 				$sql = "UPDATE offers SET amount = amount - 1 WHERE id='".$id."' and amount > 0";
@@ -164,7 +161,7 @@
                     ?>
                     <tr>
 		            	<td align="left">
-		            		<form id="like" action="" method="get" enctype="multipart/form-data" >		
+		            		<form id="like" action="" method="post" enctype="multipart/form-data" >		
 		            			<?php echo '<button onclick="showContact()" value="'.$id.'" name="like">♥</button>'; ?>
 	            			</form>                         	
                     	</td>
