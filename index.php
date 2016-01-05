@@ -126,7 +126,7 @@
                         <div class="col s12 m6 l6" >
                             <div class="card pc">
                                 <div class="card-image">
-                                    <form class="fickdich_bild" id="like" action="details.php" method="get" enctype="multipart/form-data" > 
+                                    <form class="fickdich_bild" id="like" action="details.php" method="post" enctype="multipart/form-data" > 
                                         <?php 
                                         if(isset($interImage)) {
                                             echo '<input class="img_responsivness" type="image" src="data:image/jpeg;base64,'.base64_encode( $interImage ).'" value="'.$id.'" name="id"/>';
