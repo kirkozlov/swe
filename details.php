@@ -96,7 +96,7 @@
 					
 				}
 				else {
-					echo "document.getElementById('ppt').innerHTML='Herzlichen Glückwunsch! Sie haben den Artikel erworben. Die Kontaktdaten des Verkäufers: ".$contact."';
+					echo "document.getElementById('ppt').innerHTML='Sie haben diesen Artikel erworben. Die Kontaktdaten des Verkäufers: ".$contact."';
 					PopUpShow();";
 				}	
 				?>			
