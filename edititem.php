@@ -665,7 +665,7 @@
 				img.setAttribute("type","file");
 				img.setAttribute("id",id);
 				img.setAttribute("name","file"+counter);
-				img.setAttribute("accept","image/*" );
+				img.setAttribute("accept","image/jpeg" );
 				images.insertBefore(img,null);
                 //cell.innerHTML = cell.innerHTML + '<input onchange="" type="file" id="'+ id +'" name="file' + counter + '" />';
 				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementUp(this)" value="Hoch" />';
@@ -717,7 +717,7 @@
 									</select>
 								</td>
 							<tr><input id="pac-input" class="controls" type="text" placeholder="Search Box"><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
-                            <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" accept="image/*" name="mainImage" onblur="checkErrors(this);" /><img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
+                            <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" accept="image/jpeg" name="mainImage" onblur="" /><img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
 							<tr><td colspan="3"><output id="mainOutput"><span id="spanMain">
 								<img name="img" class="thumb" src="data:image/jpeg;base64,<?php echo base64_encode($offer[2]);
 								?>" style="max-width: 600px; max-height: 600px; width: 100%; ">
