@@ -118,82 +118,105 @@
             include("includes/menu.php");
         ?>
         <div class="main">
-            <div class="content">
-                <table>
-                    <tr>
-               	 		<td colspan=2>
-                    		<?php echo '<img style="max-width: 600px; max-height: 600px;" src="data:image/jpeg;base64,'.base64_encode( $interImage ).'"/>'; ?>
-                    	</td>
-                    </tr>
-                    <tr>
-						<td colspan=2><?php echo $interMaintext; ?></td>
-                    </tr>
-                    <tr>
-						<td>Ort:</td>
-						<?php 
-							$url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lng."&sensor=true";
-							$json = file_get_contents($url);
-							$obj = json_decode($json, true);
-							$adr = $obj['results'][0]['formatted_address'];
-							echo '<td>'.$adr.'</td>';
-						?>
-                    </tr>
-                    <tr>
-						<td>Entfernung:</td><td><?php if(isset($km)) echo $km;?>m</td>
-                    </tr>
-                    <tr>
-                    	<td>Anzahl:</td><td><?php echo $interAmount?></td>
-                    </tr>
-                    <tr>
-						<td>Preis:</td><td><?php echo $interPrice; ?>€</td>
-                    </tr>
-                    <tr>
-                    	<td>Kategorie:</td><td><?php echo $category?></td>
-                    </tr>
-                    <?php
-                  		for ($i = 1; $i <= 10; $i++) {
-                  			if (isset($interTexts[$i])) {
-								$txt = ereg_replace("\n", "<br />", $interTexts[$i]); //Einsetzen von Zeilenumbruch
-                  				echo '<tr><td colspan=2>'.$txt.'</td></tr>';
-                  			}
-                  			if (isset($interImages[$i])) {
-                  				echo '<tr><td colspan=2><img style="max-width: 300px; max-height: 300px;" src="data:image/jpeg;base64,'.base64_encode( $interImages[$i] ).'"/></td></tr>';
-                  			}
-                  		}
-                    ?>
-                    <tr>
-		            	<td align="left">
-		            		<form id="like" action="" method="post" enctype="multipart/form-data" >		
-		            			<?php echo '<button onclick="showContact()" value="'.$id.'" name="like">♥</button>'; ?>
-	            			</form>                         	
-                    	</td>
-                    	<td align="right">
-							<form id="back" action="index.php" method="get" enctype="multipart/form-data" >
-									<button value="" name="next" onclick="setCookie('<?php echo $id; ?>')" />✗</button>
-							</form>
-						</td>
-                    </tr>
-           		</table>
+            <div class="content"> 
+                
+                <div class="row"><div class="col s12 m12 l12"><p></p></div></div>
+                
+                <div class="row">
+                    <div class="col s12 m12 l12">
+                         <?php echo '<img class="img_responsivness" src="data:image/jpeg;base64,'.base64_encode( $interImage ).'"/>';?>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <?php echo '<div class="col s12 m12 l12 text_center">'.$interMaintext.'</div>';?>
+                </div>
+                    
+                <?php
+                    for ($i = 1; $i <= 10; $i++) {
+                        if (isset($interTexts[$i])) {
+                            echo '<div class="row">
+                                    <div class="col s12 m12 l12">'.$interTexts[$i].'</div></div>';
+                        }
+                        if (isset($interImages[$i])) {
+                            echo '<div class="row">
+                                    <img class="img_responsivness" src="data:image/jpeg;base64,'.base64_encode( $interImages[$i] ).'"/></img></div>';
+                        }
+                    }?>
+                
+                    <table class="bordered">
+                        <tbody>
+                            <tr><td></td><td></td></tr>
+                            <tr>
+                                <td>Ort:</td>
+                                <?php 
+                                    $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lng."&sensor=true";
+                                    $json = file_get_contents($url);
+                                    $obj = json_decode($json, true);
+                                    $adr = $obj['results'][0]['formatted_address'];
+                                    echo '<td>'.$adr.'</td>';
+                                ?>
+                            </tr>
+                            <tr>
+                                <td>Entfernung:</td><td><?php if(isset($km)) echo $km;?>m</td>
+                            </tr>
+                            <tr>
+                                <td>Anzahl:</td><td><?php echo $interAmount?></td>
+                            </tr>
+                            <tr>
+                                <td>Preis:</td><td><?php echo $interPrice; ?>€</td>
+                            </tr>
+                            <tr>
+                                <td>Kategorie:</td><td><?php echo $category?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                
+  
+                <div class="row"><div class="col s12 m12 l12"><p></p></div></div>
+                
+                <div class="row">
+                    <div class="col s1 m1 l2"><h1/></div>
+                    <div class="col s3 m3 l3">
+                        <form class="center_dings" id="like" action="" method="post" enctype="multipart/form-data" > 
+                            <?php echo '<button onclick="showContact()" value="'.$id.'" name="like" class="btn-floating btn-large waves-effect waves-light green accent-3">
+                                <i class="material-icons">favorite</i>
+                            </button>'; ?>
+                        </form>    
+                    </div>
+                    <div class="col s4 m4 l2"><h1/></div>
+                    <div class="col s3 m3 l3">
+                        <form class="center_dings" id="back" action="index.php" method="get" enctype="multipart/form-data">
+                            <button value="" name="next" onclick="setCookie('<?php echo $id; ?>')" class="btn-floating btn-large waves-effect waves-light red accent-3 center_dings">
+                                <i class="material-icons">delete</i>
+                            </button>
+                        </form>                        	
+                    </div>
+                    <div class="col s1 m1 l2"><h1/></div>
+                </div>
+               
+                <div class="row"><div class="col s12 m12 l12"><p></p></div></div>
+                
             </div>
         </div>
-		<div id="popup" onclick="PopUpHide()" style=" width:100%;
-												height: 2000px;
-												background-color: rgba(0,0,0,0.5);
-												overflow:hidden;
-												position:fixed;
-												top:0px;">
-			<div id="ppc" style="margin:40px auto 0px auto;
-												width:250px;
-												height: 100px;
-												padding:10px;
-												
-												background-color: #c5c5c5;
-												border-radius:5px;
-												box-shadow: 0px 0px 10px #000;">
-				<div id="ppt" style="align:center;" ></div>
-			
-			</div>
-		</div>
+        <div id="popup" onclick="PopUpHide()" style=" width:100%;
+                                        height: 2000px;
+                                        background-color: rgba(0,0,0,0.5);
+                                        overflow:hidden;
+                                        position:fixed;
+                                        top:0px;">
+             <div id="ppc" style="margin:40px auto 0px auto;
+                                            width:250px;
+                                            height: 100px;
+                                            padding:10px;
+
+                                            background-color: #c5c5c5;
+                                            border-radius:5px;
+                                            box-shadow: 0px 0px 10px #000;">
+                 <div id="ppt" style="align:center;" ></div>
+
+             </div>
+          </div>
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script>$(".button-collapse").sideNav();</script>
