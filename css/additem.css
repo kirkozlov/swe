@@ -1,8 +1,8 @@
 .additem button{
     width: 100px;
 }
-.content table { table-layout: fixed; }
-.content table td { width: 50%; }
+.content table { table-layout: auto; }
+.content table td { width: 100%; }
 .controls {
   margin-top: 10px;
   border: 1px solid transparent;

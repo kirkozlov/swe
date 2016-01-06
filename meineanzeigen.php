@@ -76,11 +76,11 @@
         ?>
         <div class="main">
             <div class="content">
-				<table>
+				<table class="bordered">
 					<tr>
 						<td colspan="4">
 							<form action="additem.php"> 
-								<input type="submit" value="Anzeige erstellen">
+                                <button  class="waves-effect waves-light btn" type="submit" value="Anzeige erstellen"><i class="material-icons right">add_box</i>Anzeige erstellen</button>
 							</form>
 						</td>
 					</tr>
@@ -92,14 +92,15 @@
 								echo '<td>'.$value.'</td>';
 								echo '<td>
 										<form id="edit" action="edititem.php" method="post" enctype="multipart/form-data" >
-											<button value="'.$interid[$key].'" name="edit">Editieren</button>
+											<button class="waves-effect waves-light btn" value="'.$interid[$key].'" name="edit"><i class="material-icons">build</i></button>
 										</form>
 									</td>';
 								echo '<td>
 										
-											<button  onclick="DeleteOnClick('.$interid[$key].')">Löschen</button>
+											<button class="waves-effect waves-light btn red" onclick="DeleteOnClick('.$interid[$key].')"><i class="material-icons">delete</i></button>
 										
 									</td>';
+
 								echo '</tr>';
 							}
 						}             
@@ -123,7 +124,7 @@
 												border-radius:5px;
 												box-shadow: 0px 0px 10px #000;">
 				<div id="ppt" style="align:center;" >
-					<p id="BestP">Sind Sie sicher?</p>
+					<p id="BestP">Möchten Sie diese Anzeige wirklich entfernen?</p>
 					<form id="delete" action="" method="post" enctype="multipart/form-data" >
 						<button id="jaB" value="" name="delete">Ja</button>
 						<button id="neinB" onclick="PopUpHide(); return false;">Nein</button>

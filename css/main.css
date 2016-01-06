@@ -24,13 +24,13 @@ body {
 \*------------------------------------*/
 
 .menu {
-	max-width:1280px;
+/*	max-width:1280px;*/
 	margin:0 auto;
 }
 
 .content {
-	max-width:1280px;
-	width:95%;
+/*	max-width:1280px;*/
+	width:100%;
 	margin:0 auto;
 	position:relative;
 	background-color: #FFFFFF;
