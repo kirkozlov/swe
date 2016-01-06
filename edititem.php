@@ -3,21 +3,28 @@
 		header("Location: index.php");
 	}
 	$error = "";
-
+	$offerID = "";
+	
+//	var_dump($_COOKIE);
+	
+	if(!isset($_POST['edit'])){
+		if($_POST['save'])
+			$offerID = $_POST['offerID'];
+		else
+			header("Location: index.php");
+	}
+	else{
+		$offerID = $_POST['edit'];
+	}
 	include_once("includes/imgResize.php");
 	include_once("includes/ConectionOpen.php");
 	
-	$query = "SELECT * FROM `tags` ORDER BY 2";
-	$res = $conn->query($query);
-
-	$katList;
-
-	for($i = 0;$row = $res->fetch_row(); $i++){
-		$katList[$i][0] = $row[0];
-		$katList[$i][1] = $row[1];
-	}
-	
     if(isset($_POST['save'])) {
+		$toDelImg;
+		if(isset($_COOKIE['imgDel'])){
+			$toDelImg = explode(',', $_COOKIE['imgDel']);
+		}
+		
         $counter = $_GET['c'];
         $image = "";
         if(!empty($_FILES['mainImage']['tmp_name']))
@@ -25,60 +32,162 @@
         $query = "";
 		$price = $_POST['price'];
 		$amount = $_POST['amount'];
-		/*if ($price != null && !is_float($price)) {
-			$error = "price";
-		} elseif ($amount != null && !is_int($amount)) {
-			$error = "amount";
-		} */
+		
+		if(isset($toDelImg)){
+			foreach($toDelImg as $id){
+				$query = "DELETE FROM Images WHERE id = ?";
+//				echo $query."<br/>";
+			
+				$stmt = $conn->prepare($query);
+				$stmt->bind_param("s", $id);
+				$stmt->execute();
+			}
+		}
+
 		if (true || !isset($error)) {
-	        $query = $query."
+/*	        $query = $query."
 		                INSERT INTO `swegehos_swe`.`offers`
 		                (`userid`,`maintext`, `mainimage`,
 		                 `price`, `latitude`, `longtitude`,
 		                  `amount`)
-		                VALUES(". $_SESSION['idu'] .", ?, '". $image ."', 
-							" . $price . ",
-		                    ?,?, " . $amount . "
+		                VALUES(". $_SESSION['idu'] .", '". $_POST['mainTitle'] ."', '". $image ."', " . $price . ",
+		                    ". $_POST['txtLat'] .",". $_POST['txtLng'] .", " . $amount . "
 		                )
 		            ;";
+*/
+			
+			$query = "UPDATE `offers` 
+						SET `maintext` = ?, 
+						`price` = '". $price ."', 
+						`latitude` = ?, 
+						`longtitude` = ?, 
+						`amount` = '". $amount ."' ";
+			if($image != "")
+				$query = $query .", `mainimage` = '". $image ."' ";
+			
+			$query = $query ."WHERE `offers`.`id` = ". $_POST["offerID"] .";";
+			
 			$stmt = $conn->prepare($query);
 			$stmt->bind_param("sss", $_POST["mainTitle"],$_POST['txtLat'],$_POST['txtLng']);
 			$stmt->execute();
 			
-//			$res = $conn->query($query);
-			$offerID = $conn->insert_id;
-//			echo $query;
+//			res = $conn->query($query);
+			
+			$query = "UPDATE `offers_tags` 
+						 SET `tagsid` = ?
+					   WHERE `offers_tags`.`offersid` = ". $offerID .";";
+//			$conn->query($query);
+			$stmt = $conn->prepare($query);
+			$stmt->bind_param("s", $_POST["kat"]);
+			$stmt->execute();
+			
 			$query = "";// var_dump($_FILES);
+			$toUpdateImg = Array();
+			if(isset($_COOKIE['imgUpdate']) ){
+				$toUpdateImg = explode(',', $_COOKIE['imgUpdate']);
+				foreach($toUpdateImg as $img){
+					$img = explode("-", $img);
+					$query = "UPDATE images SET insideid = ? WHERE id = ?";
+					$stmt = $conn->prepare($query);
+					$stmt->bind_param("ss", $img[1], $img[0]);
+					$stmt->execute();
+				}
+			}
+			$query = "DELETE FROM detailedtexts WHERE offersid = ".$offerID;
+			$stmt = $conn->prepare($query);
+			$stmt->execute();	
+			
 			for($i = 1; $i <= $counter; $i++){
+
 				if(isset($_FILES['file' . $i]) && !empty($_FILES['file' . $i]['tmp_name'])){
-					//echo $_FILES['file' . $i]['tmp_name']. " " . $i . "<br />";
 				    $file = addslashes(resize_image($_FILES['file' . $i]['tmp_name'],300,300));//addslashes(file_get_contents($_FILES['file' . $i]['tmp_name']));
 				    $query = " INSERT INTO images(offersid, image, insideid) 
 				                        VALUES(". $offerID .", '". $file ."', ". $i .");";
 				    $conn->query($query);
-				    //echo $query;
 				}
+
 				if(isset($_POST['txt' . $i])){
-					//echo "somethingTXT" .$i;
 				    $query = " INSERT INTO detailedtexts(offersid, detailledtext, insideid)
 				                      VALUES(". $offerID .", ?, ". $i .") ;";
 					$stmt = $conn->prepare($query);
-					$stmt->bind_param("s", $_POST['txt'.$i]);
+					$stmt->bind_param("s", $_POST["txt".$i]);
 					$stmt->execute();
-				    //$conn->query($query);
-		//                var_dump($query);
-					//echo $query;
+
 				}
 			}
-			$query = "INSERT INTO `offers_tags` (`id`, `offersid`, `tagsid`) VALUES (NULL, '".$offerID."', ?);";
-			$stmt = $conn->prepare($query);
-			$stmt->bind_param("s", $_POST["kat"]);
-			$stmt->execute();
-//			$conn->query($query);			
-			
-			header("Location: meineanzeigen.php");
 		}
     }
+	
+	$query = "SELECT * FROM `offers` WHERE id = ". $offerID;
+	$res = $conn->query($query);
+
+	$offer;
+
+	for($i = 0;$row = $res->fetch_row(); $i++){
+		$offer[0] = $row[0];
+		$offer[1] = $row[1];
+		$offer[2] = $row[2];
+		$offer[3] = $row[3];
+		$offer[4] = $row[4];
+		$offer[5] = $row[5];
+		$offer[6] = $row[6];
+		$offer[7] = $row[7];
+		$offer[8] = $row[8];
+		$offer[9] = $row[9];
+	}
+	
+	$query = "SELECT * FROM `offers_tags` WHERE offersid =". $offerID;
+	$res = $conn->query($query);
+
+	$offerKat;
+
+	for($i = 0;$row = $res->fetch_row(); $i++){
+		$offerKat[0] = $row[0];
+		$offerKat[1] = $row[1];
+		$offerKat[2] = $row[2];
+	}
+	
+	$query = "SELECT * FROM `detailedtexts` WHERE offersid = ". $offerID ." ORDER BY 4";
+	$res = $conn->query($query);
+
+	$elements = false;
+	$elemCounter = 0;
+
+	while($row = $res->fetch_row()){
+		$elements[$row[3]][0] = $row[0];
+		$elements[$row[3]][1] = $row[1];
+		$elements[$row[3]][2] = $row[2];
+		$elements[$row[3]][3] = $row[3];
+		$elements[$row[3]]["img"] = false;
+		if($elemCounter < $elements[$row[3]][3]){
+			$elemCounter = $elements[$row[3]][3];
+		}
+	}
+	
+	$query = "SELECT * FROM images WHERE offersid = ". $offerID ." ORDER BY 4";
+	$res = $conn->query($query);
+	
+	while($row = $res->fetch_row()){
+		$elements[$row[3]][0] = $row[0];
+		$elements[$row[3]][1] = $row[1];
+		$elements[$row[3]][2] = $row[2];
+		$elements[$row[3]][3] = $row[3];
+		$elements[$row[3]]["img"] = true;
+		if($elemCounter < $elements[$row[3]][3]){
+			$elemCounter = $elements[$row[3]][3];
+		}
+	}
+	
+	setcookie("c", $elemCounter, time() + 3600);
+	
+	$query = "SELECT * FROM `tags` ORDER BY 2";
+	$res = $conn->query($query);
+	$katList;
+
+	for($i = 0;$row = $res->fetch_row(); $i++){
+		$katList[$i][0] = $row[0];
+		$katList[$i][1] = $row[1];
+	}
 	
 	$conn->close(); 
 
@@ -87,7 +196,6 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="css/additem.css" type="text/css" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -95,22 +203,14 @@
         <link href="css/materialize_own.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 		<script src="includes/jquery.js"></script>
 		<script src="includes/googleMap.js"></script>
+		<script src="includes/cookies.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAizLFKOw4W4Pb7juAOcSpUR6t41c_yQY&libraries=places&callback=initAutocomplete" async defer></script>
         <script language="javascript" type="text/javascript">
+			eraseCookie("txtDel");eraseCookie("imgDel");eraseCookie("imgUpdate");eraseCookie("txtUpdate");
+			//setLocation(document.getElementById("txtLat").value, document.getElementById("txtLng").value);
 		
 			$(document).ready(function(){
-			    PopUpHide();
-			<?php
-				/*if($error == "price") {
-					echo "document.getElementById('ppt').innerHTML='Bitte eine Zahl in der Form \"12.34\" für den Preis eingeben!';
-					PopUpShow();";
-					$error = "";
-				} elseif($error == "amount") {
-					echo "document.getElementById('ppt').innerHTML='Bitte eine Zahl für die Anzahl eingeben!';
-					PopUpShow();";
-					$error = "";
-				}*/	
-				?>			
+			    PopUpHide();	
 			});
 			
 			function PopUpShow(){
@@ -123,7 +223,7 @@
 				PopUpShow();
 			}
 
-			var changed = [false, false, false, false]; //[0] = title, [1] = price, [2] = amount, [3] = img
+			//var changed = [false, false, false, false]; //[0] = title, [1] = price, [2] = amount, [3] = img
 			
 			function getErrors(){
 				var errorMainText = document.getElementById("errorMainText");
@@ -135,8 +235,8 @@
 				if( errorMainText.style.visibility == "visible" ||
 					errorPrice.style.visibility == "visible" ||
 					errorAmount.style.visibility == "visible" ||
-					errorMainImg.style.visibility == "visible" ||
-					!changed[0] || !changed[1] || !changed[2] || !changed[3]
+					errorMainImg.style.visibility == "visible" // ||
+					//!changed[0] || !changed[1] || !changed[2] || !changed[3]
 					) {
 						document.getElementById('ppt').innerHTML='Bitte alle Pflichtfelder ausfüllen: Beschreibung, Preis, Anzahl und Bild.';
 						PopUpShow();
@@ -155,7 +255,6 @@
 			function checkErrors(elem){
 				switch (elem.name){
 					case "mainTitle":
-						changed[0] = true;
 						var errorMainText = document.getElementById("errorMainText");
 						if(elem.value.length > 100){
 							errorMainText.style.visibility = "visible";
@@ -173,7 +272,6 @@
 					break;
 					
 					case "price":
-						changed[1] = true;
 						var errorPrice = document.getElementById("errorPrice");
 						if(isNaN(elem.value)){
 							errorPrice.style.visibility = "visible";
@@ -191,7 +289,6 @@
 					break;
 					
 					case "amount":
-						changed[2] = true;
 						var errorAmount = document.getElementById("errorAmount");
 						if(!(elem.value == parseInt(elem.value, 10))){
 							errorAmount.style.visibility = "visible";
@@ -204,7 +301,6 @@
 					break;
 					
 					case "mainImage":
-						changed[3] = true;
 						var errorMainImg = document.getElementById("errorMainImg");
 						if(!elem.value.trim()){
 							errorMainImg.style.visibility = "visible";
@@ -216,7 +312,8 @@
 				}
 			}
 			
-            var counter = 0;
+            var counter = readCookie('c') ? readCookie('c') : 0;
+			eraseCookie('c');
 			var imgTmp = "";
 			
 			function handleMainSelect(evt){
@@ -238,7 +335,7 @@
                       // Render thumbnail.
                       //var span = document.createElement('span');
                       imgTmp.innerHTML = ['<img name="img" class="thumb" src="', e.target.result,
-                                        '" title="', escape(theFile.name), '" style="max-width: 600px; max-height: 600px; width: 100%; " />'].join('');
+                                        '" title="', escape(theFile.name), '" style="max-width: 600px; max-height: 600px; width: 100%;" />'].join('');
                       document.getElementById('mainOutput').insertBefore(imgTmp, null);
                     };
                   })(f);
@@ -276,13 +373,18 @@
 				var row = elem.parentNode.parentNode;
 //				alert(row);
 				if(input = row.getElementsByTagName('img')[0]){
-					var id = input.getAttribute("name");
-					id = id.substring(3,id.length);
-					var img = document.getElementById("file"+id);
-					var images = document.getElementById("images");
-					images.removeChild(img);
+					if(db = input.getAttribute("db")){
+						createCookie('imgDel', readCookie('imgDel') ? readCookie('imgDel') + ", " + db : db , 1);
+					}else{
+						var id = input.getAttribute("name");
+						id = id.substring(3,id.length);
+						var img = document.getElementById("file"+id);
+						var images = document.getElementById("images");
+						images.removeChild(img);
+					}
 				}
 				row.parentNode.removeChild(row);
+//				alert(document.cookie);
 				return false;
 			}
 			
@@ -330,9 +432,14 @@
 						table.rows[currentRow].innerHTML = table.rows[currentRow + 1].innerHTML;
 						table.rows[currentRow + 1].innerHTML = tmp;
 						imgUnten[0] = table.rows[currentRow].getElementsByTagName('img')[0];
-						var file = document.getElementById("file" + imgUnten[1]);
-						file.setAttribute("name", "file" + textOben[2]);
-						file.setAttribute("id", "file" + textOben[2]);
+						if(db = imgUnten[0].getAttribute("db")){
+							createCookie('imgUpdate', readCookie('imgUpdate') ? readCookie('imgUpdate') + ", " + db + "-" + textOben[2] : db + "-" + textOben[2] , 1);
+//							alert(document.cookie);
+						}else{
+							var file = document.getElementById("file" + imgUnten[1]);
+							file.setAttribute("name", "file" + textOben[2]);
+							file.setAttribute("id", "file" + textOben[2]);	
+						}						
 						imgUnten[0].setAttribute("name", "img" + textOben[2]);
 						textOben[0] = table.rows[currentRow + 1].getElementsByTagName('textarea')[0];
 						textOben[0].value = textOben[1];
@@ -343,9 +450,14 @@
 						table.rows[currentRow].innerHTML = table.rows[currentRow + 1].innerHTML;
 						table.rows[currentRow + 1].innerHTML = tmp;
 						imgOben[0] = table.rows[currentRow + 1].getElementsByTagName('img')[0];
-						var file = document.getElementById("file" + imgOben[1]);
-						file.setAttribute("name", "file" + textUnten[2]);
-						file.setAttribute("id", "file" + textUnten[2]);
+						if(db = imgOben[0].getAttribute("db")){
+							createCookie('imgUpdate', readCookie('imgUpdate') ? readCookie('imgUpdate') + ", " + db + "-" + textUnten[2] : db + "-" + textUnten[2] , 1);
+//							alert(document.cookie);
+						}else{
+							var file = document.getElementById("file" + imgOben[1]);
+							file.setAttribute("name", "file" + textUnten[2]);
+							file.setAttribute("id", "file" + textUnten[2]);
+						}	
 						imgOben[0].setAttribute("name", "img" + textUnten[2]);
 						textUnten[0] = table.rows[currentRow].getElementsByTagName('textarea')[0];
 						textUnten[0].value = textUnten[1];
@@ -359,12 +471,27 @@
 						imgUnten[0] = table.rows[currentRow].getElementsByTagName('img')[0];
 						imgOben[0].setAttribute("name", "img" + imgUnten[1]);
 						imgUnten[0].setAttribute("name", "img" + imgOben[1]);
-						var fileOben = document.getElementById("file" + imgOben[1]);
-						var fileUnten = document.getElementById("file" + imgUnten[1]);
-						fileOben.setAttribute("name", "file" + imgUnten[1]);
-						fileOben.setAttribute("id", "file" + imgUnten[1]);
-						fileUnten.setAttribute("name", "file" + imgOben[1]);
-						fileUnten.setAttribute("id", "file" + imgOben[1]);
+						if((dbOben = imgOben[0].getAttribute("db")) && (dbUnten = imgUnten[0].getAttribute("db")) ){
+							createCookie('imgUpdate', readCookie('imgUpdate') ? readCookie('imgUpdate') + ", " + dbOben + "-" + imgUnten[1] : dbOben + "-" + imgUnten[1] , 1);
+							createCookie('imgUpdate', readCookie('imgUpdate') ? readCookie('imgUpdate') + ", " + dbUnten + "-" + imgOben[1] : dbUnten + "-" + imgOben[1] , 1);
+//							alert(document.cookie);
+						}else if(dbOben = imgOben[0].getAttribute("db")){
+							createCookie('imgUpdate', readCookie('imgUpdate') ? readCookie('imgUpdate') + ", " + dbOben + "-" + imgUnten[1] : dbOben + "-" + imgUnten[1] , 1);
+							var fileUnten = document.getElementById("file" + imgUnten[1]);
+							fileUnten.setAttribute("name", "file" + imgOben[1]);
+							fileUnten.setAttribute("id", "file" + imgOben[1]);
+						}else if(dbUnten = imgUnten[0].getAttribute("db")){
+							var fileOben = document.getElementById("file" + imgOben[1]);
+							fileOben.setAttribute("name", "file" + imgUnten[1]);
+							fileOben.setAttribute("id", "file" + imgUnten[1]);
+						}else{
+							var fileOben = document.getElementById("file" + imgOben[1]);
+							var fileUnten = document.getElementById("file" + imgUnten[1]);
+							fileOben.setAttribute("name", "file" + imgUnten[1]);
+							fileOben.setAttribute("id", "file" + imgUnten[1]);
+							fileUnten.setAttribute("name", "file" + imgOben[1]);
+							fileUnten.setAttribute("id", "file" + imgOben[1]);
+						}
 					}
 				}
 				
@@ -383,7 +510,7 @@
 					currentRow = i;
 				}
 				//alert(table.rows[currentRow]);
-				if((currentRow) > 6 && tmp < table.rows.length - 1){
+				if((currentRow) > 8 && tmp < table.rows.length - 1){
 					//alert(table.rows[currentRow].innerHTML);
 					var textOben;
 					var textUnten;
@@ -415,9 +542,14 @@
 						table.rows[currentRow - 1].innerHTML = table.rows[currentRow].innerHTML;
 						table.rows[currentRow].innerHTML = tmp;
 						imgUnten[0] = table.rows[currentRow - 1].getElementsByTagName('img')[0];
-						var file = document.getElementById("file" + imgUnten[1]);
-						file.setAttribute("name", "file" + textOben[2]);
-						file.setAttribute("id", "file" + textOben[2]);
+						if(db = imgUnten[0].getAttribute("db")){
+							createCookie('imgUpdate', readCookie('imgUpdate') ? readCookie('imgUpdate') + ", " + db + "-" + textOben[2] : db + "-" + textOben[2] , 1);
+//							alert(document.cookie);
+						}else{
+							var file = document.getElementById("file" + imgUnten[1]);
+							file.setAttribute("name", "file" + textOben[2]);
+							file.setAttribute("id", "file" + textOben[2]);
+						}
 						imgUnten[0].setAttribute("name", "img" + textOben[2]);
 						textOben[0] = table.rows[currentRow].getElementsByTagName('textarea')[0];
 						textOben[0].value = textOben[1];
@@ -428,9 +560,14 @@
 						table.rows[currentRow - 1].innerHTML = table.rows[currentRow].innerHTML;
 						table.rows[currentRow].innerHTML = tmp;
 						imgOben[0] = table.rows[currentRow].getElementsByTagName('img')[0];
-						var file = document.getElementById("file" + imgOben[1]);
-						file.setAttribute("name", "file" + textUnten[2]);
-						file.setAttribute("id", "file" + textUnten[2]);
+						if(db = imgOben[0].getAttribute("db")){
+							createCookie('imgUpdate', readCookie('imgUpdate') ? readCookie('imgUpdate') + ", " + db + "-" + textUnten[2] : db + "-" + textUnten[2] , 1);
+//							alert(document.cookie);
+						}else{
+							var file = document.getElementById("file" + imgOben[1]);
+							file.setAttribute("name", "file" + textUnten[2]);
+							file.setAttribute("id", "file" + textUnten[2]);
+						}
 						imgOben[0].setAttribute("name", "img" + textUnten[2]);
 						textUnten[0] = table.rows[currentRow - 1].getElementsByTagName('textarea')[0];
 						textUnten[0].value = textUnten[1];
@@ -444,12 +581,27 @@
 						imgUnten[0] = table.rows[currentRow - 1].getElementsByTagName('img')[0];
 						imgOben[0].setAttribute("name", "img" + imgUnten[1]);
 						imgUnten[0].setAttribute("name", "img" + imgOben[1]);
-						var fileOben = document.getElementById("file" + imgOben[1]);
-						var fileUnten = document.getElementById("file" + imgUnten[1]);
-						fileOben.setAttribute("name", "file" + imgUnten[1]);
-						fileOben.setAttribute("id", "file" + imgUnten[1]);
-						fileUnten.setAttribute("name", "file" + imgOben[1]);
-						fileUnten.setAttribute("id", "file" + imgOben[1]);
+						if((dbOben = imgOben[0].getAttribute("db")) && (dbUnten = imgUnten[0].getAttribute("db")) ){
+							createCookie('imgUpdate', readCookie('imgUpdate') ? readCookie('imgUpdate') + ", " + dbOben + "-" + imgUnten[1] : dbOben + "-" + imgUnten[1] , 1);
+							createCookie('imgUpdate', readCookie('imgUpdate') ? readCookie('imgUpdate') + ", " + dbUnten + "-" + imgOben[1] : dbUnten + "-" + imgOben[1] , 1);
+//							alert(document.cookie);
+						}else if(dbOben = imgOben[0].getAttribute("db")){
+							createCookie('imgUpdate', readCookie('imgUpdate') ? readCookie('imgUpdate') + ", " + dbOben + "-" + imgUnten[1] : dbOben + "-" + imgUnten[1] , 1);
+							var fileUnten = document.getElementById("file" + imgUnten[1]);
+							fileUnten.setAttribute("name", "file" + imgOben[1]);
+							fileUnten.setAttribute("id", "file" + imgOben[1]);
+						}else if(dbUnten = imgUnten[0].getAttribute("db")){
+							var fileOben = document.getElementById("file" + imgOben[1]);
+							fileOben.setAttribute("name", "file" + imgUnten[1]);
+							fileOben.setAttribute("id", "file" + imgUnten[1]);
+						}else{
+							var fileOben = document.getElementById("file" + imgOben[1]);
+							var fileUnten = document.getElementById("file" + imgUnten[1]);
+							fileOben.setAttribute("name", "file" + imgUnten[1]);
+							fileOben.setAttribute("id", "file" + imgUnten[1]);
+							fileUnten.setAttribute("name", "file" + imgOben[1]);
+							fileUnten.setAttribute("id", "file" + imgOben[1]);
+						}
 					}
 				}
 				
@@ -543,22 +695,52 @@
                         <table class="anzeige" id="anzeige">
                             <tr><td colspan="3">
 									<input type="submit" value="Speichern" name="save" onclick="return getErrors();" />
-									<input type="text" name="txtLat" id="txtLat" hidden="hidden" />
-									<input type="text" name="txtLng" id="txtLng" hidden="hidden" />
+									<input type="text" name="txtLat" id="txtLat" hidden="hidden" value="<?php echo $offer[5]; ?>" />
+									<input type="text" name="txtLng" id="txtLng" hidden="hidden" value="<?php echo $offer[6]; ?>" />
+									<input type="text" name="offerID" id="offerID" hidden="hidden" value="<?php echo $offer[0]; ?>" />
 								</td>
 							</tr>
-                            <tr><td>Beschreibung:</td><td><input type="text" name="mainTitle" onblur="checkErrors(this);" /><img id="errorMainText" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
-                            <tr><td>Preis (in €):</td><td><input type="text" name="price" onblur="checkErrors(this);" /><img id="errorPrice" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
-                            <tr><td>Anzahl:</td><td><input type="text" name="amount" onblur="checkErrors(this);" /><img id="errorAmount" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
+                            <tr><td>Beschreibung:</td><td><input type="text" name="mainTitle" onblur="checkErrors(this);" value="<?php echo $offer[3]; ?>" /><img id="errorMainText" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
+                            <tr><td>Preis (in €):</td><td><input  value="<?php echo $offer[4]; ?>" type="text" name="price" onblur="checkErrors(this);" /><img id="errorPrice" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
+                            <tr><td>Anzahl:</td><td><input  value="<?php echo $offer[9]; ?>" type="text" name="amount" onblur="checkErrors(this);" /><img id="errorAmount" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
 							<tr><td>Kategorie:</td>
 								<td>
 									<select name="kat">
-										<?php foreach($katList as $kat) echo "<option value='$kat[0]'>$kat[1]</option>"; ?>
+										<?php 
+//										var_dump($katList);
+											foreach($katList as $kat){
+												if($kat[0] == $offerKat[2]){
+													echo "<option selected='selected' value='$kat[0]'>$kat[1]</option>";
+													continue;
+												}
+												echo "<option value='$kat[0]'>$kat[1]</option>"; 
+											}
+										?>
 									</select>
 								</td>
 							<tr><input id="pac-input" class="controls" type="text" placeholder="Search Box"><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
-                            <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" accept="image/jpeg" name="mainImage" onblur="checkErrors(this);" /><img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
-							<tr><td colspan="3"><output id="mainOutput"><span id="spanMain"></span></output></td></tr>
+                            <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" accept="image/jpeg" name="mainImage" onblur="" /><img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
+							<tr><td colspan="3"><output id="mainOutput"><span id="spanMain">
+								<img name="img" class="thumb" src="data:image/jpeg;base64,<?php echo base64_encode($offer[2]);
+								?>" style="max-width: 600px; max-height: 600px; width: 100%; ">
+							</span></output></td></tr>
+							<?php 
+								for($i = 0;$i <= $elemCounter;$i++){
+									if(isset($elements[$i])){
+										echo "<tr id = ". ($i - 1) ."><td colspan ='3' id = ". ($i - 1) . ">
+											  <input type='button' onclick='return deleteElement(this)' value='Löschen'>";
+											if($elements[$i]["img"]){
+												echo "<img name='img$i' db='".$elements[$i][0]."' src='data:image/jpeg;base64,". base64_encode($elements[$i][2]) ."' class='thumb' style='max-width: 300px; max-height: 300px; width: 100%;' />";
+											}
+											else{
+												echo "<textarea name='txt$i' >". $elements[$i][2] ."</textarea>";
+											}
+										echo '<input type="button" onclick="return elementUp(this)" value="Hoch">
+										      <input type="button" onclick="return elementDown(this)" value="Runter">';
+										echo "</td></tr>";
+									}
+								}
+							?>
                         </table>
 						<span id ="images" hidden="hidden"></span>
                     </form>
@@ -594,4 +776,3 @@
         <script>$(".button-collapse").sideNav();</script>
     </body>
 </html>
-

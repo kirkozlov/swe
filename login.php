@@ -37,9 +37,12 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
-        <link rel="stylesheet" href="css/menu.css" type="text/css" />
 		<link rel="stylesheet" href="css/tablelogin.css" type="text/css" />
-		<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="css/materialize_own.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+		<script src="includes/jquery.js"></script>
+		<script src="includes/sha2.js"></script>
 		<script>
 			$(document).ready(function(){
 			    PopUpHide();
@@ -68,6 +71,11 @@
 				var temp =document.getElementById('email').value;
 				document.getElementById('passver').setAttribute("href","forgotpassword.php?e="+temp);
 			}
+			function loginclick(){
+				var p1=document.getElementById("p1").value;
+				document.getElementById("p1").value=CryptoJS.SHA256(p1);
+				
+			}
 		</script>
     </head>
     <body>  
@@ -85,8 +93,8 @@
 			<tr><td>E-Mail:</td><td></td></tr>
 			<tr><td colspan="2"><input id="email"style="max-width: 280px; width: 95%;" type="text" name="email" value=<?php echo "'".$e."'" ?>/></td></tr>
 			<tr><td>Passwort:</td><td><a id ="passver" href="" onclick="sendmypass()">Passwort vergessen</a></td></tr>
-			<tr><td colspan="2"><input style="max-width: 280px; width: 95%;" type="password" name="password"value=<?php echo "'".$p."'" ?>/></td><tr>
-			<tr><td><input type="submit" name="activ" value="Einloggen"/></td><td><a href="reg.php">Registrieren</a></td></tr>
+			<tr><td colspan="2"><input style="max-width: 280px; width: 95%;" id="p1" type="password" name="password"/></td><tr>
+			<tr><td><input type="submit" name="activ" onclick="loginclick()"value="Einloggen"/></td><td><a href="reg.php">Registrieren</a></td></tr>
 		</table>
 		</form>
 		</div>
@@ -108,7 +116,10 @@
 				<div id="ppt" style="align:center;" ></div>
 			
 			</div>
-		</div>
+	</div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script>$(".button-collapse").sideNav();</script>
     </body>
 </html>
 

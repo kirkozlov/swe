@@ -1,10 +1,5 @@
-Algemeine info:
-Machen wir zuerst ganze Funktionalitet, und nur dann das gute css(style).
-
-
-Hier schreiben wir, was wir noch ändern mussen, um Das nicht zu fergessen.
-Oder einfach was ihr gefält nicht.
-Ich fange an.
+Nach Kaufpopup Weiterleitung auf Index
+Popup Benutzerverwaltung als Bestätigung
 
 
 
@@ -13,7 +8,6 @@ Ich fange an.
 settings: popups für PassChange machen. 
 forgotpassword: text in emails andern.
 forgotpassword: es gibt Problemen mit Sendung-- google hat schon einmal dieses account blockiert. jetzt funktioniert das.
-forgotpassword,settings,reg: pass cheschieren.
 index: lesen aus datenbank andern(um nicht alles zu lesen).
 index: mit filtern vergleichen.
 index: counter besser mit _Get übergeben.
@@ -59,7 +53,7 @@ Johanna: index, meineanzeigen, Anzeigenverwaltung(admin), Userverwaltung(admin),
 Thomas: css:interessen Verwalten, Index
 Martin:
 Reiner:
-Tobias:
+Tobias: Ortung über IP
 Cornelius:
 
 bitte verteilen sie sich selbst

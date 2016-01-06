@@ -1,0 +1,29 @@
+.center_dings {
+    margin: Auto;
+    width: 55.5;
+    padding: Center;
+}
+.format_bild {
+    height: 200px;
+    max-height: 200px;
+}
+.center_dings_neu {
+    margin: Auto;
+    width: 193.5;
+    padding: Center;
+}
+.format_text {
+    height: auto;
+    max-height: 5%;
+}
+.img_responsivness {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+    margin: auto;
+}
+.text_center {
+    text-align: center;
+}

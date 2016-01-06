@@ -15,7 +15,7 @@
 	text-rendering:optimizeLegibility;
 }
 body {
-	font:400 13px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font:400 16px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	background:#333;
 }
 
@@ -33,7 +33,7 @@ body {
 	width:95%;
 	margin:0 auto;
 	position:relative;
-	background-color: #D8D8D8;
+	background-color: #FFFFFF;
     border-radius:0 0 5px 5px;
 		-webkit-border-radius:0 0 5px 5px;
 		-moz-border-radius:0 0 5px 5px;

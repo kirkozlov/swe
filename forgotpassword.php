@@ -14,6 +14,7 @@
 	$sucsess=false;
 	if(isset($_GET['e'])){
 		$newpass=passgeneric();
+		$newpasssha2=hash('sha256', $newpass);
 		$to=$_GET['e'];
 		$str1="SELECT ID from users WHERE email='".$to."'";
 		include ('includes/ConectionOpen.php');
@@ -22,7 +23,7 @@
 			$sucsess=true;
 			$errortext="Ihnen wurde ein neues Passwort zugesendet";
 			include("includes/sendmail.php");
-			$str1="UPDATE `users`SET `password`='".$newpass."' WHERE id='".$row[0]."'";
+			$str1="UPDATE `users`SET `password`='".$newpasssha2."' WHERE id='".$row[0]."'";
 			$res=$conn->query($str1);
 			sendmail($to,$newpass);
 		}
@@ -37,8 +38,17 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
-        <link rel="stylesheet" href="css/menu.css" type="text/css" />
-		
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="css/materialize_own.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+		<script src="includes/sha2.js"></script>
+		<script>
+		function loginclick(){
+				var p1=document.getElementById("p1").value;
+				document.getElementById("p1").value=CryptoJS.SHA256(p1);
+				
+			}
+		</script>	
     </head>
     <body >
 	
@@ -60,8 +70,8 @@
 			
 									<tr><td colspan="2"><input id="email"style="max-width: 280px; width: 95%;" type="text" name="email" value="'.$to.'" hidden="true" visibility="collapse "/></td></tr>
 									<tr><td>Passwort:</td></tr>
-									<tr><td colspan="2"><input style="max-width: 280px; width: 95%;" type="password" name="password"/></td><tr>
-									<tr><td><input type="submit" name="activ" value="Einloggen"/></td></tr>
+									<tr><td colspan="2"><input id="p1" style="max-width: 280px; width: 95%;" type="password" name="password"/></td><tr>
+									<tr><td><input type="submit" name="activ"onclick="loginclick()" value="Einloggen"/></td></tr>
 								</table>
 							</form>';
 					
@@ -74,6 +84,9 @@
                 <a href="reg.php">Registrieren</a>
             </div>
         </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script>$(".button-collapse").sideNav();</script>
     </body>
 </html>
 

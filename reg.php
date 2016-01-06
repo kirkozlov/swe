@@ -47,8 +47,11 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
-        <link rel="stylesheet" href="css/menu.css" type="text/css" />
-		<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="css/materialize_own.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+		<script src="includes/jquery.js"></script>
+		<script src="includes/sha2.js"></script>
 		<script>
 			$(document).ready(function(){
 			    PopUpHide();
@@ -88,6 +91,8 @@
 					return false;
 				}
 				else{
+					document.getElementById("p1").value=CryptoJS.SHA256(p1);
+					document.getElementById("p2").value=CryptoJS.SHA256(p2);
 					return true;
 				}
 			}
@@ -104,12 +109,13 @@
 									position:relative;
 									max-width: 280px;
 									width: 95%;">
+					<tr><td><b>Hinweis: Zur Registrierung müssen Sie volljährig sein!</b></td></tr>
 					<tr><td >E-Mail:</td></tr>
 					<tr><td><input id="em" type="text" name="email" value=<?php echo "'".$e."'" ?>/></td></td>
 					<tr><td>Passwort:</td></tr>
-					<tr><td><input id="p1"type="password" name="password"value=<?php echo "'".$p."'" ?>/></td></td>
+					<tr><td><input id="p1"type="password" name="password"/></td></td>
 					<tr><td>Wiederholung:</td></tr>
-					<tr><td><input id="p2"type="password" name="passwordw"value=<?php echo "'".$pw."'" ?>/></td>
+					<tr><td><input id="p2"type="password" name="passwordw"/></td>
 					<tr><td colspan="2"><input type="submit" name="activ"value="Registrieren" onclick="return clickbutton(this)"/></td></tr>
 				</table>
 				</form>
@@ -134,8 +140,9 @@
 			
 			</div>
 		</div>
-		
-    
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script>$(".button-collapse").sideNav();</script>
 	</body>
 </html>
 
