@@ -42,7 +42,7 @@
 	$sql = (isset($_COOKIE['filter']) && $_COOKIE['filter'] > 0 )? $sql ."AND ". $_COOKIE['filter'] ."&POW(2, offers_tags.tagsid - 1) " : $sql;
 	$sql = $sql . "AND calculateTheDistance(" . $_COOKIE['pos'] . ", offers.latitude, offers.longtitude) <= ". (isset($_COOKIE['km']) ? $_COOKIE['km']."000" : "50000");
 	$sql = $sql ." ORDER BY -LOG(RAND()) / IF(users.goldflag = 0, 10, 30) LIMIT 1";
-//	echo $sql;
+    //echo $sql;
     //$sql = "SELECT id, maintext, price, mainimage, userid FROM offers ORDER BY id LIMIT ".$_SESSION['anzeigencounter'].", 1";
     $sth = $conn->query($sql);
     if (isset($sth) && $sth != null && $row = $sth->fetch_row()) {
@@ -113,7 +113,7 @@
     </head>
 	<body>
             <?php 
-                include("includes/menu_material.php");
+                include("includes/menu.php");
                 //echo $_SESSION['idu']; 
                 //$_SESSION['filter']['1'] = 1;
                 //var_dump($_SESSION); 
@@ -126,7 +126,7 @@
                         <div class="col s12 m6 l6" >
                             <div class="card pc">
                                 <div class="card-image">
-                                    <form class="fickdich_bild" id="like" action="details.php" method="post" enctype="multipart/form-data" > 
+                                    <form class="format_bild" id="like" action="details.php" method="post" enctype="multipart/form-data" > 
                                         <?php 
                                         if(isset($interImage)) {
                                             echo '<input class="img_responsivness" type="image" src="data:image/jpeg;base64,'.base64_encode( $interImage ).'" value="'.$id.'" name="id"/>';
@@ -143,28 +143,31 @@
                                     </form>
                                 </div>
                                 <div class="card-content">
-                                    <p class="center-align fickdich_text">
+                                    <p class="center-align format_text">
                                         <?php 
                                             if (isset($interMaintext)) {
                                                 echo $interMaintext;
 		        				         } ?>
                                     </p>
                                     <?php if ($dbempty) {                           
-                                            echo '<p class="center-align fickdich_text">
-                                                    Bedauerlicherweise sind keine neuen Anzeigen vorhanden.</p>';
-                                            echo '<p class="center-align fickdich_text">
-                                                    Wollen Sie von Vorne anfangen?</p>'; 
+                                            echo '<p class="center-align">
+                                                    Bedauerlicherweise sind keine neuen Anzeigen vorhanden.<br/>
+                                                    Wollen Sie von Vorne anfangen?</p>';
                                     } ?>
                                 </div>
                                 <div class="card-action">
                                     <?php if ($dbempty) {
                                         echo '<div class="row">';
-                                            echo '<div class="col s6 m6 l6">';
+                                        echo '</div>';
+                                        echo '<div class="row">';
+                                        echo '</div>';
+                                        echo '<div class="row">';
+                                            echo '<div class="col s4 m6 l6">';
                                                 echo '<form class="center_dings_neu" action="" method="post">';
                                                     echo '<button class="waves-effect waves-light btn" onclick="eraseCookie(\'idList\');">ja</button>';
                                                 echo '</form>';
                                             echo '</div>'; 
-                                            echo '<div class="col s6 m6 l6">'; 
+                                            echo '<div class="col s8 m6 l6">'; 
                                                 echo '<form class="center_dings_neu" action="" method="post">';
                                                     echo '<button class="waves-effect waves-light btn" onclick="document.location.href = \'settings.php\'; return false;">Filter anpassen</button>';
                                                 echo '</form>'; 

@@ -3,17 +3,17 @@
     width: 55.5;
     padding: Center;
 }
-.fickdich_bild {
-    height: 45%;
-    max-height: 45%;
+.format_bild {
+    height: 200px;
+    max-height: 200px;
 }
 .center_dings_neu {
     margin: Auto;
     width: 193.5;
     padding: Center;
 }
-.fickdich_text {
-    height: 5%;
+.format_text {
+    height: auto;
     max-height: 5%;
 }
 .img_responsivness {
