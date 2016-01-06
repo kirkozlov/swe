@@ -64,7 +64,25 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="css/menu.css" type="text/css" />
-
+		<script src="includes/jquery.js"></script>
+		<script >
+		$(document).ready(function(){
+			    PopUpHide();
+		});
+		function PopUpShow(){
+			$("#popup").show();
+		}
+		function DeleteOnClick(value2,n){
+			document.getElementById('jaB').value=value2;
+			document.getElementById('jaB').name=( (n==1)?"delete":"changeFlag");
+			PopUpShow();
+		}
+		function PopUpHide(){
+			$("#popup").hide();
+			
+		}
+		
+		</script>
     </head>
     <body>
         <?php 
@@ -88,14 +106,12 @@
 								}
 								
 								echo '<td>
-										<form id="delete" action="" method="post" enctype="multipart/form-data" >
-											<button value="'.$key.'" name="delete"/>Löschen</button>
-										</form>
+										<button  onclick="DeleteOnClick('.$key.',1)">Löschen</button>
+										
 									</td>';
 								echo '<td>
-										<form id="changeFlag" action="" method="post" enctype="multipart/form-data" >
-											<button value="'.$key.'" name="changeFlag"/>Status ändern</button>
-										</form>
+										<button  onclick="DeleteOnClick('.$key.',2)">Status ändern</button>
+										
 									</td>';
 								echo '</tr>';
 							}
@@ -104,6 +120,29 @@
 				</table>
             </div>
         </div>
+		<div id="popup"  style=" width:100%;
+												height: 2000px;
+												background-color: rgba(0,0,0,0.5);
+												overflow:hidden;
+												position:fixed;
+												top:0px;">
+			<div id="ppc" style="margin:40px auto 0px auto;
+												width:250px;
+												height: 40px;
+												padding:10px;
+												
+												background-color: #c5c5c5;
+												border-radius:5px;
+												box-shadow: 0px 0px 10px #000;">
+				<div id="ppt" style="align:center;" >
+					<p id="BestP">Sind Sie sicher?</p>
+					<form id="changeFlagDelete" action="" method="post" enctype="multipart/form-data" >
+						<button id="jaB" value="" name="changeFlag">Ja</button>
+						<button id="neinB" onclick="PopUpHide(); return false;">Nein</button>
+					</form>
+				</div>
+			</div>
+		</div>
     </body>
 </html>
 
