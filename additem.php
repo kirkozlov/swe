@@ -123,22 +123,29 @@
 				PopUpShow();
 			}
 
-			var changed = [false, false, false, false]; //[0] = title, [1] = price, [2] = amount, [3] = img
+			var changed = [false, false, false, false, false]; //[0] = title, [1] = price, [2] = amount, [3] = img, [4] = kategorie
 			
 			function getErrors(){
 				var errorMainText = document.getElementById("errorMainText");
 				var errorPrice = document.getElementById("errorPrice");
 				var errorAmount = document.getElementById("errorAmount");
 				var errorMainImg = document.getElementById("errorMainImg");
+				var errorKat = document.getElementById("errorKat");
 				var errorLat = document.getElementById("txtLat").value;
 				var errorLng = document.getElementById("txtLng").value;
 				if( errorMainText.style.visibility == "visible" ||
 					errorPrice.style.visibility == "visible" ||
 					errorAmount.style.visibility == "visible" ||
 					errorMainImg.style.visibility == "visible" ||
-					!changed[0] || !changed[1] || !changed[2] || !changed[3]
+					errorKat.style.visibility == "visible" ||
+					!changed[0] || !changed[1] || !changed[2] || !changed[3] || !changed[4]
 					) {
-						document.getElementById('ppt').innerHTML='Bitte alle Pflichtfelder ausfüllen: Beschreibung, Preis, Anzahl und Bild.';
+						!changed[0] ? errorMainText.style.visibility = "visible" : null;
+						!changed[1] ? errorPrice.style.visibility = "visible" : null;
+						!changed[2] ? errorAmount.style.visibility = "visible" : null;
+						!changed[3] ? errorMainImg.style.visibility = "visible" : null;
+						!changed[4] ? errorKat.style.visibility = "visible" : null;
+						document.getElementById('ppt').innerHTML='Bitte alle Pflichtfelder ausfüllen: Beschreibung, Preis, Anzahl, Kategorie und Bild.';
 						PopUpShow();
 						return false;
 					}
@@ -169,6 +176,18 @@
 						}
 						else{
 							errorMainText.style.visibility = "hidden";
+						}
+					break;
+					
+					case "kat":
+						changed[4] = true;
+						var errorKat = document.getElementById("errorKat");
+						if(elem.options[elem.selectedIndex].value < 1){
+							errorKat.style.visibility = "visible";
+							document.getElementById('ppt').innerHTML='Wählen Sie bitte eine Kategorie aus.';
+							PopUpShow();
+						} else{
+							errorKat.style.visibility = "hidden";
 						}
 					break;
 					
@@ -565,10 +584,11 @@
                                 <label for="amount">Anzahl</label>
                                 <img id="errorAmount" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
 								<td><div class="input-field">
-                                    <select id="kategorien">
+                                    <select id="kategorien" name="kat" onchange="checkErrors(this);" onblur="checkErrors(this);" >
                                         <option value="" disabled selected>Wähle deine Kategorie</option>
                                         <?php foreach($katList as $kat) echo "<option value='$kat[0]'>$kat[1]</option>"; ?>
                                     </select>
+									<img id="errorKat" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" />
                                     </div>
 								</td>
                             <tr><td>   
