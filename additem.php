@@ -459,7 +459,7 @@
             function insertRow(){
                 var table = document.getElementById("anzeige");
                 var tbody = table.children[0];
-                var row = tbody.insertBefore(table.rows[0].cloneNode(false), table.rows[7]);
+                var row = tbody.insertBefore(table.rows[0].cloneNode(false), table.rows[table.rows.length - 4]);
                 row.setAttribute("id", counter)
                 
                 var cell = row.insertCell(-1);
