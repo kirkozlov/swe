@@ -208,6 +208,7 @@
 						var errorMainImg = document.getElementById("errorMainImg");
 						if(!elem.value.trim()){
 							errorMainImg.style.visibility = "visible";
+							document.getElementById("spanMain").innerHTML = "";
 						}
 						else{
 							errorMainImg.style.visibility = "hidden";
@@ -459,7 +460,7 @@
             function insertRow(){
                 var table = document.getElementById("anzeige");
                 var tbody = table.children[0];
-                var row = tbody.insertBefore(table.rows[0].cloneNode(false), table.rows[table.rows.length - 4]);
+                var row = tbody.insertBefore(table.rows[0].cloneNode(false), table.rows[table.rows.length - 3]);
                 row.setAttribute("id", counter)
                 
                 var cell = row.insertCell(-1);
@@ -577,7 +578,7 @@
                                         <input id="mainImage" onclick="getElement(this)" onchange="" type="file" accept="image/jpeg" name="mainImage" onblur="checkErrors(this);"/>     
                                     </div>
                                     <div class="file-path-wrapper">
-                                        <input id="mainImage" class="file-path validate" type="text" onclick="getElement(this)" onchange="" accept="image/jpeg" name="mainImage" onblur="checkErrors(this);"/>
+                                        <input id="mainImage" class="file-path validate" type="text" onclick="getElement(this)" onchange="checkErrors(this);" accept="image/jpeg" name="mainImage" onblur="checkErrors(this);"/>
                                         <img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" />
                                     </div> 
                                 </div>
