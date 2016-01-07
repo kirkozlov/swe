@@ -591,7 +591,7 @@
                                 <a class='dropdown-button btn large' data-activates='elementList'>Element hinzuf&uuml;gen</a>
                             </td></tr>
                             <tr><input id="pac-input" class="controls" type="text" placeholder="Search Box"><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
-                            <tr><td><a href="#!" class="waves-effect waves-light btn" type="submit" value="Speichern" name="save" onclick="return getErrors();">Speichern<i class="material-icons right">send</i></a></td></tr>
+                            <tr><td><input class="waves-effect waves-light btn" type="submit" value="Speichern" name="save" onclick="return getErrors();"></input></td></tr>
                         </table>
 						<span id ="images" hidden="hidden"></span>
                     </form>

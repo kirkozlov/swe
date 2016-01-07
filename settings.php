@@ -26,13 +26,13 @@
 		}
 		else
 		{
-			$streo="alte pass falsh;";
+			$streo="Das eingegebene alte Passwort ist nicht korrekt!;";
 			$error=1;
 		}
 		if($p!=$pw )
 		{
 			$error=1;
-			$streo=$streo." wiederholung ist falsh";
+			$streo=$streo."Das wiederholte Passwort ist nicht das gleiche wie das neue Passwort!";
 		}
 		if($error==0){
 			$str1="UPDATE `users`SET `password`='".$p."' WHERE id='".$idu."'";
