@@ -12,7 +12,7 @@
 		$e=$_POST['email'];
 		$p=$_POST['password'];
 		$pw=$_POST['passwordw'];
-		if(filter_var($e, FILTER_VALIDATE_EMAIL)||true)//true weg machen für release
+		if(filter_var($e, FILTER_VALIDATE_EMAIL))//true weg machen für release
 		{
 			$str1="SELECT * from users WHERE email='".$e."'";
 			include ('includes/ConectionOpen.php');
@@ -130,7 +130,7 @@
 												top:0px;">
 			<div id="ppc" style="margin:40px auto 0px auto;
 												width:250px;
-												height: 40px;
+												height: 80px;
 												padding:10px;
 												
 												background-color: #c5c5c5;
