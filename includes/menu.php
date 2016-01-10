@@ -16,6 +16,10 @@
 						{
 							echo '<li><a href="useradmin.php">Benutzerverwaltung</a></li>';
 							echo '<li><a href="anzeigenverwaltungadmin.php">Anzeigenverwaltung</a></li>';
+                            echo '</ul>';
+                            echo '<ul class="side-nav" id="mobile-demo">';
+                            echo '<li><a href="useradmin.php">Benutzerverwaltung</a></li>';
+							echo '<li><a href="anzeigenverwaltungadmin.php">Anzeigenverwaltung</a></li>';
 						}
 						if(isset($_SESSION['login']) && $_SESSION['login'] == true)
 						{
