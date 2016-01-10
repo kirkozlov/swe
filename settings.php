@@ -243,9 +243,15 @@
 		<table style=" margin:0 auto;
 									position:relative;
 									max-width: 280px;
-									width: 95%;">
-			<tr><td colspan="2"><input id="elem" type="range" min="0" max="100" step="5" value=<?php echo $km ?> onSlide="vach()" onChange="vach()" /></td></tr>
-			<tr><td >Umkreis in km:</td><td><div id="te" style="width:30"><?php echo $km ?></div></td></tr>
+									width: 95%;">           
+			
+            <tr><td colspan="2">
+            <form action="#">
+                <p class="range-field">
+                    <input id="elem" type="range" min="0" max="100" step="5" value=<?php echo $km ?> onSlide="vach()" onChange="vach()" /></td></tr>
+                </p>
+            </form>
+            <tr><td >Umkreis in km:</td><td><div id="te" style="width:30"><?php echo $km ?></div></td></tr>
 			<tr><td><div id="address"></div></td></tr>
 			<tr><td><div id="location"></div></td></tr>
 		</table>
