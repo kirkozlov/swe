@@ -95,7 +95,6 @@
         <link href="css/materialize_own.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 		<script src="includes/jquery.js"></script>
 		<script src="includes/googleMap.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAizLFKOw4W4Pb7juAOcSpUR6t41c_yQY&libraries=places&callback=initAutocomplete" async defer></script>
         <script language="javascript" type="text/javascript">
 		
 			$(document).ready(function(){
@@ -574,12 +573,15 @@
 									<input type="text" name="txtLng" id="txtLng" hidden="hidden" />
 								</td>
 							</tr>
+                            
                             <tr><td><input length="100" type="text"  name="mainTitle" onblur="checkErrors(this);" />
                                 <label for="mainTitle">Beschreibung</label>
                                 <img id="errorMainText" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
+                            
                             <tr><td><input type="text"  name="price" onblur="checkErrors(this);" />
                                 <label for="price">Preis (in €)</label>
                                 <img id="errorPrice" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
+                            
                             <tr><td><input type="text"  name="amount" onblur="checkErrors(this);" />
                                 <label for="amount">Anzahl</label>
                                 <img id="errorAmount" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
@@ -591,6 +593,7 @@
 									<img id="errorKat" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" />
                                     </div>
 								</td>
+                            
                             <tr><td>   
                                 <div class="file-field input-field">
                                     <div class="btn">
@@ -602,7 +605,7 @@
                                         <img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" />
                                     </div> 
                                 </div>
-                                </td></tr>
+                            </td></tr>
 							<tr><td colspan="3"><output id="mainOutput"><span id="spanMain"></span></output></td></tr>
                             <tr><td>
                                 <ul class="dropdown-content" id="elementList" style="display: none;">
@@ -640,21 +643,22 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script>$(".button-collapse").sideNav();
-          $(document).ready(function() {
-    $('select').material_select();
-  });
-        $('.dropdown-button').dropdown({
-      inDuration: 300,
-      outDuration: 225,
-      constrain_width: false, // Does not change width of dropdown to that of the activator
-      hover: true, // Activate on hover
-      gutter: 0, // Spacing from edge
-      belowOrigin: false, // Displays dropdown below the button
-      alignment: 'left' // Displays dropdown with edge aligned to the left of button
-    }
-  );
+            $(document).ready(function() {
+                $('select').material_select();
+            });
+                $('.dropdown-button').dropdown({
+                    inDuration: 300,
+                    outDuration: 225,
+                    constrain_width: false, // Does not change width of dropdown to that of the activator
+                    hover: true, // Activate on hover
+                    gutter: 0, // Spacing from edge
+                    belowOrigin: false, // Displays dropdown below the button
+                    alignment: 'left' // Displays dropdown with edge aligned to the left of button
+                }
+            );
         
         </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAizLFKOw4W4Pb7juAOcSpUR6t41c_yQY&libraries=places&callback=initAutocomplete" async defer></script>
     </body>
 </html>
 

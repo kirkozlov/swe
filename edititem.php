@@ -392,15 +392,15 @@
 				var row = elem.parentNode.parentNode;
 				var table = row.parentNode.parentNode;//document.getElementById("anzeige");
 				//alert(table);
-				var currentRow = 8;
+				var currentRow = 7;
 				var tmp = 0;
-				for(i = 9; r = table.rows[i]; i++ ){
+				for(i = 8; r = table.rows[i]; i++ ){
 					//alert(r);
 					if(r == row){ tmp = i; break;}
 					currentRow = i;
 				}
 				//alert(table.rows[currentRow]);
-				if((currentRow + 1) > 8 && tmp > 0){
+				if((currentRow + 1) > 7 && tmp > 0){
 					//alert(table.rows[currentRow].innerHTML);
 					var textOben;
 					var textUnten;
@@ -510,7 +510,7 @@
 					currentRow = i;
 				}
 				//alert(table.rows[currentRow]);
-				if((currentRow) > 8 && tmp < table.rows.length - 1){
+				if((currentRow) > 6 && tmp < table.rows.length - 1){
 					//alert(table.rows[currentRow].innerHTML);
 					var textOben;
 					var textUnten;
@@ -610,19 +610,27 @@
 			
             function insertRow(){
                 var table = document.getElementById("anzeige");
-                var row = table.insertRow(-1);
-				row.setAttribute("id", counter)
+                var tbody = table.children[0];
+                var row = tbody.insertBefore(table.rows[0].cloneNode(false), table.rows[table.rows.length - 3]);
+                row.setAttribute("id", counter)
+                
                 var cell = row.insertCell(-1);
                 cell.setAttribute("id", counter++);
-                cell.setAttribute("colspan", 3);
                 return cell;
-            }
+
+//                var row = table.insertRow(-1);
+//				row.setAttribute("id", counter)
+//                var cell = row.insertCell(-1);
+//                cell.setAttribute("id", counter++);
+//                cell.setAttribute("colspan", 3);
+//                return cell;
+            }            
             function insertText(){
                 var cell = insertRow();
-				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return deleteElement(this)" value="Löschen" />';
-                cell.innerHTML = cell.innerHTML + "<textarea name='txt" + counter + "'></textarea>";
-				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementUp(this)" value="Hoch" />';
-				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementDown(this)" value="Runter" />';
+                cell.innerHTML = cell.innerHTML + '<button href="#!" class="waves-light btn" onclick="return elementUp(this)" value="Hoch"><i class="material-icons">keyboard_arrow_up</i></button>';
+                cell.innerHTML = cell.innerHTML + '<textarea class="materialize-textarea" name="txt' + counter + '"></textarea>';
+				cell.innerHTML = cell.innerHTML + '<button class="waves-light btn" type="button" onclick="return elementDown(this)" value="Runter"><i class="material-icons">keyboard_arrow_down</i></button>';
+                cell.innerHTML = cell.innerHTML + '<button class="waves-light btn red" type="button" onclick="return deleteElement(this)" value="Löschen"><i class="material-icons">delete</i></button>';
 				return false;
             }
             
@@ -660,7 +668,7 @@
                 var id = "file" + counter;
 				var images = document.getElementById("images");
 				cell.innerHTML = '';// hidden="hidden"
-				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return deleteElement(this)" value="Löschen" />';
+				cell.innerHTML = cell.innerHTML + '<button class="waves-light btn"" onclick="return elementUp(this)" value="Hoch"><i class="material-icons">keyboard_arrow_up</i></button>';
 				cell.innerHTML = cell.innerHTML + '<output id="imgOutput' + counter + '" ></output>';
 				var img = document.createElement("input");
 				img.setAttribute("onchange","");
@@ -670,8 +678,8 @@
 				img.setAttribute("accept","image/jpeg" );
 				images.insertBefore(img,null);
                 //cell.innerHTML = cell.innerHTML + '<input onchange="" type="file" id="'+ id +'" name="file' + counter + '" />';
-				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementUp(this)" value="Hoch" />';
-				cell.innerHTML = cell.innerHTML + '<input type="button" onclick="return elementDown(this)" value="Runter" />';
+				cell.innerHTML = cell.innerHTML + '<button class="waves-light btn" onclick="return elementDown(this)" value="Runter"><i class="material-icons">keyboard_arrow_down</i></button>';
+                cell.innerHTML = cell.innerHTML + '<button class="waves-light btn red" onclick="return deleteElement(this)" value="Löschen"><i class="material-icons">delete</i></button>';
                 document.getElementById(id).addEventListener('change', handleFileSelect, false);
                 openFileDialog(id);
 				
@@ -694,22 +702,31 @@
                     <form id="saveForm" action="" method="post" enctype="multipart/form-data" >
                         <table class="anzeige" id="anzeige">
                             <tr><td colspan="3">
-									<input type="submit" value="Speichern" name="save" onclick="return getErrors();" />
 									<input type="text" name="txtLat" id="txtLat" hidden="hidden" value="<?php echo $offer[5]; ?>" />
 									<input type="text" name="txtLng" id="txtLng" hidden="hidden" value="<?php echo $offer[6]; ?>" />
 									<input type="text" name="offerID" id="offerID" hidden="hidden" value="<?php echo $offer[0]; ?>" />
 								</td>
 							</tr>
-                            <tr><td>Beschreibung:</td><td><input type="text" name="mainTitle" onblur="checkErrors(this);" value="<?php echo $offer[3]; ?>" /><img id="errorMainText" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
-                            <tr><td>Preis (in €):</td><td><input  value="<?php echo $offer[4]; ?>" type="text" name="price" onblur="checkErrors(this);" /><img id="errorPrice" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
-                            <tr><td>Anzahl:</td><td><input  value="<?php echo $offer[9]; ?>" type="text" name="amount" onblur="checkErrors(this);" /><img id="errorAmount" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
-							<tr><td>Kategorie:</td>
+                                                       
+                            <tr><td><input length="100" type="text"  name="mainTitle" onblur="checkErrors(this);" value="<?php echo $offer[3]; ?>" />
+                                <label for="mainTitle">Beschreibung</label>
+                                <img id="errorMainText" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
+                            
+                            <tr><td><input type="text"  name="price" onblur="checkErrors(this);" value="<?php echo $offer[4]; ?>" />
+                                <label for="price">Preis (in €)</label>
+                                <img id="errorPrice" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
+                            
+                            <tr><td><input type="text"  name="amount" onblur="checkErrors(this);" value="<?php echo $offer[9]; ?>" />
+                                <label for="amount">Anzahl</label>
+                                <img id="errorAmount" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
+                            <tr>                                                                                                    
 								<td>
 									<select id="kategorien" name="kat">
 										<?php 
 //										var_dump($katList);
 											foreach($katList as $kat){
 												if($kat[0] == $offerKat[2]){
+                                                    echo "<option value='' disabled>Wähle deine Kategorie</option>";
 													echo "<option selected='selected' value='$kat[0]'>$kat[1]</option>";
 													continue;
 												}
@@ -718,38 +735,57 @@
 										?>
 									</select>
 								</td>
-							<tr><input id="pac-input" class="controls" type="text" placeholder="Search Box"><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
-                            <tr><td>Titelbild:</td><td><input id="mainImage" onclick="getElement(this)" onchange="" type="file" accept="image/jpeg" name="mainImage" onblur="" /><img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
-							<tr><td colspan="3"><output id="mainOutput"><span id="spanMain">
+                            </tr> 						                         
+                            <tr><td>   
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>Titelbild</span>
+                                        <input id="mainImage" onclick="getElement(this)" onchange="" type="file" accept="image/jpeg" name="mainImage" onblur=""/>     
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input id="mainImage" class="file-path validate" type="text" onclick="getElement(this)" onchange="" accept="image/jpeg" name="mainImage" onblur=""/>
+                                        <img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" />
+                                    </div> 
+                                </div>
+                            </td></tr>
+
+                            <tr><td colspan="3"><output id="mainOutput"><span id="spanMain">
 								<img name="img" class="thumb" src="data:image/jpeg;base64,<?php echo base64_encode($offer[2]);
 								?>" style="max-width: 600px; max-height: 600px; width: 100%; ">
 							</span></output></td></tr>
-							<?php 
+                            
+                            <?php 
 								for($i = 0;$i <= $elemCounter;$i++){
 									if(isset($elements[$i])){
 										echo "<tr id = ". ($i - 1) ."><td colspan ='3' id = ". ($i - 1) . ">
-											  <input type='button' onclick='return deleteElement(this)' value='Löschen'>";
+                                              <button class='waves-light btn' type='button' onclick='return elementUp(this)' value='Hoch'><i class='material-icons'>keyboard_arrow_up</i></button>";
 											if($elements[$i]["img"]){
 												echo "<img name='img$i' db='".$elements[$i][0]."' src='data:image/jpeg;base64,". base64_encode($elements[$i][2]) ."' class='thumb' style='max-width: 300px; max-height: 300px; width: 100%;' />";
 											}
 											else{
-												echo "<textarea name='txt$i' >". $elements[$i][2] ."</textarea>";
+												echo "<textarea class='materialize-textarea' name='txt$i' >". $elements[$i][2] ."</textarea>";
 											}
-										echo '<input type="button" onclick="return elementUp(this)" value="Hoch">
-										      <input type="button" onclick="return elementDown(this)" value="Runter">';
+										echo '<button class="waves-light btn" type="button" onclick="return elementDown(this)" value="Runter"><i class="material-icons">keyboard_arrow_down</i></button>
+                                              <button class="waves-light btn red" type="button" onclick="return deleteElement(this)" value="Löschen"><i class="material-icons">delete</i></button>';
 										echo "</td></tr>";
 									}
 								}
 							?>
+                              
+                            <tr><td>
+                                <ul class="dropdown-content" id="elementList" style="display: none;">
+                                <li><a style="width:253px;" href="#!" onclick="insertText()">Text</a></li>
+                                <li><a href="#!" onclick="insertImg()">Bild</a></li>
+                                </ul>
+                                <a class='dropdown-button btn large' data-activates='elementList'>Element hinzuf&uuml;gen</a>
+                            </td></tr>
+                                     
+                            <tr><input id="pac-input" class="controls" type="text" placeholder="Search Box"><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
+                            <tr><td><input class="waves-effect waves-light btn" type="submit" value="Speichern" name="save" onclick="return getErrors();"></input></td></tr>                          
+
                         </table>
 						<span id ="images" hidden="hidden"></span>
                     </form>
-                    <ul class="elementList" id="elementList" style="display: none;">
-                        <!--li><button onclick="insertList()">Liste</button></li-->
-                        <li><button onclick="insertText()">Text</button></li>
-                        <li><button onclick="insertImg()">Bild</button></li>
-                    </ul>
-                    <button onclick="showItems()">Element hinzuf&uuml;gen</button>
                 </div>
             </div>
         </div>
