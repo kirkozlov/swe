@@ -204,7 +204,7 @@
 		<script src="includes/jquery.js"></script>
 		<script src="includes/googleMap.js"></script>
 		<script src="includes/cookies.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAizLFKOw4W4Pb7juAOcSpUR6t41c_yQY&libraries=places&callback=initAutocomplete" async defer></script>
+		
         <script language="javascript" type="text/javascript">
 			eraseCookie("txtDel");eraseCookie("imgDel");eraseCookie("imgUpdate");eraseCookie("txtUpdate");
 			//setLocation(document.getElementById("txtLat").value, document.getElementById("txtLng").value);
@@ -705,7 +705,7 @@
                             <tr><td>Anzahl:</td><td><input  value="<?php echo $offer[9]; ?>" type="text" name="amount" onblur="checkErrors(this);" /><img id="errorAmount" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" ></td></tr>
 							<tr><td>Kategorie:</td>
 								<td>
-									<select name="kat">
+									<select id="kategorien" name="kat">
 										<?php 
 //										var_dump($katList);
 											foreach($katList as $kat){
@@ -774,5 +774,11 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script>$(".button-collapse").sideNav();</script>
+        <script>
+            $(document).ready(function() {
+                $('select').material_select();
+            });
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAizLFKOw4W4Pb7juAOcSpUR6t41c_yQY&libraries=places&callback=initAutocomplete" async defer></script>
     </body>
 </html>
