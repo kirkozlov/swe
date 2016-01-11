@@ -113,11 +113,11 @@
 								}
 								echo '</tr><tr>';
 								echo '<td colspan=2>
-										<button  onclick="DeleteOnClick('.$key.',1, \''. $value .'\')">Löschen</button>
+										<button  class="waves-effect waves-light btn red"   onclick="DeleteOnClick('.$key.',1, \''. $value .'\')">Löschen</button>
 										
 									</td>';
 								echo '<td>
-										<button  onclick="DeleteOnClick('.$key.',2, \''. $value .'\')">Status ändern</button>
+										<button  class="waves-effect waves-light btn"  onclick="DeleteOnClick('.$key.',2, \''. $value .'\')">Status ändern</button>
 										
 									</td>';
 								echo '</tr>';
@@ -145,8 +145,8 @@
 				<div id="ppt" style="align:center;" >
 					<p id="BestP">Sind Sie sicher?</p>
 					<form id="changeFlagDelete" action="" method="post" enctype="multipart/form-data" >
-						<button id="jaB" value="" name="changeFlag">Ja</button>
-						<button id="neinB" onclick="PopUpHide(); return false;">Nein</button>
+						<button  class="waves-effect waves-light btn"  id="jaB" value="" name="changeFlag">Ja</button>
+						<button  class="waves-effect waves-light btn"  id="neinB" onclick="PopUpHide(); return false;">Nein</button>
 					</form>
 				</div>
 			</div>
