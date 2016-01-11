@@ -116,7 +116,7 @@
 					<tr><td><input id="p1"type="password" name="password"/></td></td>
 					<tr><td>Wiederholung:</td></tr>
 					<tr><td><input id="p2"type="password" name="passwordw"/></td>
-					<tr><td colspan="2"><input type="submit" name="activ"value="Registrieren" onclick="return clickbutton(this)"/></td></tr>
+					<tr><td colspan="2"><button class="waves-effect waves-light btn" type="submit" name="activ" onclick="-return clickbutton(this)">Registrieren</button></td></tr>
 				</table>
 				</form>
 			</div>
