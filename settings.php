@@ -40,7 +40,7 @@
 			$o="";
 			$p="";
 			$pw="";
-			$streo="Passwort wurde geändert";
+			$streo="pass changed";
 		}
 		
 		
@@ -61,9 +61,26 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link href="css/materialize_own.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+		<style>
+			.b:link {
+				color: white;
+				background-color: transparent;
+				text-decoration: none;
+			}
+			.b:visited {
+				color: purple;
+				background-color: transparent;
+				text-decoration: underline;
+			}
+			.b:active {
+				color: red;
+				background-color: transparent;
+				text-decoration: underline;
+			}
+		</style>
 		<script src="includes/jquery.js"></script>
 		<script src="includes/sha2.js"></script>
 		<script type="text/javascript">
@@ -231,80 +248,68 @@
 			  }
 
 			  document.cookie = updatedCookie;
-}
+			}
 		</script>
     </head>
     <body>
 		<?php 
             include("includes/menu.php");
         ?>  
-	<div	class="main">		
-	<div class="content">
-		<table style=" margin:0 auto;
-									position:relative;
-									max-width: 280px;
-									width: 95%;">           
-			
-            <tr><td colspan="2">
-            <form action="#">
-                <p class="range-field">
-                    <input id="elem" type="range" min="0" max="100" step="5" value=<?php echo $km ?> onSlide="vach()" onChange="vach()" /></td></tr>
-                </p>
-            </form>
-            <tr><td >Umkreis in km:</td><td><div id="te" style="width:30"><?php echo $km ?></div></td></tr>
-			<tr><td><div id="address"></div></td></tr>
-			<tr><td><div id="location"></div></td></tr>
-		</table>
-	</div>
-	</div>
-	<br/>
-	<div	class="main">		
-	<div class="content" >
-		<form action ="settings.php" method="post">
-		<table style=" margin:0 auto;
-									position:relative;
-									max-width: 280px;
-									width: 95%;">
-			<tr><td>Altes Passwort:</td></tr>
-			<tr><td><input id="p0"type="password" name="oldpass" value=<?php echo "'".$o."'" ?>/></td></tr>
-			<tr><td>Neues Passwort:</td></tr>
-			<tr><td><input id="p" type="password" name="password"value=<?php echo "'".$p."'" ?>/></td></tr>
-			<tr><td>Wiederholung:</td></tr>
-			<tr><td><input id="pw" type="password" name="passwordw"value=<?php echo "'".$pw."'" ?>/></td></tr>
-			<tr><td colspan="2"><input type="submit" name="activ"value="Speichern" onclick="return clickbutton(this)" /></td></tr>
-		</table>
-		</form>
-    </div>
-	</div>
-	<br/>
-	<div	class="main" style="text-align:left;">		<!--gut fuer handy, schlecht for PC -->
-	<div class="content" >
-		
-		<button id="openlist"onclick="filadd()">Kategorie hinzufügen</button>
-		<ul >
-		<?php
-		if (isset($filtr)) {
-			foreach ($filtr as $key => $value)
-			{
-				echo '<li id="liout'.$key.'" style="display: none;"> <a href="javascript:deletefilter('.$key.')">'.$value.' </a> </li>';
-			}
-		}
-		?>
-		</ul>
-    </div>
-	</div>
-	<div id="newfiladd"  style='display: none; background:#FF0000; padding: 0 5 0 5; ' >
-		<ul>
-		<?php
-		if (isset($filtr)) {
-			foreach ($filtr as $key => $value)
-			{
-				echo '<li id="liin'.$key.'" style="display: none; background:#FFFF00; margin: 1 1 1 1;"> <a href="javascript:addfilter('.$key.')">'.$value.' </a> </li>';
-			}
-		}
-		?>
-		</ul>
-	</div>
+		<div class="main">		
+			<div class="content">
+			<div class="row">
+							<div class="col s12 m4 offset-m5 l4 offset-l5">
+								<h4>Filter einstellen:</h4>
+							</div>
+						</div>
+				<table style=" margin:0 auto;
+						position:relative;
+						max-width: 300px;
+						width: 95%;"
+					<tr><td colspan="2"><input id="elem" type="range" min="0" max="100" step="5" value=<?php echo $km ?> onSlide="vach()" onChange="vach()" /></td></tr>
+					<tr><td >Umkreis:</td><td><div id="te" style="width:30"><?php echo $km ?></div></td></tr>
+					<tr><td><div id="address"></div></td></tr>
+					<tr><td><div id="location"></div></td></tr>
+				</table>
+			</div>
+		</div>
+		<div class="main" style="text-align:left;">		<!--gut fuer handy, schlecht for PC -->
+			<div class="content" >
+				<div class="row">
+					<div class="col s6 m4 offset-m4 l4 offset-l4">
+						<a class="waves-effect waves-light btn" id="openlist" onclick="filadd()" >Kategorie hinzufügen</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s6 m3 offset-m4 l2 offset-l4">
+						<ul class="card-panel">
+							<li> aktivierte Kategorien:</li>
+							<li class="divider"></li>
+							<?php
+								if (isset($filtr)) {
+									foreach ($filtr as $key => $value)
+									{
+										echo '<li id="liout'.$key.'" style="display: none;"> <a href="javascript:deletefilter('.$key.')">'.$value.' </a> </li>';
+									}
+								} 
+							?>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="newfiladd"  class="card-panel teal lighten-2" style='display: none; margin: 0 0 0 60; padding: 0 0 0 0; ' >
+			<ul>
+				<?php
+					if (isset($filtr)) {
+						foreach ($filtr as $key => $value)
+						{
+							echo '<li id="liin'.$key.'" style="display: none; margin: 5 20 5 20;"> <a  class="b" href="javascript:addfilter('.$key.')">'.$value.' </a> </li>';
+						}
+					}
+				?>
+			</ul>
+		</div>
 		<div id="popup" onclick="PopUpHide()" style=" width:100%;
 												height: 2000px;
 												background-color: rgba(0,0,0,0.5);
@@ -320,11 +325,63 @@
 												border-radius:5px;
 												box-shadow: 0px 0px 10px #000;">
 				<div id="ppt" style="align:center;" ></div>
-			
 			</div>
-	</div>
+		</div>
+		<div class="main">		
+			<div class="content" >
+				<div class="row">
+					<form class="col s12" action ="settings.php" method="post">
+						<div class="row">
+							<div class="col s12 m4 offset-m5 l4 offset-l5">
+								<h4>Passwort ändern:</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 m4 offset-m4 l4 offset-l4">
+								<input id="p0" type="password" class="validate" name="oldpass" value=<?php echo "'".$o."'" ?>>
+								<label for="password">Altes Passwort</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 m4 offset-m4 l4 offset-l4">
+								<input id="p" type="password" class="validate" name="password" value=<?php echo "'".$p."'" ?>>
+								<label for="password">Neues Passwort</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 m4 offset-m4 l4 offset-l4">
+								<input id="pw" type="password" class="validate" name="passwordw" value=<?php echo "'".$pw."'" ?>>
+								<label for="passwordw">Passwort Wiederholung</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s12 m4 offset-m4 l4 offset-l4">
+								<button class="btn waves-effect waves-light" type="submit" name="activ" value="Speichern" onclick="return clickbutton(this)">Speichern
+									<i class="material-icons right">send</i>
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script>$(".button-collapse").sideNav();</script>
+		<script>
+			$(document).ready(function() {
+				$('select').material_select();
+			});
+			$('.dropdown-button').dropdown({
+				inDuration: 300,
+				outDuration: 225,
+				constrain_width: false, // Does not change width of dropdown to that of the activator
+				hover: true, // Activate on hover
+				gutter: 0, // Spacing from edge
+				belowOrigin: false, // Displays dropdown below the button
+				alignment: 'left' // Displays dropdown with edge aligned to the left of button
+			});
+		</script>
     </body>
 </html>
