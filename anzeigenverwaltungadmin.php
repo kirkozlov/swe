@@ -82,7 +82,7 @@
 										$adr = $obj['results'][0]['formatted_address'];
 										echo '<td>'.$adr.'</td>';
 								echo '<td>
-										<button  onclick="DeleteOnClick('.$key.')">Löschen</button>
+										<button  class="waves-effect waves-light btn red"  onclick="DeleteOnClick('.$key.')">Löschen</button>
 										
 									</td>';
 								echo '</tr>';
@@ -109,10 +109,10 @@
 												border-radius:5px;
 												box-shadow: 0px 0px 10px #000;">
 				<div id="ppt" style="align:center;" >
-					<p id="BestP">Sind Sie sicher?</p>
+					<p id="BestP">Sind Sie sicher, dass Sie die Anzeige löschen wollen?</p>
 					<form id="delete" action="" method="post" enctype="multipart/form-data" >
-						<button id="jaB" value="" name="delete">Ja</button>
-						<button id="neinB" onclick="PopUpHide(); return false;">Nein</button>
+						<button class="waves-effect waves-light btn"  id="jaB" value="" name="delete">Ja</button>
+						<button class="waves-effect waves-light btn"  id="neinB" onclick="PopUpHide(); return false;">Nein</button>
 					</form>
 					
 				</div>
