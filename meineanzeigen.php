@@ -109,11 +109,16 @@
             </div>
         </div>
 		
-		<div id="popup"  style=" width:100%;
+	
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script>$(".button-collapse").sideNav();</script>
+        	<div id="popup"  style=" width:100%;
 												height: 2000px;
 												background-color: rgba(0,0,0,0.5);
 												overflow:hidden;
-												position:fixed;
+												position:absolute;
+                                                z-index:999;
 												top:0px;">
 			<div id="ppc" style="margin:40px auto 0px auto;
 												width:250px;
@@ -134,9 +139,6 @@
 			
 			</div>
 		</div>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src="js/materialize.min.js"></script>
-        <script>$(".button-collapse").sideNav();</script>
     </body>
 </html>
 

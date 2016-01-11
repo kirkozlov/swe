@@ -17,12 +17,16 @@
 							echo '<li><a href="useradmin.php">Benutzerverwaltung</a></li>';
 							echo '<li><a href="anzeigenverwaltungadmin.php">Anzeigenverwaltung</a></li>';
                             echo '</ul>';
+                            echo '<ul class="right">';
+							echo '<li><a href="logout.php">Ausloggen </a></li>';
+							echo ' </ul>';
                             echo '<ul class="side-nav" id="mobile-demo">';
                             echo '<li><a href="useradmin.php">Benutzerverwaltung</a></li>';
 							echo '<li><a href="anzeigenverwaltungadmin.php">Anzeigenverwaltung</a></li>';
+                            echo '</ul>';
 						}
-						if(isset($_SESSION['login']) && $_SESSION['login'] == true)
-						{
+						else if(isset($_SESSION['login']) && $_SESSION['login'] == true)
+						{     
 						    echo '<li><a href="interrests.php">Interessenliste</a></li>';
 						    echo '<li><a href="meineanzeigen.php">Meine Anzeigen</a></li>';
 						    echo '<li><a href="additem.php">Anzeige erstellen</a></li>';

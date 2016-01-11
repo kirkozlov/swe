@@ -613,7 +613,8 @@
                                 <li><a href="#!" onclick="insertImg()">Bild</a></li>
                                 </ul>
                                 <a class='dropdown-button btn large' data-activates='elementList'>Element hinzuf&uuml;gen</a>
-                            </td></tr>
+                            </td></tr>                         
+  
                             <tr><input id="pac-input" class="controls" type="text" placeholder="Search Box"><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
                             <tr><td><input class="waves-effect waves-light btn" type="submit" value="Speichern" name="save" onclick="return getErrors();"></input></td></tr>
                         </table>
@@ -642,15 +643,18 @@
 		</div>
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
-        <script>$(".button-collapse").sideNav();
+        <script>$(".button-collapse").sideNav();</script>
+        <script> 
             $(document).ready(function() {
                 $('select').material_select();
             });
+        </script>  
+        <script>
                 $('.dropdown-button').dropdown({
                     inDuration: 300,
                     outDuration: 225,
                     constrain_width: false, // Does not change width of dropdown to that of the activator
-                    hover: true, // Activate on hover
+                    hover: false, // Activate on hover
                     gutter: 0, // Spacing from edge
                     belowOrigin: false, // Displays dropdown below the button
                     alignment: 'left' // Displays dropdown with edge aligned to the left of button
