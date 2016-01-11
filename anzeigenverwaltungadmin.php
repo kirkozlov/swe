@@ -102,9 +102,9 @@
                                                 z-index:999;
 												top:0px;">
 			<div id="ppc" style="margin:40px auto 0px auto;
+                                                height: auto;
 												width:250px;
 												padding:10px;
-												
 												background-color: #c5c5c5;
 												border-radius:5px;
 												box-shadow: 0px 0px 10px #000;">

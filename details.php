@@ -209,7 +209,6 @@
                                             width:250px;
                                             height: auto;
                                             padding:10px;
-
                                             background-color: #c5c5c5;
                                             border-radius:5px;
                                             box-shadow: 0px 0px 10px #000;">
