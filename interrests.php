@@ -85,12 +85,12 @@
                 			echo '</tr><tr>';
 							echo '<td colspan=2>
 									<form id="contact" action="" method="post" enctype="multipart/form-data" >
-										<button value="'.$userid[$key].'" name="contact"/>Kontakt</button>
+										<button class="waves-effect waves-light btn" value="'.$userid[$key].'" name="contact"/>Kontakt</button>
 									</form>
 								</td>';
 							echo '<td colspan=2>
 									<form id="like" action="details.php" method="post" enctype="multipart/form-data" >
-										<button value="'.$interid[$key].'" name="id"/>Details</button>
+										<button class="waves-effect waves-light btn" value="'.$interid[$key].'" name="id"/>Details</button>
 									</form>
 								</td>';
                 			echo '</tr>';

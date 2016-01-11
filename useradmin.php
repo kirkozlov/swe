@@ -74,7 +74,13 @@
 		function PopUpShow(){
 			$("#popup").show();
 		}
-		function DeleteOnClick(value2,n){
+		function DeleteOnClick(value2,n, uName){
+			var p = document.getElementById("BestP");
+			if (n == 1) {
+				p.innerHTML = "Wollen Sie den Benutzer '" + uName + "' wirklich löschen?";
+			}else if(n == 2){
+				p.innerHTML = "Wollen Sie den Status des Benutzers '" + uName + "' wirklich ändern?";
+			}
 			document.getElementById('jaB').value=value2;
 			document.getElementById('jaB').name=( (n==1)?"delete":"changeFlag");
 			PopUpShow();
@@ -89,7 +95,6 @@
     <body>
         <?php 
             include("includes/menu.php");
-	
         ?>
         <div class="main">
             <div class="content">
@@ -108,11 +113,11 @@
 								}
 								echo '</tr><tr>';
 								echo '<td colspan=2>
-										<button  onclick="DeleteOnClick('.$key.',1)">Löschen</button>
+										<button  onclick="DeleteOnClick('.$key.',1, \''. $value .'\')">Löschen</button>
 										
 									</td>';
 								echo '<td>
-										<button  onclick="DeleteOnClick('.$key.',2)">Status ändern</button>
+										<button  onclick="DeleteOnClick('.$key.',2, \''. $value .'\')">Status ändern</button>
 										
 									</td>';
 								echo '</tr>';
