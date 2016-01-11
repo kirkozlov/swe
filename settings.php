@@ -1,6 +1,6 @@
 <?php session_start();
-	if($_SESSION['login']!=true)
-		header('Location: login.php');
+//	if($_SESSION['login']!=true)
+//		header('Location: login.php');
 	if(!isset($_COOKIE['km'])){
 		$_COOKIE['km']=50;
 	}
@@ -265,9 +265,15 @@
 				<table style=" margin:0 auto;
 						position:relative;
 						max-width: 300px;
-						width: 95%;"
-					<tr><td colspan="2"><input id="elem" type="range" min="0" max="100" step="5" value=<?php echo $km ?> onSlide="vach()" onChange="vach()" /></td></tr>
-					<tr><td >Umkreis:</td><td><div id="te" style="width:30"><?php echo $km ?></div></td></tr>
+									width: 95%;">           
+			
+            <tr><td colspan="2">
+            <form action="#">
+                <p class="range-field">
+                    <input id="elem" type="range" min="0" max="100" step="5" value=<?php echo $km ?> onSlide="vach()" onChange="vach()" /></td></tr>
+                </p>
+            </form>
+            <tr><td >Umkreis in km:</td><td><div id="te" style="width:30"><?php echo $km ?></div></td></tr>
 					<tr><td><div id="address"></div></td></tr>
 					<tr><td><div id="location"></div></td></tr>
 				</table>
@@ -327,6 +333,7 @@
 				<div id="ppt" style="align:center;" ></div>
 			</div>
 		</div>
+		<?php if(isset($_SESSION['login'])) { ?>
 		<div class="main">		
 			<div class="content" >
 				<div class="row">
@@ -365,6 +372,7 @@
 				</div>
 			</div>
 		</div>
+		<?php } ?>
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>

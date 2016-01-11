@@ -46,9 +46,11 @@
 						}
 						else 
 						{
+							echo '<li><a href="settings.php">Einstellungen</a></li>';
                             echo '</ul>';
                             echo '<ul class="side-nav" id="mobile-demo">';
                             echo '<li><a href="index.php">Startseite</a>';
+							echo '<li><a href="settings.php">Einstellungen</a></li>';
 							echo '</ul>';
 							echo '<ul class="right">';
 							echo '<li><a class="right" href="login.php">Einloggen</a></li>';
