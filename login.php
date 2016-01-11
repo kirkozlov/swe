@@ -1,7 +1,13 @@
 <?php 
 	session_start();
-	if(isset($_SESSION['login']) && $_SESSION['login'] == true)
-		header('Location: index.php');
+	if(isset($_SESSION['login']) && $_SESSION['login'] == true){
+		if(isset($_SESSION['admin']) && $_SESSION['admin'] == "1"){
+			header('Location: useradmin.php');
+		}
+		else {
+			header('Location: index.php'); 
+		}
+	}
 	$e="";
 	$p="";
 	$stre="";
@@ -19,7 +25,12 @@
 			$_SESSION['login']=true;
 			$_SESSION['idu']=$row[0];
 			$_SESSION['admin']=$row[1];
-			header('Location: index.php');		
+			if(isset($_SESSION['admin']) && $_SESSION['admin'] == "1"){
+				header('Location: useradmin.php');
+			}
+			else {
+				header('Location: index.php'); 
+			}		
 		}
 		else
 		{
