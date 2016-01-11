@@ -109,7 +109,6 @@
 												border-radius:5px;
 												box-shadow: 0px 0px 10px #000;">
 				<div id="ppt" style="align:center;" >
-					<p id="BestP">Sind Sie sicher, dass Sie die Anzeige löschen wollen?</p>
 					<form id="delete" action="" method="post" enctype="multipart/form-data" >
 						<button class="waves-effect waves-light btn"  id="jaB" value="" name="delete">Ja</button>
 						<button class="waves-effect waves-light btn"  id="neinB" onclick="PopUpHide(); return false;">Nein</button>

@@ -616,7 +616,7 @@
                             </td></tr>                         
   
                             <tr><input id="pac-input" class="controls" type="text" placeholder="Search Box"><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
-                            <tr><td><input class="waves-effect waves-light btn" type="submit" value="Speichern" name="save" onclick="return getErrors();"></input></td></tr>
+                            <tr><td><button class="waves-effect waves-light btn" type="submit" value="Speichern" name="save" onclick="return getErrors();">Speichern</button></td></tr>
                         </table>
 						<span id ="images" hidden="hidden"></span>
                     </form>
@@ -628,6 +628,7 @@
 												background-color: rgba(0,0,0,0.5);
 												overflow:hidden;
 												position:fixed;
+                                                z-index:999;
 												top:0px;">
 			<div id="ppc" style="margin:40px auto 0px auto;
 												width:250px;
