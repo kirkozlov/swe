@@ -118,7 +118,7 @@
 												top:0px;">
 			<div id="ppc" style="margin:40px auto 0px auto;
 												width:250px;
-												height: 80px;
+												height: auto;
 												padding:10px;
 												
 												background-color: #c5c5c5;
