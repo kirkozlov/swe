@@ -106,8 +106,8 @@
 								} else {
 									echo "<td>normal</td>";
 								}
-								
-								echo '<td>
+								echo '</tr><tr>';
+								echo '<td colspan=2>
 										<button  onclick="DeleteOnClick('.$key.',1)">Löschen</button>
 										
 									</td>';
@@ -116,6 +116,7 @@
 										
 									</td>';
 								echo '</tr>';
+								echo '<tr><td colspan=3><hr></td></tr>';
 							}
 						}             
 					 ?>
