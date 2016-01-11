@@ -105,7 +105,7 @@
 			<tr><td colspan="2"><input id="email"style="max-width: 280px; width: 95%;" type="text" name="email" value=<?php echo "'".$e."'" ?>/></td></tr>
 			<tr><td>Passwort:</td><td><a id ="passver" href="" onclick="sendmypass()">Passwort vergessen</a></td></tr>
 			<tr><td colspan="2"><input style="max-width: 280px; width: 95%;" id="p1" type="password" name="password"/></td><tr>
-			<tr><td><input type="submit" name="activ" onclick="loginclick()"value="Einloggen"/></td><td><a href="reg.php">Registrieren</a></td></tr>
+			<tr><td><button  class="waves-effect waves-light btn"  type="submit" name="activ" onclick="loginclick()" />Einloggen</button></td><td><a href="reg.php">Registrieren</a></td></tr>
 		</table>
 		</form>
 		</div>
