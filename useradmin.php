@@ -95,6 +95,7 @@
     <body>
         <?php 
             include("includes/menu.php");
+	
         ?>
         <div class="main">
             <div class="content">
@@ -113,11 +114,11 @@
 								}
 								echo '</tr><tr>';
 								echo '<td colspan=2>
-										<button  class="waves-effect waves-light btn red"   onclick="DeleteOnClick('.$key.',1, \''. $value .'\')">Löschen</button>
+										<button class="waves-effect waves-light btn red" onclick="DeleteOnClick('.$key.',1)">Löschen</button>
 										
 									</td>';
 								echo '<td>
-										<button  class="waves-effect waves-light btn"  onclick="DeleteOnClick('.$key.',2, \''. $value .'\')">Status ändern</button>
+										<button class="waves-effect waves-light btn" onclick="DeleteOnClick('.$key.',2)">Status ändern</button>
 										
 									</td>';
 								echo '</tr>';
@@ -136,7 +137,7 @@
 												top:0px;">
 			<div id="ppc" style="margin:40px auto 0px auto;
 												width:250px;
-												height: auto;
+												height: 80px;
 												padding:10px;
 												
 												background-color: #c5c5c5;
@@ -145,8 +146,10 @@
 				<div id="ppt" style="align:center;" >
 					<p id="BestP">Sind Sie sicher?</p>
 					<form id="changeFlagDelete" action="" method="post" enctype="multipart/form-data" >
-						<button  class="waves-effect waves-light btn"  id="jaB" value="" name="changeFlag">Ja</button>
-						<button  class="waves-effect waves-light btn"  id="neinB" onclick="PopUpHide(); return false;">Nein</button>
+                        <table>
+                            <tr><td><button class="waves-effect waves-light btn" id="jaB" value="" name="delete">Ja</button></td>
+                            <td><button class="waves-effect waves-light btn" id="neinB" onclick="PopUpHide(); return false;">Nein</button></td></tr>
+                        </table>
 					</form>
 				</div>
 			</div>

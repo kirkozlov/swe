@@ -110,13 +110,13 @@
 									max-width: 280px;
 									width: 95%;">
 					<tr><td><b>Hinweis: Zur Registrierung müssen Sie volljährig sein!</b></td></tr>
-					<tr><td >E-Mail:</td></tr>
-					<tr><td><input id="em" type="text" name="email" value=<?php echo "'".$e."'" ?>/></td></td>
-					<tr><td>Passwort:</td></tr>
-					<tr><td><input id="p1"type="password" name="password"/></td></td>
-					<tr><td>Wiederholung:</td></tr>
-					<tr><td><input id="p2"type="password" name="passwordw"/></td>
-					<tr><td colspan="2"><button class="waves-effect waves-light btn" type="submit" name="activ" onclick="-return clickbutton(this)">Registrieren</button></td></tr>
+					<tr><td><input id="em" type="text" name="email" value=<?php echo "'".$e."'" ?>/>
+                        <label for="email">Email</label></td></tr>
+					<tr><td><input id="p1"type="password" name="password"/>
+                    <label for="password">Passwort</label></td></tr>	     
+					<tr><td><input id="p2"type="password" name="passwordw"/>
+                        <label for="passwordw">Wiederholung</label></td></tr>	     
+                <tr><td colspan="2"><button class="waves-effect waves-light btn" type="submit" name="activ"value="Registrieren" onclick="return clickbutton(this)">Registrieren</button></td></tr>
 				</table>
 				</form>
 			</div>
@@ -130,7 +130,7 @@
 												top:0px;">
 			<div id="ppc" style="margin:40px auto 0px auto;
 												width:250px;
-												height: auto;
+												height: 80px;
 												padding:10px;
 												
 												background-color: #c5c5c5;

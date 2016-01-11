@@ -101,11 +101,13 @@
 	position:relative;
     max-width: 280px;
     width: 95%;">
-			<tr><td>E-Mail:</td><td></td></tr>
-			<tr><td colspan="2"><input id="email"style="max-width: 280px; width: 95%;" type="text" name="email" value=<?php echo "'".$e."'" ?>/></td></tr>
-			<tr><td>Passwort:</td><td><a id ="passver" href="" onclick="sendmypass()">Passwort vergessen</a></td></tr>
-			<tr><td colspan="2"><input style="max-width: 280px; width: 95%;" id="p1" type="password" name="password"/></td><tr>
-			<tr><td><button  class="waves-effect waves-light btn"  type="submit" name="activ" onclick="loginclick()" />Einloggen</button></td><td><a href="reg.php">Registrieren</a></td></tr>
+			<tr><td colspan="2"><input id="email"style="max-width: 280px; width: 95%;" type="text" name="email" value=<?php echo "'".$e."'" ?>/>
+                <label for="email">Email</label></td></tr>	        
+			<tr><td colspan="2"><input style="max-width: 280px; width: 95%;" id="p1" type="password" name="password"/>
+                <label for="password">Passwort</label></td></tr>
+            <tr><td><a id ="passver" href="" onclick="sendmypass()">Passwort vergessen</a></td></tr>     
+            <tr><td colspan="2"><button class="waves-effect waves-light btn" type="submit" name="activ" onclick="loginclick()"value="Einloggen">Einloggen</button></td></tr>
+            <tr><td colspan="2"><a href="reg.php">Registrieren</a></td></tr>
 		</table>
 		</form>
 		</div>
@@ -118,7 +120,7 @@
 												top:0px;">
 			<div id="ppc" style="margin:40px auto 0px auto;
 												width:250px;
-												height: auto;
+												height: 80px;
 												padding:10px;
 												
 												background-color: #c5c5c5;

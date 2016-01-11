@@ -781,7 +781,7 @@
                             </td></tr>
                                      
                             <tr><input id="pac-input" class="controls" type="text" placeholder="Search Box"><td colspan="3"><div id="map" style="width: 100%; height: 200px;" ></div></td></tr>
-                            <tr><td><input class="waves-effect waves-light btn" type="submit" value="Speichern" name="save" onclick="return getErrors();"></input></td></tr>                          
+                            <tr><td><button class="waves-effect waves-light btn" type="submit" value="Speichern" name="save" onclick="return getErrors();">Speichern</button></td></tr>                          
 
                         </table>
 						<span id ="images" hidden="hidden"></span>

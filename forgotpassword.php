@@ -21,7 +21,7 @@
 		$res=$conn->query($str1);
 		if($res != FALSE && $row=$res->fetch_row()){
 			$sucsess=true;
-			$errortext="Ihnen wurde ein neues Passwort zugesendet";
+			$errortext="Ihnen wurde ein neues Passwort zugesandt!";
 			include("includes/sendmail.php");
 			$str1="UPDATE `users`SET `password`='".$newpasssha2."' WHERE id='".$row[0]."'";
 			$res=$conn->query($str1);
@@ -60,7 +60,7 @@
             <div class="content">
                 <?php
                     
-					echo $errortext;
+					echo "<table><tr><td>$errortext</td></tr></table>";
                     if($sucsess){
 						echo '<form action ="login.php" method="post">
 								<table style=" margin:0 auto;
@@ -71,7 +71,7 @@
 									<tr><td colspan="2"><input id="email"style="max-width: 280px; width: 95%;" type="text" name="email" value="'.$to.'" hidden="true" visibility="collapse "/></td></tr>
 									<tr><td>Passwort:</td></tr>
 									<tr><td colspan="2"><input id="p1" style="max-width: 280px; width: 95%;" type="password" name="password"/></td><tr>
-									<tr><td><input type="submit" name="activ"onclick="loginclick()" value="Einloggen"/></td></tr>
+									<tr><td><button class="waves-effect waves-light btn" type="submit" name="activ"onclick="loginclick()" value="Einloggen">Einloggen</button></td></tr>
 								</table>
 							</form>';
 					
@@ -80,8 +80,10 @@
 				
                  ?>
 				 <br/>
-				 <a href="index.php">Haupseite</a>
-                <a href="reg.php">Registrieren</a>
+                <table>
+                    <tr><td><a href="index.php">Haupseite</a></td></tr>
+                    <tr><td><a href="reg.php">Registrieren</a></td></tr>
+                </table>
             </div>
         </div>
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

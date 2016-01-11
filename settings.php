@@ -258,8 +258,8 @@
 		<div class="main">		
 			<div class="content">
 			<div class="row">
-							<div class="col s12 m4 offset-m5 l4 offset-l5">
-								<h4>Filter einstellen:</h4>
+							<div class="col s12 m4 offset-m4 l4 offset-l4">
+                                <table><tr><td><h4>Filter einstellen:</h4></td></tr></table>
 							</div>
 						</div>
 				<table style=" margin:0 auto;
@@ -283,13 +283,15 @@
 			<div class="content" >
 				<div class="row">
 					<div class="col s6 m4 offset-m4 l4 offset-l4">
+                        <table><tr><td>
 						<a class="waves-effect waves-light btn" id="openlist" onclick="filadd()" >Kategorie hinzufügen</a>
+                        </td></tr></table>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col s6 m3 offset-m4 l2 offset-l4">
+					<div class="col s6 m4 offset-m4 l4 offset-l4">
 						<ul class="card-panel">
-							<li> aktivierte Kategorien:</li>
+							<li><b>Aktivierte Kategorien:</b></li>
 							<li class="divider"></li>
 							<?php
 								if (isset($filtr)) {
@@ -321,6 +323,7 @@
 												background-color: rgba(0,0,0,0.5);
 												overflow:hidden;
 												position:fixed;
+                                                z-index:999;
 												top:0px;">
 			<div id="ppc" style="margin:40px auto 0px auto;
 												width:250px;
@@ -339,8 +342,8 @@
 				<div class="row">
 					<form class="col s12" action ="settings.php" method="post">
 						<div class="row">
-							<div class="col s12 m4 offset-m5 l4 offset-l5">
-								<h4>Passwort ändern:</h4>
+							<div class="col s12 m4 offset-m4 l4 offset-l4">
+                                <table><tr><td><h4>Passwort ändern:</h4></td></tr></table>
 							</div>
 						</div>
 						<div class="row">
@@ -363,9 +366,11 @@
 						</div>
 						<div class="row">
 							<div class="col s12 m4 offset-m4 l4 offset-l4">
+                                <table><tr><td>
 								<button class="btn waves-effect waves-light" type="submit" name="activ" value="Speichern" onclick="return clickbutton(this)">Speichern
 									<i class="material-icons right">send</i>
 								</button>
+                                </td></tr></table>
 							</div>
 						</div>
 					</form>

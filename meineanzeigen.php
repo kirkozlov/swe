@@ -117,7 +117,7 @@
 												height: 2000px;
 												background-color: rgba(0,0,0,0.5);
 												overflow:hidden;
-												position:absolute;
+												position:fixed;
                                                 z-index:999;
 												top:0px;">
 			<div id="ppc" style="margin:40px auto 0px auto;
@@ -131,8 +131,10 @@
 				<div id="ppt" style="align:center;" >
 					<p id="BestP">Möchten Sie diese Anzeige wirklich entfernen?</p>
 					<form id="delete" action="" method="post" enctype="multipart/form-data" >
-						<button id="jaB" value="" name="delete">Ja</button>
-						<button id="neinB" onclick="PopUpHide(); return false;">Nein</button>
+                        <table>
+                            <tr><td><button class="waves-effect waves-light btn" id="jaB" value="" name="delete">Ja</button></td>
+                            <td><button class="waves-effect waves-light btn" id="neinB" onclick="PopUpHide(); return false;">Nein</button></td></tr>
+                        </table>
 					</form>
 					
 				</div>

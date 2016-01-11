@@ -82,7 +82,7 @@
 										$adr = $obj['results'][0]['formatted_address'];
 										echo '<td>'.$adr.'</td>';
 								echo '<td>
-										<button  class="waves-effect waves-light btn red"  onclick="DeleteOnClick('.$key.')">Löschen</button>
+										<button class="waves-effect waves-light btn red" onclick="DeleteOnClick('.$key.')">Löschen</button>
 										
 									</td>';
 								echo '</tr>';
@@ -99,10 +99,10 @@
 												background-color: rgba(0,0,0,0.5);
 												overflow:hidden;
 												position:fixed;
+                                                z-index:999;
 												top:0px;">
 			<div id="ppc" style="margin:40px auto 0px auto;
 												width:250px;
-												height: auto;
 												padding:10px;
 												
 												background-color: #c5c5c5;
@@ -110,8 +110,10 @@
 												box-shadow: 0px 0px 10px #000;">
 				<div id="ppt" style="align:center;" >
 					<form id="delete" action="" method="post" enctype="multipart/form-data" >
-						<button class="waves-effect waves-light btn"  id="jaB" value="" name="delete">Ja</button>
-						<button class="waves-effect waves-light btn"  id="neinB" onclick="PopUpHide(); return false;">Nein</button>
+                        <table>
+                            <tr><td><button class="waves-effect waves-light btn" id="jaB" value="" name="delete">Ja</button></td>
+                            <td><button class="waves-effect waves-light btn" id="neinB" onclick="PopUpHide(); return false;">Nein</button></td></tr>
+                        </table>
 					</form>
 					
 				</div>

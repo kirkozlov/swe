@@ -123,24 +123,24 @@
                 <div class="row"><div class="col s12 m12 l12"><p></p></div></div>
                 
                 <div class="row">
-                    <div class="col s12 m12 l12">
+                    <div class="col s12 m12 l3 offset-l4">
                          <?php echo '<img class="img_responsivness" src="data:image/jpeg;base64,'.base64_encode( $interImage ).'"/>';?>
                     </div>
                 </div>
                 
                 <div class="row">
-                    <?php echo '<div class="col s12 m12 l12 text_center"><p style="word-break:break-all;word-wrap:break-word">'.$interMaintext.'</p></div>';?>
+                    <?php echo '<div class="col s12 m12 l12 text_center"><h5 style="word-break:break-all;word-wrap:break-word">'.$interMaintext.'</h5></div>';?>
                 </div>
                     
                 <?php
                     for ($i = 1; $i <= 10; $i++) {
                         if (isset($interTexts[$i])) {
                             echo '<div class="row">
-                                    <div class="col s12 m12 l12"><p style="word-break:break-all;word-wrap:break-word">'.$interTexts[$i].'</p></div></div>';
+                                    <div class="col s12 m12 l4 offset-l4"><p style="word-break:break-all;word-wrap:break-word">'.$interTexts[$i].'</p></div></div>';
                         }
                         if (isset($interImages[$i])) {
                             echo '<div class="row">
-                                    <img class="img_responsivness" src="data:image/jpeg;base64,'.base64_encode( $interImages[$i] ).'"/></img></div>';
+                                    <div class="col s12 m12 l4 offset-l4"><img class="img_responsivness" src="data:image/jpeg;base64,'.base64_encode( $interImages[$i] ).'"/></img></div></div>';
                         }
                     }?>
                 
