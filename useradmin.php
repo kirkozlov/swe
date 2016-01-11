@@ -114,11 +114,11 @@
 								}
 								echo '</tr><tr>';
 								echo '<td colspan=2>
-										<button class="waves-effect waves-light btn red" onclick="DeleteOnClick('.$key.',1)">Löschen</button>
+										<button  class="waves-effect waves-light btn red"   onclick="DeleteOnClick('.$key.',1, \''. $value .'\')">Löschen</button>
 										
 									</td>';
 								echo '<td>
-										<button class="waves-effect waves-light btn" onclick="DeleteOnClick('.$key.',2)">Status ändern</button>
+										<button  class="waves-effect waves-light btn"  onclick="DeleteOnClick('.$key.',2, \''. $value .'\')">Status ändern</button>
 										
 									</td>';
 								echo '</tr>';
