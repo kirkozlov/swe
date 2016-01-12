@@ -306,7 +306,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="newfiladd"  class="card-panel teal lighten-2" style='display: none; margin: 0 0 0 60; padding: 0 0 0 0; ' >
+		<div id="newfiladd"  class="card-panel teal lighten-2" style='z-index: 1; display: none; margin: 0 0 0 60; padding: 0 0 0 0; ' >
 			<ul>
 				<?php
 					if (isset($filtr)) {
