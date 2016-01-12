@@ -252,6 +252,20 @@
 					return true;
 				}
 			}
+			
+			function checkImg(elem){
+				var extension = elem.value.substring(elem.value.lastIndexOf('.'));
+
+				var validFileType = ".jpg , .jpeg";
+				if (validFileType.toLowerCase().indexOf(extension.toLowerCase()) < 0) {
+					elem.value = null;
+					document.getElementById('ppt').innerHTML='Sie können nur Bilder im Format jpg/jpeg hochladen!';
+					PopUpShow();
+					return false;
+				}
+				return true;
+			}
+			
 			function checkErrors(elem){
 				switch (elem.name){
 					case "mainTitle":
@@ -302,8 +316,9 @@
 					
 					case "mainImage":
 						var errorMainImg = document.getElementById("errorMainImg");
-						if(!elem.value.trim()){
+						if(!elem.value.trim() || !checkImg(elem)){
 							errorMainImg.style.visibility = "visible";
+							document.getElementById("spanMain").innerHTML = "";
 						}
 						else{
 							errorMainImg.style.visibility = "hidden";
@@ -671,7 +686,7 @@
 				cell.innerHTML = cell.innerHTML + '<button class="waves-light btn"" onclick="return elementUp(this)" value="Hoch"><i class="material-icons">keyboard_arrow_up</i></button>';
 				cell.innerHTML = cell.innerHTML + '<output id="imgOutput' + counter + '" ></output>';
 				var img = document.createElement("input");
-				img.setAttribute("onchange","");
+				img.setAttribute("onchange","checkImg(this);");
 				img.setAttribute("type","file");
 				img.setAttribute("id",id);
 				img.setAttribute("name","file"+counter);
@@ -743,7 +758,7 @@
                                         <input id="mainImage" onclick="getElement(this)" onchange="" type="file" accept="image/jpeg" name="mainImage" onblur=""/>     
                                     </div>
                                     <div class="file-path-wrapper">
-                                        <input id="mainImage" class="file-path validate" type="text" onclick="getElement(this)" onchange="" accept="image/jpeg" name="mainImage" onblur=""/>
+                                        <input id="mainImage" class="file-path validate" type="text" onclick="getElement(this)" onchange="checkErrors(this);" accept="image/jpeg" name="mainImage" onblur=""/>
                                         <img id="errorMainImg" style="height: 20px; width:20px; visibility: hidden;" src="images/err.png" />
                                     </div> 
                                 </div>

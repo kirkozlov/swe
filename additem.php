@@ -158,6 +158,20 @@
 					return true;
 				}
 			}
+			
+			function checkImg(elem){
+				var extension = elem.value.substring(elem.value.lastIndexOf('.'));
+
+				var validFileType = ".jpg , .jpeg";
+				if (validFileType.toLowerCase().indexOf(extension.toLowerCase()) < 0) {
+					elem.value = null;
+					document.getElementById('ppt').innerHTML='Sie können nur Bilder im Format jpg/jpeg hochladen!';
+					PopUpShow();
+					return false;
+				}
+				return true;
+			}
+			
 			function checkErrors(elem){
 				switch (elem.name){
 					case "mainTitle":
@@ -224,7 +238,7 @@
 					case "mainImage":
 						changed[3] = true;
 						var errorMainImg = document.getElementById("errorMainImg");
-						if(!elem.value.trim()){
+						if(!elem.value.trim() || !checkImg(elem)){
 							errorMainImg.style.visibility = "visible";
 							document.getElementById("spanMain").innerHTML = "";
 						}
@@ -538,7 +552,7 @@
 				cell.innerHTML = cell.innerHTML + '<button class="waves-effect waves-light btn"" onclick="return elementUp(this)" value="Hoch"><i class="material-icons">keyboard_arrow_up<i/></button>';
 				cell.innerHTML = cell.innerHTML + '<output id="imgOutput' + counter + '" ></output>';
 				var img = document.createElement("input");
-				img.setAttribute("onchange","");
+				img.setAttribute("onchange","checkImg(this);");
 				img.setAttribute("type","file");
 				img.setAttribute("id",id);
 				img.setAttribute("name","file"+counter);
