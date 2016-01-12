@@ -4,7 +4,7 @@ require_once "Mail.php";
 function sendmail($to,$mess){
 $from = '<fhswege3@gmail.com>';
 $subject = 'Ihre neues Passwort für Quick Deal';
-$body = "Ihre neue Passwort lautet: ".$mess;
+$body = "Ihr neues Passwort lautet: ".$mess;
 
 $headers = array(
     'From' => $from,

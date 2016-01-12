@@ -73,22 +73,21 @@
         <div class="main">
             <div class="content">
                 <?php
-                	if (isset($interText) && isset($interPrice) && isset($interAmount)) {
+                	if (isset($interText) && isset($interPrice)) {
                 		echo '<table>';
-                		echo '<tr><td>Bild</td><td>Beschreibung</td><td>Preis</td><td>Anzahl</td></tr>';
+                		echo '<tr><td>Bild</td><td>Beschreibung</td><td>Preis</td></tr>';
                 		foreach ($interText as $key => $value) {
                 			echo '<tr>';
                 			echo '<td><img style="max-width: 100px; max-height: 100px;" src="data:image/jpeg;base64,'.base64_encode( $interImage[$key] ).'"/></td>';
 							echo '<td>'.$value.'</td>';
                 			echo '<td>'.$interPrice[$key].'€</td>';
-                			echo '<td>'.$interAmount[$key].'</td>';
                 			echo '</tr><tr>';
 							echo '<td colspan=2>
 									<form id="contact" action="" method="post" enctype="multipart/form-data" >
 										<button class="waves-effect waves-light btn" value="'.$userid[$key].'" name="contact"/>Kontakt</button>
 									</form>
 								</td>';
-							echo '<td colspan=2>
+							echo '<td>
 									<form id="like" action="details.php" method="post" enctype="multipart/form-data" >
 										<button class="waves-effect waves-light btn" value="'.$interid[$key].'" name="id"/>Details</button>
 									</form>

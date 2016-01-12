@@ -40,7 +40,7 @@
 			$o="";
 			$p="";
 			$pw="";
-			$streo="pass changed";
+			$streo="Ihr Passwort wurde geändert";
 		}
 		
 		
